@@ -9,6 +9,6 @@ namespace Dominio
         public int Id { get; set; }
         public Producto Producto { get; set; }
         public Proveedor Proveedor { get; set; }
-        public decimal Precio { get; set; }
+        public decimal PrecioCompra { get; set; }
     }
 }
