@@ -1,0 +1,75 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="GestionComercialWeb.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+
+    <title>Sistema Comercial</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #1f2937;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #60a5fa;
+        }
+
+        .contenido {
+            padding: 30px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <form runat="server">
+
+        <div class="navbar">
+
+            <a href="Inicio.aspx">Inicio</a>
+
+            <a href="Productos.aspx">Productos</a>
+
+            <a href="Clientes.aspx">Clientes</a>
+
+            <a href="Ventas.aspx">Ventas</a>
+
+        </div>
+
+        <div class="contenido">
+
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+
+        </div>
+
+    </form>
+
+</body>
+</html>
