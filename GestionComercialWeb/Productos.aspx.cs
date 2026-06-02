@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio;
 
 namespace GestionComercialWeb
 {
@@ -11,7 +12,13 @@ namespace GestionComercialWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            MarcaNegocio negocio = new MarcaNegocio();
+            dgvMarca.DataSource = negocio.Listar();
+            dgvMarca.DataBind();
 
+            CategoriaNegocio negocioCategoria = new CategoriaNegocio();
+            dgvCategoria.DataSource = negocioCategoria.Listar();
+            dgvCategoria.DataBind();
         }
     }
 }

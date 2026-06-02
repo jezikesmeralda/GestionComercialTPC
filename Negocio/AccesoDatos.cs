@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Data;
 using Dominio;
 
@@ -35,13 +36,13 @@ namespace Negocio
         public void SetearConsulta(string consulta)
         {
             comando.Parameters.Clear();
-            comando.CommandType = CommandType.Text;
+            comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
         }
         public void SetearProcedimiento(string nombreSP)
         {
             comando.Parameters.Clear();
-            comando.CommandType = CommandType.StoredProcedure;
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = nombreSP;
         }
 
