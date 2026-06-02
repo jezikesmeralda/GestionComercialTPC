@@ -34,8 +34,15 @@ namespace Negocio
 
         public void SetearConsulta(string consulta)
         {
+            comando.Parameters.Clear();
             comando.CommandType = CommandType.Text;
             comando.CommandText = consulta;
+        }
+        public void SetearProcedimiento(string nombreSP)
+        {
+            comando.Parameters.Clear();
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.CommandText = nombreSP;
         }
 
         public void EjecutarLectura()

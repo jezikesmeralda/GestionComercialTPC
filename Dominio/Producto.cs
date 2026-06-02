@@ -14,8 +14,8 @@ namespace Dominio
         public Categoria Categoria { get; set; }
 
         public decimal PrecioCosto{ get; set; }
-        public decimal PorcentajeGanancia { get; set; } // o precio venta?
-        
+        public decimal PorcentajeGanancia { get; set; } // para calcular el precio de venta
+
         public int StockActual { get; set; }
         public int StockMinimo { get; set; }
         public bool Activo { get; set; }
