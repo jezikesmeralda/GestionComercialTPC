@@ -8,6 +8,7 @@
             <asp:BoundField DataField="Nombre" HeaderText="Nombre Marca" />
              <asp:BoundField DataField="Activo" HeaderText="Activo" />
         </Columns>
+        
     </asp:GridView>
      <h3> Prueba de Categoria </h3>
   <asp:GridView ID="dgvCategoria" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">

@@ -1,0 +1,125 @@
+
+
+CREATE DATABASE Comercio;
+GO
+
+USE Comercio;
+GO
+
+
+CREATE TABLE Marcas
+(
+Id INT IDENTITY(1,1) PRIMARY KEY,
+Nombre VARCHAR(100) NOT NULL,
+Activo BIT NOT NULL DEFAULT 1
+);
+
+
+
+CREATE TABLE Categorias
+(
+Id INT IDENTITY(1,1) PRIMARY KEY,
+Nombre VARCHAR(100) NOT NULL,
+Activo BIT NOT NULL DEFAULT 1
+);
+
+
+
+CREATE TABLE Productos
+(
+Id INT IDENTITY(1,1) PRIMARY KEY,
+NombreProducto VARCHAR(150) NOT NULL,
+Descripcion VARCHAR(500) NULL,
+
+IdMarca INT NOT NULL,
+IdCategoria INT NOT NULL,
+
+PrecioCosto DECIMAL(18,2) NOT NULL,
+PorcentajeGanancia DECIMAL(10,2) NOT NULL,
+PrecioVenta DECIMAL(18,2) NOT NULL,
+
+StockActual INT NOT NULL DEFAULT 0,
+StockMinimo INT NOT NULL DEFAULT 0,
+
+Activo BIT NOT NULL DEFAULT 1,
+
+CONSTRAINT FK_Productos_Marcas
+    FOREIGN KEY (IdMarca)
+    REFERENCES Marcas(Id),
+
+CONSTRAINT FK_Productos_Categorias
+    FOREIGN KEY (IdCategoria)
+    REFERENCES Categorias(Id)
+
+);
+
+
+
+CREATE TABLE Clientes
+(
+Id INT IDENTITY(1,1) PRIMARY KEY,
+
+
+Nombre VARCHAR(100) NOT NULL,
+Apellido VARCHAR(100) NOT NULL,
+
+DNI INT NOT NULL UNIQUE,
+
+Email VARCHAR(200) NULL,
+Telefono VARCHAR(50) NULL,
+Direccion VARCHAR(200) NULL,
+
+Activo BIT NOT NULL DEFAULT 1
+
+);
+
+
+
+CREATE TABLE Proveedores
+(
+Id INT IDENTITY(1,1) PRIMARY KEY,
+
+
+Nombre VARCHAR(150) NOT NULL,
+
+Email VARCHAR(200) NULL,
+Telefono VARCHAR(50) NULL,
+
+Activo BIT NOT NULL DEFAULT 1
+
+
+);
+
+
+
+INSERT INTO Marcas (Nombre)
+VALUES
+('Catena'),
+('Rutini'),
+('Corona'),
+('Quilmes');
+
+INSERT INTO Categorias (Nombre)
+VALUES
+('Vinos'),
+('Cervezas'),
+('Destilados');
+
+GO
+CREATE PROCEDURE sp_ListarMarcas
+AS
+BEGIN
+    SELECT Id, Nombre, Activo
+    FROM Marcas
+    WHERE Activo = 1
+END
+
+
+
+CREATE PROCEDURE sp_ListarCategorias
+AS
+BEGIN
+    SELECT Id, Nombre, Activo
+    FROM Categorias
+    WHERE Activo = 1
+END
