@@ -1,8 +1,5 @@
-
-
 CREATE DATABASE Comercio;
 GO
-
 USE Comercio;
 GO
 
@@ -13,8 +10,6 @@ Id INT IDENTITY(1,1) PRIMARY KEY,
 Nombre VARCHAR(100) NOT NULL,
 Activo BIT NOT NULL DEFAULT 1
 );
-
-
 
 CREATE TABLE Categorias
 (
@@ -73,8 +68,6 @@ Activo BIT NOT NULL DEFAULT 1
 
 );
 
-
-
 CREATE TABLE Proveedores
 (
 Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -89,37 +82,3 @@ Activo BIT NOT NULL DEFAULT 1
 
 
 );
-
-
-
-INSERT INTO Marcas (Nombre)
-VALUES
-('Catena'),
-('Rutini'),
-('Corona'),
-('Quilmes');
-
-INSERT INTO Categorias (Nombre)
-VALUES
-('Vinos'),
-('Cervezas'),
-('Destilados');
-
-GO
-CREATE PROCEDURE sp_ListarMarcas
-AS
-BEGIN
-    SELECT Id, Nombre, Activo
-    FROM Marcas
-    WHERE Activo = 1
-END
-
-
-
-CREATE PROCEDURE sp_ListarCategorias
-AS
-BEGIN
-    SELECT Id, Nombre, Activo
-    FROM Categorias
-    WHERE Activo = 1
-END
