@@ -26,6 +26,7 @@ namespace Negocio
                     aux.Id = (int)datos.Lector["Id"];
                     aux.NombreProducto = (string)datos.Lector["Nombre"];
                     aux.Descripcion = datos.Lector["Descripcion"] as string;
+                    aux.ImagenUrl = datos.Lector["ImagenUrl"] as string;
                     aux.PrecioCosto = (decimal)datos.Lector["PrecioCosto"];
                     aux.StockActual = (int)datos.Lector["StockActual"];
 

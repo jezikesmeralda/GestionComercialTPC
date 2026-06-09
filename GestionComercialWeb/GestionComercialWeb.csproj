@@ -66,6 +66,7 @@
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Productos.aspx" />
+    <Content Include="ProduForm.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -94,6 +95,13 @@
     <Compile Include="Productos.aspx.designer.cs">
       <DependentUpon>Productos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ProduForm.aspx.cs">
+      <DependentUpon>ProduForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProduForm.aspx.designer.cs">
+      <DependentUpon>ProduForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -112,6 +120,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />
+    <Content Include="Imagenes\trapiche-malbec.webp" />
+    <Content Include="Imagenes\catena-chardonnay.webp" />
+    <Content Include="Imagenes\luigi-bosca-rose.webp" />
+    <Content Include="Imagenes\rutini-champagne.webp" />
+    <Content Include="Imagenes\trapiche-pinot-noir.webp" />
+    <Content Include="Imagenes\zuccardi-brut.webp" />
+    <Content Include="Imagenes\zuccardi-torrontes.webp" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
