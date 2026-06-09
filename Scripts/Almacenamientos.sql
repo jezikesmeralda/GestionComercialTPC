@@ -33,3 +33,10 @@ BEGIN
     INNER JOIN Marcas m ON p.IdMarca = m.Id
     INNER JOIN Categorias c ON p.IdCategoria = c.Id
 END
+GO
+CREATE PROCEDURE sp_prueba
+AS
+BEGIN
+    SELECT * from Categorias;
+END
+
