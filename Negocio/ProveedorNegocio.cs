@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Dominio;
 
 namespace Negocio
 {
-    public class CategoriaNegocio
+    public class ProveedorNegocio
     {
-        public List<Categoria> Listar()
+        public List<Proveedor> Listar()
         {
-            List<Categoria> lista = new List<Categoria>();
+            List<Proveedor> lista = new List<Proveedor>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearProcedimiento("sp_ListarCategorias");
+                datos.SetearProcedimiento("sp_ListarProveedores");
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    Categoria aux = new Categoria();
-
+                    Proveedor aux = new Proveedor();
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Email = datos.Lector["Email"] as string;
+                    aux.Telefono = datos.Lector["Telefono"] as string;
                     aux.Activo = (bool)datos.Lector["Activo"];
-
                     lista.Add(aux);
                 }
 
@@ -40,14 +39,16 @@ namespace Negocio
             }
         }
 
-        public void Alta(Categoria categoria)
+        public void Alta(Proveedor proveedor)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearProcedimiento("sp_AltaCategoria");
-                datos.SetearParametro("@Nombre", categoria.Nombre);
+                datos.SetearProcedimiento("sp_AltaProveedor");
+                datos.SetearParametro("@Nombre", proveedor.Nombre);
+                datos.SetearParametro("@Email", (object)proveedor.Email ?? DBNull.Value);
+                datos.SetearParametro("@Telefono", (object)proveedor.Telefono ?? DBNull.Value);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -60,15 +61,17 @@ namespace Negocio
             }
         }
 
-        public void Modificar(Categoria categoria)
+        public void Modificar(Proveedor proveedor)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearProcedimiento("sp_ModificarCategoria");
-                datos.SetearParametro("@Id", categoria.Id);
-                datos.SetearParametro("@Nombre", categoria.Nombre);
+                datos.SetearProcedimiento("sp_ModificarProveedor");
+                datos.SetearParametro("@Id", proveedor.Id);
+                datos.SetearParametro("@Nombre", proveedor.Nombre);
+                datos.SetearParametro("@Email", (object)proveedor.Email ?? DBNull.Value);
+                datos.SetearParametro("@Telefono", (object)proveedor.Telefono ?? DBNull.Value);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -87,7 +90,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("sp_BajaCategoria");
+                datos.SetearProcedimiento("sp_BajaProveedor");
                 datos.SetearParametro("@Id", id);
                 datos.EjecutarAccion();
             }
