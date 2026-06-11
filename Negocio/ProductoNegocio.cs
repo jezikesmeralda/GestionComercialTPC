@@ -24,7 +24,7 @@ namespace Negocio
                     Producto aux = new Producto();
 
                     aux.Id = (int)datos.Lector["Id"];
-                    aux.NombreProducto = (string)datos.Lector["Nombre"];
+                    aux.NombreProducto = (string)datos.Lector["NombreProducto"];
                     aux.Descripcion = datos.Lector["Descripcion"] as string;
                     aux.ImagenUrl = datos.Lector["ImagenUrl"] as string;
                     aux.PrecioCosto = (decimal)datos.Lector["PrecioCosto"];
@@ -42,6 +42,22 @@ namespace Negocio
             finally
             {
                 datos.CerrarConexion();
+            }
+        }
+        public int ContarActivos()
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta(
+                    "SELECT COUNT(*) FROM Productos WHERE Activo = 1");
+
+                return Convert.ToInt32(datos.EjecutarScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

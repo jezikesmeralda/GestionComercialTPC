@@ -18,7 +18,7 @@
             </div>
         </div>
     <% } %>
-</div> %>
+</div>
     
     <h3 class="mt-4">Marcas</h3>
     <asp:GridView ID="dgvMarca" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">
