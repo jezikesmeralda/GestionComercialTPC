@@ -13,10 +13,10 @@
                     <label>Proveedor</label>
                     <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
-                </div>
-               
-             <div class="row align-items-end mb-4">
-            <div class="col-md-4">
+            </div>
+             <hr />
+            <div class="row align-items-end mb-4">
+                <div class="col-md-4">
                     <label>Buscar Producto</label>
                     <asp:TextBox ID="txtBuscarProducto" runat="server" CssClass="form-control" placeholder="Ingrese nombre del producto"></asp:TextBox>
 
@@ -37,28 +37,28 @@
 
             </div>
 
-             <div class="row align-items-end mb-3">
-            <div class="col-md-2">
-                <label>Cantidad</label>
-                <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
-            </div>
+            <div class="row align-items-end mb-3">
+                <div class="col-md-2">
+                    <label>Cantidad</label>
+                    <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                </div>
 
-            <div class="col-md-2">
-                <label>Precio Compra</label>
-                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control"> </asp:TextBox>
-            </div>
+                <div class="col-md-2">
+                    <label>Precio Compra</label>
+                    <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control"> </asp:TextBox>
+                </div>
 
-            <div class="col-md-2">
+                <div class="col-md-2">
 
-                <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary w-100" />
+                    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary w-100" />
+
+                </div>
 
             </div>
 
         </div>
-
     </div>
-</div>
-    
+
 
     <div class="card shadow-sm">
 
