@@ -20,7 +20,7 @@ Activo BIT NOT NULL DEFAULT 1
 
 
 
-CREATE TABLE Productos
+CREATE TABLE Productos -- A esta tabla se le agrego el campo IMAGEN
 (
 Id INT IDENTITY(1,1) PRIMARY KEY,
 NombreProducto VARCHAR(150) NOT NULL,

@@ -83,14 +83,14 @@ BEGIN
 END
 GO
 
--- Productos:
 
 -- Productos:
+
 
 CREATE PROCEDURE sp_ListarProductos
 AS
 BEGIN
-    SELECT p.Id, p.NombreProducto, p.Descripcion, 
+    SELECT p.Id, p.NombreProducto, p.Descripcion, p.ImagenUrl,
            p.PrecioCosto, p.PorcentajeGanancia, p.PrecioVenta,
            p.StockActual, p.StockMinimo, p.Activo,
            m.Nombre AS NombreMarca,
@@ -104,6 +104,7 @@ GO
 CREATE PROCEDURE sp_AltaProducto
     @Nombre VARCHAR(150),
     @Descripcion VARCHAR(500) = NULL,
+    @ImagenUrl VARCHAR(500) = NULL,
     @IdMarca INT,
     @IdCategoria INT,
     @PrecioCosto DECIMAL(18,2),
@@ -115,8 +116,8 @@ BEGIN
     DECLARE @PrecioVenta DECIMAL(18,2)
     SET @PrecioVenta = @PrecioCosto * (1 + @PorcentajeGanancia / 100)
 
-    INSERT INTO Productos (NombreProducto, Descripcion, IdMarca, IdCategoria, PrecioCosto, PorcentajeGanancia, PrecioVenta, StockActual, StockMinimo, Activo)
-    VALUES (@Nombre, @Descripcion, @IdMarca, @IdCategoria, @PrecioCosto, @PorcentajeGanancia, @PrecioVenta, @StockActual, @StockMinimo, 1)
+    INSERT INTO Productos (NombreProducto, Descripcion, ImagenUrl, IdMarca, IdCategoria, PrecioCosto, PorcentajeGanancia, PrecioVenta, StockActual, StockMinimo, Activo)
+    VALUES (@Nombre, @Descripcion, @ImagenUrl, @IdMarca, @IdCategoria, @PrecioCosto, @PorcentajeGanancia, @PrecioVenta, @StockActual, @StockMinimo, 1)
 END
 GO
 
@@ -124,6 +125,7 @@ CREATE PROCEDURE sp_ModificarProducto
     @Id INT,
     @Nombre VARCHAR(150),
     @Descripcion VARCHAR(500) = NULL,
+    @ImagenUrl VARCHAR(500) = NULL,
     @IdMarca INT,
     @IdCategoria INT,
     @PrecioCosto DECIMAL(18,2),
@@ -138,6 +140,7 @@ BEGIN
     UPDATE Productos
     SET NombreProducto = @Nombre,
         Descripcion = @Descripcion,
+        ImagenUrl = @ImagenUrl,
         IdMarca = @IdMarca,
         IdCategoria = @IdCategoria,
         PrecioCosto = @PrecioCosto,
