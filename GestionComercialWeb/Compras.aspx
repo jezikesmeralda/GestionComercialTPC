@@ -1,44 +1,64 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Compras.aspx.cs" Inherits="GestionComercialWeb.Compras" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<h2 class="mb-4">Compras</h2>
 
-<div class="card shadow-sm mb-4">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <h2 class="mb-4">Compras</h2>
+
+    <div class="card shadow-sm mb-4">
 
         <div class="card-body">
 
-            <div class="row">
+            <div class="row mb-3">
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3">
                     <label>Proveedor</label>
                     <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
-
-                <div class="col-md-3 mb-3">
-                    <label>Producto</label>
-                    <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
-                
-                <div class="col-md-2 mb-3">
-                    <label>Cantidad</label>
-                    <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+               
+             <div class="row align-items-end mb-4">
+            <div class="col-md-4">
+                    <label>Buscar Producto</label>
+                    <asp:TextBox ID="txtBuscarProducto" runat="server" CssClass="form-control" placeholder="Ingrese nombre del producto"></asp:TextBox>
+
                 </div>
 
-                <div class="col-md-2 mb-3">
-                    <label>Precio Compra</label>
-                    <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control"> </asp:TextBox>
-                </div>
+                <div class="col-md-2">
 
-                <div class="col-md-2 d-flex align-items-end">
-
-                    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary w-100"/>
+                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" />
 
                 </div>
+
+            </div>
+
+            <div class="alert alert-secondary mb-4">
+
+                <strong>Producto encontrado:</strong>
+                <asp:Label ID="lblProductoEncontrado" runat="server" Text="Ninguno"></asp:Label>
+
+            </div>
+
+             <div class="row align-items-end mb-3">
+            <div class="col-md-2">
+                <label>Cantidad</label>
+                <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+            </div>
+
+            <div class="col-md-2">
+                <label>Precio Compra</label>
+                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control"> </asp:TextBox>
+            </div>
+
+            <div class="col-md-2">
+
+                <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary w-100" />
 
             </div>
 
         </div>
 
     </div>
+</div>
+    
 
     <div class="card shadow-sm">
 
@@ -53,7 +73,7 @@
                     <asp:BoundField HeaderText="Producto" DataField="Producto" />
 
                     <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
-                    
+
                     <asp:BoundField HeaderText="Precio" DataField="PrecioUnitario" />
 
                     <asp:BoundField HeaderText="Subtotal" DataField="Subtotal" />
