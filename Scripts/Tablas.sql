@@ -80,5 +80,15 @@ Telefono VARCHAR(50) NULL,
 
 Activo BIT NOT NULL DEFAULT 1
 
+);
 
+CREATE TABLE Usuarios
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+
+    Nombre VARCHAR(100) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL,
+    Rol INT NOT NULL, -- 0 = Vendedor, 1 = Administrador
+
+    Activo BIT NOT NULL DEFAULT 1
 );

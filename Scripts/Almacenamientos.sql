@@ -85,6 +85,8 @@ GO
 
 -- Productos:
 
+-- Productos:
+
 CREATE PROCEDURE sp_ListarProductos
 AS
 BEGIN
@@ -96,6 +98,64 @@ BEGIN
     FROM Productos p
     INNER JOIN Marcas m ON p.IdMarca = m.Id
     INNER JOIN Categorias c ON p.IdCategoria = c.Id
+END
+GO
+
+CREATE PROCEDURE sp_AltaProducto
+    @Nombre VARCHAR(150),
+    @Descripcion VARCHAR(500) = NULL,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @PrecioCosto DECIMAL(18,2),
+    @PorcentajeGanancia DECIMAL(10,2),
+    @StockActual INT,
+    @StockMinimo INT
+AS
+BEGIN
+    DECLARE @PrecioVenta DECIMAL(18,2)
+    SET @PrecioVenta = @PrecioCosto * (1 + @PorcentajeGanancia / 100)
+
+    INSERT INTO Productos (NombreProducto, Descripcion, IdMarca, IdCategoria, PrecioCosto, PorcentajeGanancia, PrecioVenta, StockActual, StockMinimo, Activo)
+    VALUES (@Nombre, @Descripcion, @IdMarca, @IdCategoria, @PrecioCosto, @PorcentajeGanancia, @PrecioVenta, @StockActual, @StockMinimo, 1)
+END
+GO
+
+CREATE PROCEDURE sp_ModificarProducto
+    @Id INT,
+    @Nombre VARCHAR(150),
+    @Descripcion VARCHAR(500) = NULL,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @PrecioCosto DECIMAL(18,2),
+    @PorcentajeGanancia DECIMAL(10,2),
+    @StockActual INT,
+    @StockMinimo INT
+AS
+BEGIN
+    DECLARE @PrecioVenta DECIMAL(18,2)
+    SET @PrecioVenta = @PrecioCosto * (1 + @PorcentajeGanancia / 100)
+
+    UPDATE Productos
+    SET NombreProducto = @Nombre,
+        Descripcion = @Descripcion,
+        IdMarca = @IdMarca,
+        IdCategoria = @IdCategoria,
+        PrecioCosto = @PrecioCosto,
+        PorcentajeGanancia = @PorcentajeGanancia,
+        PrecioVenta = @PrecioVenta,
+        StockActual = @StockActual,
+        StockMinimo = @StockMinimo
+    WHERE Id = @Id
+END
+GO
+
+CREATE PROCEDURE sp_BajaProducto
+    @Id INT
+AS
+BEGIN
+    UPDATE Productos
+    SET Activo = 0
+    WHERE Id = @Id
 END
 GO
 
@@ -199,5 +259,63 @@ BEGIN
     UPDATE Proveedores
     SET Activo = 0
     WHERE Id = @Id
+END
+GO
+
+-- Usuarios:
+
+CREATE PROCEDURE sp_ListarUsuarios
+AS
+BEGIN
+    SELECT Id, Nombre, Password, Rol, Activo
+    FROM Usuarios
+    WHERE Activo = 1
+END
+GO
+
+CREATE PROCEDURE sp_AltaUsuario
+    @Nombre VARCHAR(100),
+    @Password VARCHAR(255),
+    @Rol INT
+AS
+BEGIN
+    INSERT INTO Usuarios (Nombre, Password, Rol, Activo)
+    VALUES (@Nombre, @Password, @Rol, 1)
+END
+GO
+
+CREATE PROCEDURE sp_ModificarUsuario
+    @Id INT,
+    @Nombre VARCHAR(100),
+    @Password VARCHAR(255),
+    @Rol INT
+AS
+BEGIN
+    UPDATE Usuarios
+    SET Nombre = @Nombre,
+        Password = @Password,
+        Rol = @Rol
+    WHERE Id = @Id
+END
+GO
+
+CREATE PROCEDURE sp_BajaUsuario
+    @Id INT
+AS
+BEGIN
+    UPDATE Usuarios
+    SET Activo = 0
+    WHERE Id = @Id
+END
+GO
+
+CREATE PROCEDURE sp_ValidarLogin
+    @Nombre VARCHAR(100),
+    @Password VARCHAR(255)
+AS
+BEGIN
+    SELECT Id, Nombre, Rol
+    FROM Usuarios
+    WHERE Nombre = @Nombre AND Password = @Password AND Activo = 1
 END
 GO
