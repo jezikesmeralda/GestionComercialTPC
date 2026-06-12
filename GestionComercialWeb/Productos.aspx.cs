@@ -14,11 +14,6 @@ namespace GestionComercialWeb
         {
             ListaProductos = new ProductoNegocio().Listar();
 
-            dgvMarca.DataSource = new MarcaNegocio().Listar();
-            dgvMarca.DataBind();
-
-            dgvCategoria.DataSource = new CategoriaNegocio().Listar();
-            dgvCategoria.DataBind();
         }
     }
 }
