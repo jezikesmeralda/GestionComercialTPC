@@ -78,3 +78,5 @@ BEGIN
     INNER JOIN Marcas m ON p.IdMarca = m.Id
     INNER JOIN Categorias c ON p.IdCategoria = c.Id
 END
+
+SELECT COUNT(*) FROM Productos WHERE Activo = 1
