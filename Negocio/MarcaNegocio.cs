@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Dominio;
 
-
 namespace Negocio
 {
     public class MarcaNegocio
@@ -39,8 +38,66 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        public void Alta(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_AltaMarca");
+                datos.SetearParametro("@Nombre", marca.Nombre);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Modificar(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ModificarMarca");
+                datos.SetearParametro("@Id", marca.Id);
+                datos.SetearParametro("@Nombre", marca.Nombre);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Baja(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_BajaMarca");
+                datos.SetearParametro("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
-
-
-

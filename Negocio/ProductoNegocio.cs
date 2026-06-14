@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dominio;
 
 namespace Negocio
@@ -28,7 +25,10 @@ namespace Negocio
                     aux.Descripcion = datos.Lector["Descripcion"] as string;
                     aux.ImagenUrl = datos.Lector["ImagenUrl"] as string;
                     aux.PrecioCosto = (decimal)datos.Lector["PrecioCosto"];
+                    aux.PorcentajeGanancia = (decimal)datos.Lector["PorcentajeGanancia"];
                     aux.StockActual = (int)datos.Lector["StockActual"];
+                    aux.StockMinimo = (int)datos.Lector["StockMinimo"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(aux);
                 }
@@ -44,20 +44,100 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
         public int ContarActivos()
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearConsulta(
-                    "SELECT COUNT(*) FROM Productos WHERE Activo = 1");
-
+                datos.SetearConsulta("SELECT COUNT(*) FROM Productos WHERE Activo = 1");
                 return Convert.ToInt32(datos.EjecutarScalar());
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Alta(Producto producto, int idMarca, int idCategoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_AltaProducto");
+                datos.SetearParametro("@Nombre", producto.NombreProducto);
+                datos.SetearParametro("@Descripcion", (object)producto.Descripcion ?? DBNull.Value);
+                datos.SetearParametro("@ImagenUrl", (object)producto.ImagenUrl ?? DBNull.Value);
+                datos.SetearParametro("@IdMarca", idMarca);
+                datos.SetearParametro("@IdCategoria", idCategoria);
+                datos.SetearParametro("@PrecioCosto", producto.PrecioCosto);
+                datos.SetearParametro("@PorcentajeGanancia", producto.PorcentajeGanancia);
+                datos.SetearParametro("@StockActual", producto.StockActual);
+                datos.SetearParametro("@StockMinimo", producto.StockMinimo);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Modificar(Producto producto, int idMarca, int idCategoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ModificarProducto");
+                datos.SetearParametro("@Id", producto.Id);
+                datos.SetearParametro("@Nombre", producto.NombreProducto);
+                datos.SetearParametro("@Descripcion", (object)producto.Descripcion ?? DBNull.Value);
+                datos.SetearParametro("@ImagenUrl", (object)producto.ImagenUrl ?? DBNull.Value);
+                datos.SetearParametro("@IdMarca", idMarca);
+                datos.SetearParametro("@IdCategoria", idCategoria);
+                datos.SetearParametro("@PrecioCosto", producto.PrecioCosto);
+                datos.SetearParametro("@PorcentajeGanancia", producto.PorcentajeGanancia);
+                datos.SetearParametro("@StockActual", producto.StockActual);
+                datos.SetearParametro("@StockMinimo", producto.StockMinimo);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Baja(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_BajaProducto");
+                datos.SetearParametro("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
             }
         }
     }
