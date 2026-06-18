@@ -42,6 +42,9 @@ namespace Negocio
 
         public void Alta(Categoria categoria)
         {
+            if (string.IsNullOrWhiteSpace(categoria.Nombre))
+                throw new Exception("El nombre de la categoría es obligatorio.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -62,6 +65,9 @@ namespace Negocio
 
         public void Modificar(Categoria categoria)
         {
+            if (string.IsNullOrWhiteSpace(categoria.Nombre))
+                throw new Exception("El nombre de la categoría es obligatorio.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try

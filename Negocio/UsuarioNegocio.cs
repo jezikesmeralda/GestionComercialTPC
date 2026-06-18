@@ -43,6 +43,15 @@ namespace Negocio
 
         public void Alta(Usuario usuario)
         {
+            if (string.IsNullOrWhiteSpace(usuario.UserName))
+                throw new Exception("El nombre de usuario es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Password))
+                throw new Exception("La contraseña es obligatoria.");
+
+            if (usuario.Password.Length < 4)
+                throw new Exception("La contraseña debe tener al menos 4 caracteres.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -65,6 +74,15 @@ namespace Negocio
 
         public void Modificar(Usuario usuario)
         {
+            if (string.IsNullOrWhiteSpace(usuario.UserName))
+                throw new Exception("El nombre de usuario es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Password))
+                throw new Exception("La contraseña es obligatoria.");
+
+            if (usuario.Password.Length < 4)
+                throw new Exception("La contraseña debe tener al menos 4 caracteres.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -108,6 +126,9 @@ namespace Negocio
 
         public Usuario ValidarLogin(string userName, string password)
         {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+                throw new Exception("Debe ingresar usuario y contraseña.");
+
             AccesoDatos datos = new AccesoDatos();
             Usuario usuario = null;
 

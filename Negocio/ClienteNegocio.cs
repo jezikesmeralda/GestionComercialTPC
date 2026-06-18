@@ -44,6 +44,15 @@ namespace Negocio
 
         public void Alta(Cliente cliente)
         {
+            if (string.IsNullOrWhiteSpace(cliente.Nombre))
+                throw new Exception("El nombre del cliente es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(cliente.Apellido))
+                throw new Exception("El apellido del cliente es obligatorio.");
+
+            if (cliente.Dni <= 0)
+                throw new Exception("El DNI ingresado no es válido.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -69,6 +78,15 @@ namespace Negocio
 
         public void Modificar(Cliente cliente)
         {
+            if (string.IsNullOrWhiteSpace(cliente.Nombre))
+                throw new Exception("El nombre del cliente es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(cliente.Apellido))
+                throw new Exception("El apellido del cliente es obligatorio.");
+
+            if (cliente.Dni <= 0)
+                throw new Exception("El DNI ingresado no es válido.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try

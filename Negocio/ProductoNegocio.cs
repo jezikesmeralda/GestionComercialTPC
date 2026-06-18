@@ -66,6 +66,18 @@ namespace Negocio
 
         public void Alta(Producto producto, int idMarca, int idCategoria)
         {
+            if (string.IsNullOrWhiteSpace(producto.NombreProducto))
+                throw new Exception("El nombre del producto es obligatorio.");
+
+            if (producto.PrecioCosto <= 0)
+                throw new Exception("El precio de costo debe ser mayor a cero.");
+
+            if (producto.PorcentajeGanancia < 0)
+                throw new Exception("El porcentaje de ganancia no puede ser negativo.");
+
+            if (producto.StockActual < 0 || producto.StockMinimo < 0)
+                throw new Exception("El stock no puede ser negativo.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -94,6 +106,18 @@ namespace Negocio
 
         public void Modificar(Producto producto, int idMarca, int idCategoria)
         {
+            if (string.IsNullOrWhiteSpace(producto.NombreProducto))
+                throw new Exception("El nombre del producto es obligatorio.");
+
+            if (producto.PrecioCosto <= 0)
+                throw new Exception("El precio de costo debe ser mayor a cero.");
+
+            if (producto.PorcentajeGanancia < 0)
+                throw new Exception("El porcentaje de ganancia no puede ser negativo.");
+
+            if (producto.StockActual < 0 || producto.StockMinimo < 0)
+                throw new Exception("El stock no puede ser negativo.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try

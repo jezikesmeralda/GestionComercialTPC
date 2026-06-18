@@ -41,6 +41,9 @@ namespace Negocio
 
         public void Alta(Marca marca)
         {
+            if (string.IsNullOrWhiteSpace(marca.Nombre))
+                throw new Exception("El nombre de la marca es obligatorio.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -61,6 +64,9 @@ namespace Negocio
 
         public void Modificar(Marca marca)
         {
+            if (string.IsNullOrWhiteSpace(marca.Nombre))
+                throw new Exception("El nombre de la marca es obligatorio.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try

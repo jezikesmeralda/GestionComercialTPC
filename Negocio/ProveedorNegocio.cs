@@ -41,6 +41,9 @@ namespace Negocio
 
         public void Alta(Proveedor proveedor)
         {
+            if (string.IsNullOrWhiteSpace(proveedor.Nombre))
+                throw new Exception("El nombre del proveedor es obligatorio.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -63,6 +66,9 @@ namespace Negocio
 
         public void Modificar(Proveedor proveedor)
         {
+            if (string.IsNullOrWhiteSpace(proveedor.Nombre))
+                throw new Exception("El nombre del proveedor es obligatorio.");
+
             AccesoDatos datos = new AccesoDatos();
 
             try
