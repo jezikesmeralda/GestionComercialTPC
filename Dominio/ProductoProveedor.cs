@@ -9,6 +9,6 @@ namespace Dominio
         public int Id { get; set; }
         public Producto Producto { get; set; }
         public Proveedor Proveedor { get; set; }
-        public decimal PrecioCompra { get; set; }//precio de referencia que el proveedor le da al producto, no es el precio de venta, es el precio de compra
+        public decimal PrecioCompra { get; set; }
     }
 }

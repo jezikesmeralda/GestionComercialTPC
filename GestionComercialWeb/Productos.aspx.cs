@@ -12,8 +12,28 @@ namespace GestionComercialWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ListaProductos = new ProductoNegocio().Listar();
+            if (!IsPostBack)
+            {
+                ListaProductos = new ProductoNegocio().Listar();
+            }
+            else
+            {
+                string busqueda = txtBuscar.Text.Trim().ToLower();
+                List<Producto> todos = new ProductoNegocio().Listar();
+                List<Producto> filtrados = new List<Producto>();
 
+                foreach (Producto p in todos)
+                {
+                    if (string.IsNullOrWhiteSpace(busqueda) || p.NombreProducto.ToLower().Contains(busqueda))
+                        filtrados.Add(p);
+                }
+
+                ListaProductos = filtrados;
+            }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
         }
     }
 }

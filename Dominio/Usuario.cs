@@ -1,7 +1,5 @@
 ﻿namespace Dominio
 {
-    // Eliminamos rol.cs y dejamos asi como indica el profe en el video
-    // Son valores que siempre van a ser 2. Vendedor y Administrador
     public enum Rol
     {
         Vendedor,

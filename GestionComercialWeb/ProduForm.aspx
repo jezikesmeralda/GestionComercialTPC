@@ -18,11 +18,11 @@
             </div>
             <div class="mb-3">
                 <label for="txtMarca" class="form-label">Marca</label>
-                <asp:DropDownList ID="ddlMarca" cssclass="form-select" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlMarca" CssClass="form-select" runat="server"></asp:DropDownList>
             </div>
             <div class="mb-3">
                 <label for="txtCategoria" class="form-label">Categorias</label>
-                <asp:DropDownList ID="ddlCategoria" cssclass="form-select" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlCategoria" CssClass="form-select" runat="server"></asp:DropDownList>
             </div>
             <div class="mb-3">
                 <label for="txtPrecioCosto" class="form-label">Precio Costo</label>
@@ -44,10 +44,11 @@
                 <label for="txtStockActual" class="form-label">Stock Actual</label>
                 <asp:TextBox runat="server" ID="txtStockActual" CssClass="form-control" />
             </div>
-            <div class="mb-3">            
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger" Visible="false" />
+            <div class="mb-3 mt-2">
                 <asp:Button runat="server" ID="btnAceptar" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
                 <a href="Productos.aspx" class="btn btn-secondary">Cancelar</a>
-            </div>   
+            </div>
         </div>
     </div>
 

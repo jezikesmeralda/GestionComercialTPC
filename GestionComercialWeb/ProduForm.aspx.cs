@@ -55,7 +55,8 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                Session["error"] = ex.Message;
+                lblError.Text = "Por favor, complete los campos correctamente.";
+                lblError.Visible = true;
             }
         }
     }
