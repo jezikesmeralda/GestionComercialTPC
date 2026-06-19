@@ -30,6 +30,14 @@ namespace Negocio
                     aux.StockMinimo = (int)datos.Lector["StockMinimo"];
                     aux.Activo = (bool)datos.Lector["Activo"];
 
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Nombre = (string)datos.Lector["NombreMarca"];
+
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
+
                     lista.Add(aux);
                 }
 

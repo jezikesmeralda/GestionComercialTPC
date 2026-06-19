@@ -33,7 +33,7 @@ namespace Negocio
                 catch
                 {
                     
-                    conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=GestionComercialDB;Integrated Security=True;TrustServerCertificate=True;");
+                    conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=Comercio;Integrated Security=True;TrustServerCertificate=True;");
                     conexion.Open();
                 }
             }

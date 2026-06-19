@@ -12,17 +12,21 @@
                 </div>
 
                 <div class="col-md-2">
-                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" />
+                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" OnClick="btnBuscar_Click"/>
                 </div>
 
                 <div class="col-md-2">
                     <label class="form-label">Marca</label>
-                    <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Todas" Value="0" />
+                    </asp:DropDownList>
                 </div>
 
                 <div class="col-md-2">
                     <label class="form-label">Categoría</label>
-                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Todas" Value="0" />
+                    </asp:DropDownList>
                 </div>
 
                 <div class="col-md-2">
