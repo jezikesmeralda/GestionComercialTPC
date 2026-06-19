@@ -41,9 +41,20 @@
               </div>
 
           </div>
+          <div class="row">
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Dirección</label>
+
+        <asp:TextBox ID="txtDireccion"
+            runat="server"
+            CssClass="form-control"
+            placeholder="Calle y número">
+        </asp:TextBox>
+    </div>
+</div>
 
           <div class="mt-3">
-              <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success me-2" />
+              <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success me-2" OnClick="btnGuardar_Click"/>
               <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" />
           </div>
 
