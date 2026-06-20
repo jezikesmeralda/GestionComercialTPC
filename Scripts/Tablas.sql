@@ -92,3 +92,45 @@ CREATE TABLE Usuarios
 
     Activo BIT NOT NULL DEFAULT 1
 );
+
+---------------------------------------------
+USE Comercio;
+GO
+
+
+CREATE TABLE Compras
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+
+    IdProveedor INT NOT NULL,
+
+    FechaCompra DATETIME NOT NULL DEFAULT GETDATE(),
+
+    Total DECIMAL(18,2) NOT NULL,
+
+    CONSTRAINT FK_Compras_Proveedores
+        FOREIGN KEY (IdProveedor)
+        REFERENCES Proveedores(Id)
+);
+CREATE TABLE DetalleCompras
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+
+    IdCompra INT NOT NULL,
+
+    IdProducto INT NOT NULL,
+
+    Cantidad INT NOT NULL,
+
+    PrecioUnitario DECIMAL(18,2) NOT NULL,
+
+    Subtotal DECIMAL(18,2) NOT NULL,
+
+    CONSTRAINT FK_DetalleCompras_Compras
+        FOREIGN KEY (IdCompra)
+        REFERENCES Compras(Id),
+
+    CONSTRAINT FK_DetalleCompras_Productos
+        FOREIGN KEY (IdProducto)
+        REFERENCES Productos(Id)
+);

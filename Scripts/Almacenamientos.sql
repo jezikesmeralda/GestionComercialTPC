@@ -322,3 +322,80 @@ BEGIN
     WHERE Nombre = @Nombre AND Password = @Password AND Activo = 1
 END
 GO
+--------------------------------------
+USE Comercio;
+GO
+
+CREATE PROCEDURE sp_AltaCompra
+(
+    @IdProveedor INT,
+    @Total DECIMAL(18,2)
+)
+AS
+BEGIN
+
+    INSERT INTO Compras
+    (
+        IdProveedor,
+        FechaCompra,
+        Total
+    )
+    VALUES
+    (
+        @IdProveedor,
+        GETDATE(),
+        @Total
+    );
+
+    SELECT SCOPE_IDENTITY();
+
+END
+
+CREATE PROCEDURE sp_AltaDetalleCompra
+(
+    @IdCompra INT,
+    @IdProducto INT,
+    @Cantidad INT,
+    @PrecioUnitario DECIMAL(18,2),
+    @Subtotal DECIMAL(18,2)
+)
+AS
+BEGIN
+
+    INSERT INTO DetalleCompras
+    (
+        IdCompra,
+        IdProducto,
+        Cantidad,
+        PrecioUnitario,
+        Subtotal
+    )
+    VALUES
+    (
+        @IdCompra,
+        @IdProducto,
+        @Cantidad,
+        @PrecioUnitario,
+        @Subtotal
+    );
+
+END
+
+CREATE PROCEDURE sp_ActualizarStockCompra
+(
+    @IdProducto INT,
+    @Cantidad INT,
+    @PrecioCosto DECIMAL(18,2)
+)
+AS
+BEGIN
+
+    UPDATE Productos
+    SET
+        StockActual = StockActual + @Cantidad,
+        PrecioCosto = @PrecioCosto,
+        PrecioVenta = @PrecioCosto + (@PrecioCosto * PorcentajeGanancia / 100)
+    WHERE Id = @IdProducto;
+
+END
+
