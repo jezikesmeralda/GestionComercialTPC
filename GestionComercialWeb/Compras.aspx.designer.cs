@@ -51,6 +51,24 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.Label lblProductoEncontrado;
 
         /// <summary>
+        /// Control lblStockActual.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStockActual;
+
+        /// <summary>
+        /// Control lblUltimoCosto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblUltimoCosto;
+
+        /// <summary>
         /// Control txtCantidad.
         /// </summary>
         /// <remarks>

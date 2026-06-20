@@ -172,5 +172,43 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public Producto BusquedaNombre(string nombre)
+        {
+            Producto producto = null;
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta(@"SELECT TOP 1 Id, NombreProducto, StockActual, PrecioCosto FROM Productos WHERE NombreProducto LIKE @Nombre");
+
+                datos.SetearParametro("@Nombre", "%" + nombre + "%");
+
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    producto = new Producto();
+
+                    producto.Id =
+                        (int)datos.Lector["Id"];
+
+                    producto.NombreProducto =
+                        (string)datos.Lector["NombreProducto"];
+
+                    producto.StockActual =
+                        (int)datos.Lector["StockActual"];
+
+                    producto.PrecioCosto =
+                        (decimal)datos.Lector["PrecioCosto"];
+                }
+
+                return producto;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

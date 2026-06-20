@@ -24,7 +24,7 @@
 
                 <div class="col-md-2">
 
-                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" />
+                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" Onclick="btnBuscar_Click"/>
 
                 </div>
 
@@ -34,7 +34,19 @@
 
                 <strong>Producto encontrado:</strong>
                 <asp:Label ID="lblProductoEncontrado" runat="server" Text="Ninguno"></asp:Label>
+                <div class="row mt-2">
 
+                    <div class="col-md-3">
+                        <strong>Stock Actual:</strong>
+                        <asp:Label ID="lblStockActual" runat="server" Text="-"></asp:Label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>Último Costo:</strong>
+                        <asp:Label ID="lblUltimoCosto" runat="server" Text="-"></asp:Label>
+                    </div>
+
+                </div>
             </div>
 
             <div class="row align-items-end mb-3">
@@ -50,7 +62,7 @@
 
                 <div class="col-md-2">
 
-                    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary w-100" />
+                    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary w-100" OnClick="btnAgregar_Click" />
 
                 </div>
 
@@ -89,7 +101,7 @@
 
             <div class="text-end">
 
-                <asp:Button ID="btnRegistrarCompra" runat="server" Text="Registrar Compra" CssClass="btn btn-success" />
+                <asp:Button ID="btnRegistrarCompra" runat="server" Text="Registrar Compra" CssClass="btn btn-success" OnClick="btnRegistrarCompra_Click" />
 
             </div>
 
