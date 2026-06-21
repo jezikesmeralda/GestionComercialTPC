@@ -24,6 +24,12 @@ namespace GestionComercialWeb
                     ddlCategoria.DataTextField = "Nombre";
                     ddlCategoria.DataValueField = "Id";
                     ddlCategoria.DataBind();
+
+                    if (Request.QueryString["id"] != null)
+                    {
+                        int id = int.Parse(Request.QueryString["id"]);
+                        CargarProducto(id);
+                    }
                 }
             }
             catch (Exception ex)
@@ -32,11 +38,35 @@ namespace GestionComercialWeb
             }
         }
 
+        private void CargarProducto(int id)
+        {
+            ProductoNegocio negocio = new ProductoNegocio();
+            Producto producto = negocio.Listar().Find(p => p.Id == id);
+
+            if (producto != null)
+            {
+                hdnId.Value = producto.Id.ToString();
+                lblTitulo.Text = "Editar Producto";
+
+                txtNombre.Text = producto.NombreProducto;
+                txtDescripcion.Text = producto.Descripcion;
+                txtURLImagen.Text = producto.ImagenUrl;
+                txtPrecioCosto.Text = producto.PrecioCosto.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                txtPorcetajeGanancia.Text = producto.PorcentajeGanancia.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                txtStockMinimo.Text = producto.StockMinimo.ToString();
+                txtStockActual.Text = producto.StockActual.ToString();
+
+                ddlMarca.SelectedValue = producto.Marca.Id.ToString();
+                ddlCategoria.SelectedValue = producto.Categoria.Id.ToString();
+            }
+        }
+
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             try
             {
                 Producto producto = new Producto();
+                producto.Id = int.Parse(hdnId.Value);
                 producto.NombreProducto = txtNombre.Text;
                 producto.Descripcion = txtDescripcion.Text;
                 producto.ImagenUrl = txtURLImagen.Text;
@@ -49,7 +79,12 @@ namespace GestionComercialWeb
                 int idMarca = int.Parse(ddlMarca.SelectedValue);
                 int idCategoria = int.Parse(ddlCategoria.SelectedValue);
 
-                new ProductoNegocio().Alta(producto, idMarca, idCategoria);
+                ProductoNegocio negocio = new ProductoNegocio();
+
+                if (producto.Id == 0)
+                    negocio.Alta(producto, idMarca, idCategoria);
+                else
+                    negocio.Modificar(producto, idMarca, idCategoria);
 
                 Response.Redirect("Productos.aspx");
             }

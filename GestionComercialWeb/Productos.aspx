@@ -58,7 +58,14 @@
                     <div class="card-body">
                         <h5 class="card-title"><%: produ.NombreProducto %></h5>
                         <p class="card-text"><%: produ.Descripcion %></p>
+                        <p class="fs-5 text-success fw-bold">$<%: produ.PrecioVenta.ToString("N2") %></p>
                         <p><strong>Stock: </strong><%: produ.StockActual %> unidades</p>
+                        <a href='<%= "ProduForm.aspx?id=" + produ.Id %>' class="btn btn-outline-primary btn-sm">Editar</a>
+                        <a href='<%= "Productos.aspx?eliminar=" + produ.Id %>' 
+                           class="btn btn-outline-danger btn-sm" 
+                           onclick="return confirm('¿Seguro que querés dar de baja este producto?');">
+                           Eliminar
+                        </a>
                     </div>
                 </div>
             </div>

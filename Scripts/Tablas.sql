@@ -93,10 +93,6 @@ CREATE TABLE Usuarios
     Activo BIT NOT NULL DEFAULT 1
 );
 
----------------------------------------------
-USE Comercio;
-GO
-
 
 CREATE TABLE Compras
 (

@@ -2,12 +2,11 @@
 
 <asp:Content ID="ProduForm1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <h2><asp:Label ID="lblTitulo" runat="server" Text="Nuevo Producto" /></h2>
+
     <div class="row">
         <div class="col-6">
-            <%-- <div class="mb-3">
-                <label for="txtID" class="form-label">ID</label>
-                <asp:TextBox runat="server" ID="txtID" CssClass="form-control" />
-            </div> --%>
+            <asp:HiddenField ID="hdnId" runat="server" Value="0" />
             <div class="mb-3">
                 <label for="txtNombre" class="form-label">Nombre</label>
                 <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />

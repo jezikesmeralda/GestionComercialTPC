@@ -1,7 +1,6 @@
 ﻿using Dominio;
 using Negocio;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,6 +17,16 @@ namespace GestionComercialWeb
             {
                 CargarCategorias();
                 CargarMarcas();
+
+                if (Request.QueryString["eliminar"] != null)
+                {
+                    int idEliminar = int.Parse(Request.QueryString["eliminar"]);
+                    new ProductoNegocio().Baja(idEliminar);
+                    Response.Redirect("Productos.aspx");
+                    
+                    return;
+                }
+
                 ListaProductos = new ProductoNegocio().Listar();
             }
             else
@@ -35,6 +44,7 @@ namespace GestionComercialWeb
                 ListaProductos = filtrados;
             }
         }
+
         private void CargarMarcas()
         {
             MarcaNegocio negocio = new MarcaNegocio();
@@ -86,19 +96,19 @@ namespace GestionComercialWeb
 
                 switch (stock)
                 {
-                    case 0: 
+                    case 0:
                         coincideStock = true;
                         break;
 
-                    case 1: 
+                    case 1:
                         coincideStock = p.StockActual > 10;
                         break;
 
-                    case 2: 
+                    case 2:
                         coincideStock = p.StockActual > 0 && p.StockActual <= 10;
                         break;
 
-                    case 3: 
+                    case 3:
                         coincideStock = p.StockActual == 0;
                         break;
                 }

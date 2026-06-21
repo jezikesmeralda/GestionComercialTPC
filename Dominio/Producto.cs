@@ -14,7 +14,8 @@ namespace Dominio
         public Categoria Categoria { get; set; }
 
         public decimal PrecioCosto{ get; set; }
-        public decimal PorcentajeGanancia { get; set; } 
+        public decimal PorcentajeGanancia { get; set; }
+        public decimal PrecioVenta => PrecioCosto * (1 + PorcentajeGanancia / 100);
 
         public string ImagenUrl { get; set; }
         public int StockActual { get; set; }

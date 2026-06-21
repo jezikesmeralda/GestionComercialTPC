@@ -351,6 +351,8 @@ BEGIN
 
 END
 
+GO;
+
 CREATE PROCEDURE sp_AltaDetalleCompra
 (
     @IdCompra INT,
@@ -380,6 +382,8 @@ BEGIN
     );
 
 END
+
+GO
 
 CREATE PROCEDURE sp_ActualizarStockCompra
 (
