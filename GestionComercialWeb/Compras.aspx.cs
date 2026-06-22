@@ -3,9 +3,6 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
@@ -93,7 +90,7 @@ namespace GestionComercialWeb
 
             Compra compra = new Compra();
 
-            compra.Proveedor = new Proveedor();
+            compra.Proveedor = new Dominio.Proveedor();
             compra.Proveedor.Id = int.Parse(ddlProveedor.SelectedValue);
 
             compra.FechaCompra = DateTime.Now;

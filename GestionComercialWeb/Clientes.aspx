@@ -72,7 +72,12 @@
               <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
               <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
               <asp:BoundField HeaderText="DNI" DataField="Dni" />
-           </Columns>
+              <asp:BoundField HeaderText="Teléfono" DataField="Telefono" />
+              <asp:BoundField HeaderText="Email" DataField="Email" />
+              <asp:BoundField HeaderText="Dirección" DataField="Direccion" />
+              <asp:ButtonField Text="Editar" ButtonType="Button" ControlStyle-CssClass="btn btn-outline-primary btn-sm" />
+              <asp:ButtonField Text="Eliminar" ButtonType="Button" ControlStyle-CssClass="btn btn-outline-danger btn-sm" />
+          </Columns>
       </asp:GridView>
       </div>
 

@@ -54,7 +54,7 @@
                 <div class="card h-100">
                     <img src='<%= string.IsNullOrEmpty(produ.ImagenUrl) ? "https://placehold.co/300x200" 
                         : (produ.ImagenUrl.StartsWith("http") ? produ.ImagenUrl : ResolveUrl("~/" + produ.ImagenUrl)) %>' 
-                        class="card-img-top" alt="..." style="height: 200px; object-fit: contain; background-color: white;">
+                        class="card-img-top" alt="..." style="height: 200px; object-fit: contain; background-color: white;"/>
                     <div class="card-body">
                         <h5 class="card-title"><%: produ.NombreProducto %></h5>
                         <p class="card-text"><%: produ.Descripcion %></p>

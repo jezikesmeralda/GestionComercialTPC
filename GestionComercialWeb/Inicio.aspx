@@ -8,7 +8,7 @@ Inherits="GestionComercialWeb.Inicio" %>
 
     <div class="text-center mb-5">
 
-        <h1 class="display-4 fw-bold">COMERCIO</h1>
+        <h1 class="display-4 fw-bold">Vinoteca</h1>
 
         <p class="subtitulo">
             Sistema de Gestión Comercial
@@ -27,6 +27,10 @@ Inherits="GestionComercialWeb.Inicio" %>
         <div class="col-md-3 mb-3">
             <a href="Clientes.aspx" class="btn btn-dark w-100 p-3">
                 Clientes
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="Proveedores.aspx" class="btn btn-dark w-100 p-3">Proveedores
             </a>
         </div>
 
