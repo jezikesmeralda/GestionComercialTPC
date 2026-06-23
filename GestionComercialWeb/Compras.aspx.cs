@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
@@ -19,12 +20,20 @@ namespace GestionComercialWeb
             {
                 Session["DetalleCompra"] = new List<DetalleCompra>();
 
-                ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
-                ddlProveedor.DataSource = proveedorNegocio.Listar();
-                ddlProveedor.DataTextField = "Nombre";
-                ddlProveedor.DataValueField = "Id";
-                ddlProveedor.DataBind();
+                CargarProveedores();
             }
+        }
+
+        private void CargarProveedores()
+        {
+            ProveedorNegocio negocio = new ProveedorNegocio();
+
+            ddlProveedor.DataSource = negocio.Listar();
+            ddlProveedor.DataTextField = "Nombre";
+            ddlProveedor.DataValueField = "Id";
+            ddlProveedor.DataBind();
+
+            ddlProveedor.Items.Insert(0, new ListItem("Todas", "0"));
         }
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -102,6 +111,10 @@ namespace GestionComercialWeb
             ComprasNegocio negocio = new ComprasNegocio();
 
             negocio.Alta(compra);
+
+            
+
+            
 
             Session["DetalleCompra"] = new List<DetalleCompra>();
 

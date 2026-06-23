@@ -11,7 +11,9 @@
 
                 <div class="col-md-3">
                     <label>Proveedor</label>
-                    <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Todas" Value="0" />
+                    </asp:DropDownList>
                 </div>
             </div>
              <hr />
