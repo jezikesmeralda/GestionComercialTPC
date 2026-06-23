@@ -403,3 +403,61 @@ BEGIN
 
 END
 
+-----------------nuevo 
+CREATE PROCEDURE sp_AltaVenta
+(
+    @IdCliente INT,
+    @IdUsuario INT,
+    @Total DECIMAL(18,2)
+)
+AS
+BEGIN
+
+    INSERT INTO Ventas
+    (
+        IdCliente,
+        IdUsuario,
+        FechaVenta,
+        Total
+    )
+    VALUES
+    (
+        @IdCliente,
+        @IdUsuario,
+        GETDATE(),
+        @Total
+    );
+
+    SELECT SCOPE_IDENTITY();
+
+END
+
+CREATE PROCEDURE sp_AltaDetalleVenta
+(
+    @IdVenta INT,
+    @IdProducto INT,
+    @Cantidad INT,
+    @PrecioUnitario DECIMAL(18,2),
+    @Subtotal DECIMAL(18,2)
+)
+AS
+BEGIN
+
+    INSERT INTO DetalleVentas
+    (
+        IdVenta,
+        IdProducto,
+        Cantidad,
+        PrecioUnitario,
+        Subtotal
+    )
+    VALUES
+    (
+        @IdVenta,
+        @IdProducto,
+        @Cantidad,
+        @PrecioUnitario,
+        @Subtotal
+    );
+
+END

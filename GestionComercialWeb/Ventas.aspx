@@ -26,9 +26,25 @@
     </div>
 
     <div class="alert alert-secondary mb-4">
-        <strong>Producto encontrado:</strong>
-        <asp:Label ID="lblProductoEncontrado" runat="server" Text="Ninguno"></asp:Label>
+
+    <strong>Producto encontrado:</strong>
+    <asp:Label ID="lblProductoEncontrado" runat="server" Text="Ninguno"></asp:Label>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <strong>Stock Actual:</strong>
+            <asp:Label ID="lblStockActual"  runat="server" Text="-"></asp:Label>
+        </div>
+
+        <div class="col-md-3">
+            <strong>Precio Venta:</strong>
+            <asp:Label ID="lblPrecioVenta" runat="server" Text="-"></asp:Label>
+        </div>
+
     </div>
+
+</div>
 
     <div class="row align-items-end mb-3">
         <div class="col-md-3">

@@ -54,8 +54,7 @@ namespace Negocio
                 datos.SetearParametro("@IdProveedor", compra.Proveedor.Id);
                 datos.SetearParametro("@Total", compra.Total);
 
-                int idCompra =
-                    Convert.ToInt32(datos.EjecutarScalar());
+                int idCompra = Convert.ToInt32(datos.EjecutarScalar());
 
                 datos.CerrarConexion();
                 ProductoNegocio productoNegocio = new ProductoNegocio();

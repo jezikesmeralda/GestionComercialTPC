@@ -242,7 +242,24 @@ namespace Negocio
             }
         }
 
-        
-        
+        public void DescontarStock(int idProducto, int cantidad)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta(@" UPDATE Productos SET StockActual = StockActual - @Cantidad WHERE Id = @IdProducto");
+
+                datos.SetearParametro("@Cantidad", cantidad);
+                datos.SetearParametro("@IdProducto", idProducto);
+
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
     }
 }
