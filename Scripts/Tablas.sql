@@ -130,3 +130,42 @@ CREATE TABLE DetalleCompras
         FOREIGN KEY (IdProducto)
         REFERENCES Productos(Id)
 );
+
+---------------------nuevo 
+CREATE TABLE Ventas
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+
+    IdCliente INT NOT NULL,
+    IdUsuario INT NOT NULL,
+
+    FechaVenta DATETIME NOT NULL DEFAULT GETDATE(),
+
+    Total DECIMAL(18,2) NOT NULL,
+
+    FOREIGN KEY(IdCliente)
+        REFERENCES Clientes(Id),
+
+    FOREIGN KEY(IdUsuario)
+        REFERENCES Usuarios(Id)
+);
+
+CREATE TABLE DetalleVentas
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+
+    IdVenta INT NOT NULL,
+    IdProducto INT NOT NULL,
+
+    Cantidad INT NOT NULL,
+
+    PrecioUnitario DECIMAL(18,2) NOT NULL,
+
+    Subtotal DECIMAL(18,2) NOT NULL,
+
+    FOREIGN KEY(IdVenta)
+        REFERENCES Ventas(Id),
+
+    FOREIGN KEY(IdProducto)
+        REFERENCES Productos(Id)
+);

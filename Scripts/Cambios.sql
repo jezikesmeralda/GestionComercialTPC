@@ -43,3 +43,19 @@ BEGIN
     ORDER BY dc.Id DESC;
 END
 GO
+----------Nuevo 
+CREATE PROCEDURE sp_ListarCompras
+AS
+BEGIN
+    SELECT
+        c.Id,
+        c.FechaCompra,
+        c.Total,
+        p.Id AS IdProveedor,
+        p.Nombre AS Proveedor
+    FROM Compras c
+    INNER JOIN Proveedores p
+        ON c.IdProveedor = p.Id
+    ORDER BY c.FechaCompra DESC
+END
+GO
