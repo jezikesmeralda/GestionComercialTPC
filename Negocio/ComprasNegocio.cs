@@ -93,25 +93,6 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
-        private void ActualizarStock(DetalleCompra detalle)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.SetearProcedimiento("sp_ActualizarStockCompra");
-
-                datos.SetearParametro("@IdProducto", detalle.Producto.Id);
-                datos.SetearParametro("@Cantidad", detalle.Cantidad);
-                datos.SetearParametro("@PrecioCosto", detalle.PrecioUnitario);
-
-                datos.EjecutarAccion();
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
 
 
     }
