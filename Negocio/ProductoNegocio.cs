@@ -172,6 +172,7 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+<<<<<<< HEAD
         public void ActualizarStock( int idProducto, int cantidad, decimal? nuevoCosto = null)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -201,6 +202,9 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+=======
+        
+>>>>>>> da514344bcc0508c439e162bcd5b69da2961d28f
         public Producto BusquedaNombre(string nombre)
         {
             Producto producto = null;
