@@ -45,11 +45,7 @@
     <div class="col-md-12 mb-3">
         <label class="form-label">Dirección</label>
 
-        <asp:TextBox ID="txtDireccion"
-            runat="server"
-            CssClass="form-control"
-            placeholder="Calle y número">
-        </asp:TextBox>
+        <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control" placeholder="Calle y número"></asp:TextBox>
     </div>
 </div>
 
@@ -66,19 +62,26 @@
       <div class="card-body">
           <h5 class="mb-3">Listado de Clientes</h5>
 
-      <asp:GridView ID="gvClientes" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="false">
-          <Columns>
+          <asp:GridView ID="gvClientes" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="false" OnRowCommand="gvClientes_RowCommand">
+              <Columns>
 
-              <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
-              <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
-              <asp:BoundField HeaderText="DNI" DataField="Dni" />
-              <asp:BoundField HeaderText="Teléfono" DataField="Telefono" />
-              <asp:BoundField HeaderText="Email" DataField="Email" />
-              <asp:BoundField HeaderText="Dirección" DataField="Direccion" />
-              <asp:ButtonField Text="Editar" ButtonType="Button" ControlStyle-CssClass="btn btn-outline-primary btn-sm" />
-              <asp:ButtonField Text="Eliminar" ButtonType="Button" ControlStyle-CssClass="btn btn-outline-danger btn-sm" />
-          </Columns>
-      </asp:GridView>
+                  <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
+                  <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
+                  <asp:BoundField HeaderText="DNI" DataField="Dni" />
+                  <asp:BoundField HeaderText="Teléfono" DataField="Telefono" />
+                  <asp:BoundField HeaderText="Email" DataField="Email" />
+                  <asp:BoundField HeaderText="Dirección" DataField="Direccion" />
+
+                  <asp:TemplateField HeaderText="Acciones">
+                      <ItemTemplate>
+                          <asp:Button ID="btnEditar" runat="server" Text="Editar" CssClass="btn btn-outline-primary btn-sm me-1" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' />
+
+                          <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-outline-danger btn-sm" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' />
+
+                      </ItemTemplate>
+                  </asp:TemplateField>
+              </Columns>
+          </asp:GridView>
       </div>
 
   </div>

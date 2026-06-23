@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
@@ -10,7 +11,22 @@ namespace GestionComercialWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
+            {
                 CargarProveedores();
+
+                if (Request.QueryString["id"] != null)
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+
+                    Proveedor proveedor = new ProveedorNegocio().Listar().Find(x => x.Id == id);
+
+                    txtNombre.Text = proveedor.Nombre;
+                    txtTelefono.Text = proveedor.Telefono;
+                    txtEmail.Text = proveedor.Email;
+
+                    ViewState["IdProveedor"] = proveedor.Id;
+                }
+            }
         }
         private void CargarProveedores()
         {
@@ -50,6 +66,23 @@ namespace GestionComercialWeb
             txtTelefono.Text = "";
             txtEmail.Text = "";
         }
-    }
+        protected void gvProveedores_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+
+            if (e.CommandName == "Eliminar")
+            {
+                MarcaNegocio negocio = new MarcaNegocio();
+
+                negocio.Baja(id);
+
+                CargarProveedores();
+            }
+
+            if (e.CommandName == "Editar")
+            {
+                Response.Redirect("Marcas.aspx?id=" + id);
+            }
+        }
 }
-    
+}

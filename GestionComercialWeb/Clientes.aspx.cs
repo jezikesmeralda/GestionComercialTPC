@@ -17,6 +17,22 @@ namespace GestionComercialWeb
             if (!IsPostBack)
             {
                 CargarClientes();
+
+                if (Request.QueryString["id"] != null)
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+
+                    Cliente cliente = new ClienteNegocio().Listar().Find(x => x.Id == id);
+
+                    txtNombre.Text = cliente.Nombre;
+                    txtApellido.Text = cliente.Apellido;
+                    txtDni.Text = cliente.Dni.ToString();
+                    txtEmail.Text = cliente.Email;
+                    txtTelefono.Text = cliente.Telefono;
+                    txtDireccion.Text = cliente.Direccion;
+
+                    ViewState["IdCliente"] = cliente.Id;
+                }
             }
         }
 
@@ -39,8 +55,7 @@ namespace GestionComercialWeb
             catch(Exception ex)
             {
 
-               /* lblError.Text = "Por favor, complete los campos correctamente.";
-                lblError.Visible = true;*/
+              //pagina error
             }
 
         }
@@ -62,5 +77,22 @@ namespace GestionComercialWeb
 
             txtNombre.Focus();
         }
-    }
-}
+        protected void gvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+
+            if (e.CommandName == "Eliminar")
+            {
+                ClienteNegocio negocio = new ClienteNegocio();
+
+                negocio.Baja(id);
+
+                CargarClientes();
+            }
+
+            if (e.CommandName == "Editar")
+            {
+                Response.Redirect("ClientesForm.aspx?id=" + id);
+            }
+        }
+}}
