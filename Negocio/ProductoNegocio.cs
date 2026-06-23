@@ -172,23 +172,29 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
-        public void ActualizarStock(int idProducto, int cantidad)
+        public void ActualizarStock( int idProducto, int cantidad, decimal? nuevoCosto = null)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearConsulta(
-                    "UPDATE Productos SET StockActual = StockActual + @Cantidad WHERE Id = @IdProducto");
+                if (nuevoCosto.HasValue)
+                {
+                    datos.SetearProcedimiento("sp_ActualizarStockCompra");
 
-                datos.SetearParametro("@Cantidad", cantidad);
-                datos.SetearParametro("@IdProducto", idProducto);
+                    datos.SetearParametro("@IdProducto", idProducto);
+                    datos.SetearParametro("@Cantidad", cantidad);
+                    datos.SetearParametro("@PrecioCosto", nuevoCosto.Value);
+                }
+                else
+                {
+                    datos.SetearConsulta(@" UPDATE Productos SET StockActual = StockActual + @Cantidad WHERE Id = @IdProducto");
+
+                    datos.SetearParametro("@Cantidad", cantidad);
+                    datos.SetearParametro("@IdProducto", idProducto);
+                }
 
                 datos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -233,5 +239,8 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        
+        
     }
 }

@@ -58,11 +58,12 @@ namespace Negocio
                     Convert.ToInt32(datos.EjecutarScalar());
 
                 datos.CerrarConexion();
+                ProductoNegocio productoNegocio = new ProductoNegocio();
 
                 foreach (DetalleCompra item in compra.Detalles)
                 {
                     GuardarDetalle(idCompra, item);
-                    ActualizarStock(item);
+                    productoNegocio.ActualizarStock(item.Producto.Id, item.Cantidad, item.PrecioUnitario);
                 }
             }
             catch (Exception ex)
