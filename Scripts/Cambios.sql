@@ -21,3 +21,25 @@ BEGIN
     INNER JOIN Categorias c ON p.IdCategoria = c.Id
     WHERE p.Activo = 1
 END
+    
+GO
+--NUEVO--
+    CREATE PROCEDURE sp_ListarDetalleCompras
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        dc.Id,
+        dc.IdCompra,
+        dc.IdProducto,
+        p.NombreProducto,
+        dc.Cantidad,
+        dc.PrecioUnitario,
+        dc.Subtotal
+    FROM DetalleCompras dc
+    INNER JOIN Productos p
+        ON dc.IdProducto = p.Id
+    ORDER BY dc.Id DESC;
+END
+GO
