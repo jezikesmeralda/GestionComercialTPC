@@ -98,8 +98,9 @@ namespace GestionComercialWeb
 
             ActualizarGrillaYTotal();
         }
-    }
-    protected void btnRegistrarVenta_Click(object sender, EventArgs e)
+    
+
+protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["DetalleVentaTemporal"];
 

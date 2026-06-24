@@ -4,6 +4,9 @@
 USE Comercio;
 GO
 
+INSERT INTO Usuarios (Nombre, Password, Rol, Activo)
+VALUES ('admin', '1234', 1, 1)
+
 INSERT INTO Marcas (Nombre)
 VALUES
 ('Catena'),
