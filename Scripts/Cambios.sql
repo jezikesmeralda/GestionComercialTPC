@@ -59,3 +59,61 @@ BEGIN
     ORDER BY c.FechaCompra DESC
 END
 GO
+-----------------Nuevo
+GO
+CREATE PROCEDURE sp_AltaVenta
+    @IdCliente INT,
+    @IdUsuario INT,
+    @Total DECIMAL(18,2)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Ventas
+    (
+        IdCliente,
+        IdUsuario,
+        FechaVenta,
+        Total
+    )
+    VALUES
+    (
+        @IdCliente,
+        @IdUsuario,
+        GETDATE(),
+        @Total
+    );
+
+    SELECT SCOPE_IDENTITY();
+END
+GO
+CREATE PROCEDURE sp_AltaDetalleVenta
+    @IdVenta INT,
+    @IdProducto INT,
+    @Cantidad INT,
+    @PrecioUnitario DECIMAL(18,2),
+    @Subtotal DECIMAL(18,2)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO DetalleVentas
+    (
+        IdVenta,
+        IdProducto,
+        Cantidad,
+        PrecioUnitario,
+        Subtotal
+    )
+    VALUES
+    (
+        @IdVenta,
+        @IdProducto,
+        @Cantidad,
+        @PrecioUnitario,
+        @Subtotal
+    );
+END
+
+GO
+
