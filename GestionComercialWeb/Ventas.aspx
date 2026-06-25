@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
+    
     <h2 class="mb-4">Ventas</h2>
 
     <div class="card shadow-sm mb-4">
@@ -21,7 +22,7 @@
             <asp:TextBox ID="txtBuscarProducto" runat="server" CssClass="form-control" placeholder="Ingrese nombre del producto"></asp:TextBox>
         </div>
         <div class="col-md-2">
-            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" />
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" OnClick="btnBuscar_Click" />
         </div>
     </div>
 
@@ -52,7 +53,7 @@
             <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
         </div>
         <div class="col-md-2">
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" />
+            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" OnClick="btnAgregar_Click" />
         </div>
     </div>
 </div>
@@ -89,7 +90,7 @@
 
             <div class="text-end">
 
-                <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-success" />
+                <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-success" OnClick="btnRegistrarVenta_Click" />
 
             </div>
 

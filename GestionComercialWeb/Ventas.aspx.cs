@@ -102,8 +102,11 @@ namespace GestionComercialWeb
 
 protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
+            
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["DetalleVentaTemporal"];
 
+           
+            
             if (ddlCliente.SelectedValue == "0" || listaTemporal == null || listaTemporal.Count == 0) return;
 
             try
@@ -123,13 +126,13 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
                 ventaNegocio.Alta(nuevaVenta);
 
                 Session["DetalleVentaTemporal"] = null;
-
-                Response.Redirect("Ventas.aspx");
+                
+               Response.Redirect("Ventas.aspx");
             }
             catch (Exception ex)
             {
-               
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", $"alert('Error: {ex.Message}');", true);
+                Response.Write("ERROR: " + ex.Message);
+                
             }
         }
 
