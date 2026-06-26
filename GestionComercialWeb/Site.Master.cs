@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Dominio;
+using System;
 
 namespace GestionComercialWeb
 {
@@ -11,7 +7,17 @@ namespace GestionComercialWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["usuario"] != null)
+            {
+                Usuario usuario = (Usuario)Session["usuario"];
+                lblUsuario.Text = usuario.UserName;
+            }
+        }
 
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/Login.aspx");
         }
     }
 }

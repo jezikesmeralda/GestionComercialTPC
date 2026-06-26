@@ -7,6 +7,8 @@ GO
 INSERT INTO Usuarios (Nombre, Password, Rol, Activo)
 VALUES ('admin', '1234', 1, 1)
 
+SELECT * FROM Usuarios
+
 INSERT INTO Marcas (Nombre)
 VALUES
 ('Catena'),

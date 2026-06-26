@@ -14,6 +14,7 @@ namespace GestionComercialWeb
             if (Session["mensaje"] != null)
             {
                 lblError.Text = Session["mensaje"].ToString();
+                lblError.CssClass = "text-success d-block mb-3";
                 lblError.Visible = true;
                 Session.Remove("mensaje");
             }

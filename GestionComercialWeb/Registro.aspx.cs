@@ -54,7 +54,11 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
+                if (ex.Message.Contains("UNIQUE KEY") || ex.Message.Contains("duplicate key"))
+                    lblError.Text = "Ya existe un usuario con ese nombre. Por favor, elegí otro.";
+                else
+                    lblError.Text = ex.Message;
+
                 lblError.Visible = true;
             }
         }
