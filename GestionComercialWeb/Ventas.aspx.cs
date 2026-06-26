@@ -9,7 +9,7 @@ using Negocio;
 
 namespace GestionComercialWeb
 {
-    public partial class Ventas : System.Web.UI.Page
+    public partial class Ventas : PaginaBase
     {
         private ProductoNegocio prodNegocio = new ProductoNegocio();
         private VentaNegocio ventaNegocio = new VentaNegocio();

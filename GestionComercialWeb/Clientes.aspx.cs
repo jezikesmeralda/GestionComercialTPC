@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
-    public partial class Clientes : System.Web.UI.Page
+    public partial class Clientes : PaginaBase
     {
         ClienteNegocio negocio = new ClienteNegocio();
         protected void Page_Load(object sender, EventArgs e)

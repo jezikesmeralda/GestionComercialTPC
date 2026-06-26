@@ -5,7 +5,7 @@ using Dominio;
 
 namespace GestionComercialWeb
 {
-    public partial class ProduForm : System.Web.UI.Page
+    public partial class ProduForm : PaginaBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {

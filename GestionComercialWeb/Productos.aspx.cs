@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
-    public partial class Productos : System.Web.UI.Page
+    public partial class Productos : PaginaBase
     {
         public List<Producto> ListaProductos { get; set; }
 

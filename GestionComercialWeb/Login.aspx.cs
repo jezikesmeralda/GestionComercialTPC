@@ -10,6 +10,13 @@ namespace GestionComercialWeb
         {
             if (Session["usuario"] != null)
                 Response.Redirect("Inicio.aspx");
+
+            if (Session["mensaje"] != null)
+            {
+                lblError.Text = Session["mensaje"].ToString();
+                lblError.Visible = true;
+                Session.Remove("mensaje");
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
