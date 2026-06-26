@@ -130,5 +130,25 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+   
+    public int ContarActivos()
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Clientes WHERE Activo = 1");
+
+                return Convert.ToInt32(datos.EjecutarScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

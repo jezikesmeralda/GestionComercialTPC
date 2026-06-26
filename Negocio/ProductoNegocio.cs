@@ -261,5 +261,24 @@ namespace Negocio
             }
         }
 
+        public int ContarStockBajo()
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta(@"SELECT COUNT(*) FROM Productos WHERE Activo = 1 AND StockActual <= StockMinimo");
+
+                return Convert.ToInt32(datos.EjecutarScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

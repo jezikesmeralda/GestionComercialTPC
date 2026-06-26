@@ -16,9 +16,11 @@ namespace GestionComercialWeb
             if (!IsPostBack)
             {
                 ProductoNegocio productoNeg = new ProductoNegocio();
+                ClienteNegocio clienteNeg = new ClienteNegocio();
+
                 lblProductos.Text = productoNeg.ContarActivos().ToString();
-                lblClientes.Text = "10";
-                lblStockBajo.Text = "3";
+                lblClientes.Text = clienteNeg.ContarActivos().ToString();
+                lblStockBajo.Text = productoNeg.ContarStockBajo().ToString();
             }
         }
     }
