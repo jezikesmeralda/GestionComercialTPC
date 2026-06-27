@@ -20,9 +20,9 @@ namespace GestionComercialWeb
             {
                 CargarClientes();
             }
-            if (Session["DetalleVentaTemporal"] == null)
+            if (Session["Carrito"] == null)
             {
-                Session["DetalleVentaTemporal"] = new List<DetalleVenta>();
+                Session["Carrito"] = new List<DetalleVenta>();
             }
             ActualizarGrillaYTotal();
         }
@@ -30,17 +30,24 @@ namespace GestionComercialWeb
         {
             try
             {
-                ddlCliente.DataSource = clienteNegocio.Listar();
+                ddlCliente.DataSource = clienteNegocio.Listar()
+                    .Select(x => new
+                    {
+                        x.Id,
+                        Nombre = x.Nombre + " " + x.Apellido
+                    });
+
                 ddlCliente.DataTextField = "Nombre";
                 ddlCliente.DataValueField = "Id";
                 ddlCliente.DataBind();
+
                 ddlCliente.Items.Insert(0, new ListItem("Seleccione un Cliente...", "0"));
             }
             catch (Exception)
             {
-
             }
         }
+        
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -56,7 +63,7 @@ namespace GestionComercialWeb
                 lblProductoEncontrado.Text = encontrado.NombreProducto;
                 lblStockActual.Text = encontrado.StockActual.ToString();
 
-                lblPrecioVenta.Text = encontrado.PrecioCosto.ToString("F2");
+                lblPrecioVenta.Text = encontrado.PrecioVenta.ToString("F2");
             }
             else
             {
@@ -82,17 +89,17 @@ namespace GestionComercialWeb
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('¡Stock insuficiente!');", true);
                 return;
             }
-            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["DetalleVentaTemporal"];
+            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
 
             DetalleVenta nuevoDetalle = new DetalleVenta();
             nuevoDetalle.Producto = prod;
             nuevoDetalle.Cantidad = cantidad;
-            nuevoDetalle.PrecioUnitario = prod.PrecioCosto; 
+            nuevoDetalle.PrecioUnitario = prod.PrecioVenta; 
 
 
             listaTemporal.Add(nuevoDetalle);
 
-            Session["DetalleVentaTemporal"] = listaTemporal;
+            Session["Carrito"] = listaTemporal;
 
             LimpiarBuscadorProducto();
 
@@ -103,7 +110,7 @@ namespace GestionComercialWeb
 protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
             
-            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["DetalleVentaTemporal"];
+            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
 
            
             
@@ -123,9 +130,9 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
                 foreach (var item in listaTemporal) totalFinal += item.Subtotal;
                 nuevaVenta.Total = totalFinal;
 
-                ventaNegocio.Alta(nuevaVenta);
-
-                Session["DetalleVentaTemporal"] = null;
+                string numeroFactura = ventaNegocio.Alta(nuevaVenta);
+                
+                Session["Carrito"] = null;
                 
                Response.Redirect("Ventas.aspx");
             }
@@ -138,7 +145,7 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
 
         private void ActualizarGrillaYTotal()
         {
-            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["DetalleVentaTemporal"];
+            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
 
             var datosParaGrilla = new List<object>();
             decimal acumuladorTotal = 0;

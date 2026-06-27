@@ -461,3 +461,94 @@ BEGIN
     );
 
 END
+
+    CREATE PROCEDURE sp_ListarDetalleCompras
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        dc.Id,
+        dc.IdCompra,
+        dc.IdProducto,
+        p.NombreProducto,
+        dc.Cantidad,
+        dc.PrecioUnitario,
+        dc.Subtotal
+    FROM DetalleCompras dc
+    INNER JOIN Productos p
+        ON dc.IdProducto = p.Id
+    ORDER BY dc.Id DESC;
+END
+GO
+
+CREATE PROCEDURE sp_ListarCompras
+AS
+BEGIN
+    SELECT
+        c.Id,
+        c.FechaCompra,
+        c.Total,
+        p.Id AS IdProveedor,
+        p.Nombre AS Proveedor
+    FROM Compras c
+    INNER JOIN Proveedores p
+        ON c.IdProveedor = p.Id
+    ORDER BY c.FechaCompra DESC
+END
+GO
+CREATE PROCEDURE sp_AltaVenta
+    @IdCliente INT,
+    @IdUsuario INT,
+    @Total DECIMAL(18,2)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Ventas
+    (
+        IdCliente,
+        IdUsuario,
+        FechaVenta,
+        Total
+    )
+    VALUES
+    (
+        @IdCliente,
+        @IdUsuario,
+        GETDATE(),
+        @Total
+    );
+
+    SELECT SCOPE_IDENTITY();
+END
+GO
+CREATE PROCEDURE sp_AltaDetalleVenta
+    @IdVenta INT,
+    @IdProducto INT,
+    @Cantidad INT,
+    @PrecioUnitario DECIMAL(18,2),
+    @Subtotal DECIMAL(18,2)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO DetalleVentas
+    (
+        IdVenta,
+        IdProducto,
+        Cantidad,
+        PrecioUnitario,
+        Subtotal
+    )
+    VALUES
+    (
+        @IdVenta,
+        @IdProducto,
+        @Cantidad,
+        @PrecioUnitario,
+        @Subtotal
+    );
+END
+
+GO

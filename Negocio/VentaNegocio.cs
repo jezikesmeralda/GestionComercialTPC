@@ -9,7 +9,7 @@ namespace Negocio
 {
     public class VentaNegocio
     {
-        public void Alta(Venta venta)
+        public string Alta(Venta venta)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -32,6 +32,7 @@ namespace Negocio
 
                     productoNegocio.DescontarStock(item.Producto.Id, item.Cantidad);
                 }
+                return $"FAC-{DateTime.Now.Year}-{idVenta:D6}";
             }
             catch (Exception ex)
             {
@@ -59,5 +60,11 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        public string GenerarNumeroFactura(int idVenta)
+        {
+            return $"FAC-{DateTime.Now.Year}-{idVenta:D6}";
+        }
+
     }
 }
