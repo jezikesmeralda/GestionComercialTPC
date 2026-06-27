@@ -97,7 +97,7 @@ namespace Negocio
                     Vendedor = new Usuario
                     {
                         Id = Convert.ToInt32(cabecera["IdUsuario"]),
-                        Nombre = cabecera["NombreUsuario"].ToString()
+                        UserName = cabecera["NombreUsuario"].ToString()
                     },
                     Detalles = new List<DetalleVenta>()
                 };
@@ -132,5 +132,3 @@ namespace Negocio
     }
 }
 
-    }
-}
