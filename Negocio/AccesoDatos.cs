@@ -116,5 +116,44 @@ namespace Negocio
                 conexion.Close();
             }
         }
+
+        public DataRow EjecutarFila()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                using (SqlDataAdapter da = new SqlDataAdapter(comando))
+                {
+                    DataTable tabla = new DataTable();
+                    da.Fill(tabla);
+                    return tabla.Rows.Count > 0 ? tabla.Rows[0] : null;
+                }
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+        public DataSet EjecutarDataSet()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                using (SqlDataAdapter da = new SqlDataAdapter(comando))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    return ds;
+                }
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
     }
 }

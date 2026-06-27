@@ -30,6 +30,9 @@ ALTER TABLE Ventas
 ADD NumeroFactura VARCHAR(20) UNIQUE;
 
 
+USE Comercio;
+GO
+
 ALTER PROCEDURE sp_AltaVenta
     @IdCliente INT,
     @IdUsuario INT,
@@ -38,32 +41,16 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-   
-    INSERT INTO Ventas
-    (
-        IdCliente,
-        IdUsuario,
-        FechaVenta,
-        Total
-    )
-    VALUES
-    (
-        @IdCliente,
-        @IdUsuario,
-        GETDATE(),
-        @Total
-    );
+    INSERT INTO Ventas (IdCliente, IdUsuario, FechaVenta, Total)
+    VALUES (@IdCliente, @IdUsuario, GETDATE(), @Total);
 
-   
-    DECLARE @IdVenta INT;
-    SET @IdVenta = SCOPE_IDENTITY();
+    DECLARE @IdVenta INT = SCOPE_IDENTITY();
+    DECLARE @NumeroFactura VARCHAR(20) = 'FAC-' + CAST(YEAR(GETDATE()) AS VARCHAR(4)) + '-' + RIGHT('000000' + CAST(@IdVenta AS VARCHAR(6)), 6);
 
-    
     UPDATE Ventas
-    SET NumeroFactura = CAST(@IdVenta AS VARCHAR(20))
+    SET NumeroFactura = @NumeroFactura
     WHERE Id = @IdVenta;
 
-    
-    SELECT @IdVenta;
+    SELECT @IdVenta AS Id, @NumeroFactura AS NumeroFactura;
 END
 GO

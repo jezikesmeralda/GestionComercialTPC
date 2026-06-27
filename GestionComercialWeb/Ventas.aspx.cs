@@ -119,9 +119,7 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
             try
             {
                 Venta nuevaVenta = new Venta();
-
                 nuevaVenta.Cliente = new Cliente { Id = int.Parse(ddlCliente.SelectedValue) };
-
                 nuevaVenta.Vendedor = new Usuario { Id = 1 };
                 nuevaVenta.Detalles = listaTemporal;
 
@@ -130,11 +128,11 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
                 foreach (var item in listaTemporal) totalFinal += item.Subtotal;
                 nuevaVenta.Total = totalFinal;
 
-                string numeroFactura = ventaNegocio.Alta(nuevaVenta);
-                
+                Venta ventaGuardada = ventaNegocio.Alta(nuevaVenta);
+
                 Session["Carrito"] = null;
-                
-               Response.Redirect("Ventas.aspx");
+
+                Response.Redirect("Factura.aspx?id=" + ventaGuardada.Id);
             }
             catch (Exception ex)
             {
