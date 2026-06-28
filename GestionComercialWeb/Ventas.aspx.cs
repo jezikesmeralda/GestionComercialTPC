@@ -124,7 +124,19 @@ namespace GestionComercialWeb
         {
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
 
-            if (ddlCliente.SelectedValue == "0" || listaTemporal == null || listaTemporal.Count == 0) return;
+            if (ddlCliente.SelectedValue == "0")
+            {
+                lblError.Text = "Debe seleccionar un cliente.";
+                lblError.Visible = true;
+                return;
+            }
+
+            if (listaTemporal == null || listaTemporal.Count == 0)
+            {
+                lblError.Text = "Debe agregar al menos un producto.";
+                lblError.Visible = true;
+                return;
+            }
 
             try
             {
@@ -147,7 +159,8 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                Response.Write("ERROR: " + ex.Message);
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
             }
         }
 

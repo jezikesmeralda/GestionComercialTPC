@@ -7,6 +7,7 @@
                 <h3 class="mb-4">Datos del Cliente</h3>
 
                 <asp:HiddenField ID="hfId" runat="server" />
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Nombre</label>
@@ -39,6 +40,8 @@
                         <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control" placeholder="Calle, número, localidad"></asp:TextBox>
                     </div>
                 </div>
+
+                <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" Visible="false" />
 
                 <div class="mt-2">
                     <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success" OnClick="btnGuardar_Click" />

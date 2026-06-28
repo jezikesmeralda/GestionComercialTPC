@@ -7,6 +7,8 @@ GO
 SELECT * FROM Clientes;
 SELECT * FROM Productos;
 SELECT * FROM Ventas;
+SELECT * FROM Usuarios;
+
 GO
 --AÑADI ESTO---
 ALTER PROCEDURE sp_ListarProductos

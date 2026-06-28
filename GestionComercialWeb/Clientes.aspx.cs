@@ -1,10 +1,6 @@
 ﻿using Dominio;
 using Negocio;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,24 +9,29 @@ namespace GestionComercialWeb
     public partial class Clientes : PaginaBase
     {
         ClienteNegocio negocio = new ClienteNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                CargarClientes();
+                if (Session["mensaje"] != null)
+                {
+                    lblMensaje.Text = Session["mensaje"].ToString();
+                    lblMensaje.CssClass = "alert alert-success d-block mb-3";
+                    lblMensaje.Visible = true;
+                    Session.Remove("mensaje");
+                }
 
+                CargarClientes();
             }
         }
 
-        
         private void CargarClientes()
         {
-            ClienteNegocio negocio = new ClienteNegocio();
-
             gvClientes.DataSource = negocio.Listar();
             gvClientes.DataBind();
         }
-        
+
         protected void gvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandArgument == null) return;
@@ -48,6 +49,7 @@ namespace GestionComercialWeb
                 Response.Redirect("ClientesForm.aspx?id=" + id);
             }
         }
+
         protected void btnNuevoCliente_Click(object sender, EventArgs e)
         {
             Response.Redirect("ClientesForm.aspx");

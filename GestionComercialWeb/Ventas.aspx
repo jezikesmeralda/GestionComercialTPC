@@ -70,6 +70,8 @@
                 <h4>Total: $<asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label></h4>
             </div>
 
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
+
             <div class="text-end">
                 <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-success" OnClick="btnRegistrarVenta_Click" />
             </div>

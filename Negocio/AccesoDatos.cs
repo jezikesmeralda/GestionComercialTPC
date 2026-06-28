@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
-using Dominio;
 
 namespace Negocio
 {
@@ -20,7 +19,6 @@ namespace Negocio
         {
             try
             {
-                
                 conexion = new SqlConnection(@"Server=localhost;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
                 conexion.Open();
             }
@@ -28,7 +26,6 @@ namespace Negocio
             {
                 try
                 {
-                    
                     conexion = new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
                     conexion.Open();
                 }
@@ -50,12 +47,14 @@ namespace Negocio
             conexion.Close();
             comando = new SqlCommand();
         }
+
         public void SetearConsulta(string consulta)
         {
             comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
         }
+
         public void SetearProcedimiento(string nombreSP)
         {
             comando.Parameters.Clear();
@@ -154,6 +153,5 @@ namespace Negocio
                 conexion.Close();
             }
         }
-
     }
 }

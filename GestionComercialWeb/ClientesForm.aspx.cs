@@ -1,15 +1,11 @@
 ﻿using Dominio;
 using Negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
-    public partial class ClientesForm : System.Web.UI.Page
+    public partial class ClientesForm : PaginaBase
     {
         ClienteNegocio negocio = new ClienteNegocio();
 
@@ -20,7 +16,6 @@ namespace GestionComercialWeb
                 if (Request.QueryString["id"] != null)
                 {
                     int id = int.Parse(Request.QueryString["id"]);
-
                     Cliente cliente = negocio.Listar().Find(x => x.Id == id);
 
                     if (cliente != null)
@@ -39,27 +34,61 @@ namespace GestionComercialWeb
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            
-            Dominio.Cliente cliente = new Dominio.Cliente();
-
-            cliente.Nombre = txtNombre.Text;
-            cliente.Apellido = txtApellido.Text;
-            cliente.Dni = int.Parse(txtDni.Text);
-            cliente.Telefono = txtTelefono.Text;
-            cliente.Email = txtEmail.Text;
-            cliente.Direccion = txtDireccion.Text;
-
-            if (!string.IsNullOrEmpty(hfId.Value))
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                cliente.Id = int.Parse(hfId.Value);
-                negocio.Modificar(cliente); 
-            }
-            else
-            {
-                negocio.Alta(cliente); 
+                lblError.Text = "El nombre es obligatorio.";
+                lblError.Visible = true;
+                return;
             }
 
-            Response.Redirect("Clientes.aspx");
+            if (string.IsNullOrWhiteSpace(txtApellido.Text))
+            {
+                lblError.Text = "El apellido es obligatorio.";
+                lblError.Visible = true;
+                return;
+            }
+
+            int dni;
+            if (!int.TryParse(txtDni.Text, out dni) || dni <= 0)
+            {
+                lblError.Text = "El DNI debe ser un número válido.";
+                lblError.Visible = true;
+                return;
+            }
+
+            try
+            {
+                Cliente cliente = new Cliente();
+                cliente.Nombre = txtNombre.Text;
+                cliente.Apellido = txtApellido.Text;
+                cliente.Dni = dni;
+                cliente.Telefono = txtTelefono.Text;
+                cliente.Email = txtEmail.Text;
+                cliente.Direccion = txtDireccion.Text;
+
+                if (!string.IsNullOrEmpty(hfId.Value))
+                {
+                    cliente.Id = int.Parse(hfId.Value);
+                    negocio.Modificar(cliente);
+                    Session["mensaje"] = "Cliente modificado correctamente.";
+                }
+                else
+                {
+                    negocio.Alta(cliente);
+                    Session["mensaje"] = "Cliente agregado correctamente.";
+                }
+
+                Response.Redirect("Clientes.aspx");
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("UNIQUE KEY") || ex.Message.Contains("duplicate key"))
+                    lblError.Text = "Ya existe un cliente con ese DNI.";
+                else
+                    lblError.Text = ex.Message;
+
+                lblError.Visible = true;
+            }
         }
     }
 }
