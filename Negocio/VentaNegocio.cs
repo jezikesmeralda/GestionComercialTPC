@@ -92,7 +92,8 @@ namespace Negocio
                     {
                         Id = Convert.ToInt32(cabecera["IdCliente"]),
                         Nombre = cabecera["NombreCliente"].ToString(),
-                        Apellido = cabecera["ApellidoCliente"].ToString()
+                        Apellido = cabecera["ApellidoCliente"].ToString(),
+                        Email = cabecera["EmailCliente"] as string
                     },
                     Vendedor = new Usuario
                     {

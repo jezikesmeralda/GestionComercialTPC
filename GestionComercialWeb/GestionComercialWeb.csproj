@@ -134,7 +134,8 @@
     <Compile Include="Factura.aspx.designer.cs">
       <DependentUpon>Factura.aspx</DependentUpon>
     </Compile>
-    <Compile Include="FacturaPdfGenerador.cs" />
+    <Compile Include="Services\EmailServices.cs" />
+    <Compile Include="Services\FacturaPdfGenerador.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

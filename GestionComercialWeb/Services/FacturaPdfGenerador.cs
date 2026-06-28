@@ -6,7 +6,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
-namespace GestionComercialWeb
+namespace GestionComercialWeb.Services
 {
 
     public static class FacturaPdfGenerador

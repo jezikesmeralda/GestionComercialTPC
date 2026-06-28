@@ -13,7 +13,7 @@
                 <div class="factura-header">
                     <h2>VINOTECA</h2>
                     <p>Factura N°<asp:Label ID="lblNumeroFactura" runat="server"></asp:Label></p>
-                    <p><strong>Cliente:</strong> <asp:Label ID="Label1" runat="server"></asp:Label></p>
+                 
                 </div>
 
                 <div class="mb-3">
@@ -55,7 +55,9 @@
         <div class="text-center mt-4  no-imprimir">
             <asp:Button ID="btnImprimir" runat="server" Text="Imprimir" CssClass="btn btn-primary" OnClientClick="window.print(); return false;" />
             <asp:LinkButton ID="btnDescargarPdf" runat="server" CssClass="btn btn-secondary" OnClick="btnDescargarPdf_Click">Descargar PDF</asp:LinkButton>
-            <a id="lnkEnviarMail" runat="server" class="btn btn-outline-secondary" href="#">Enviar por mail</a>
-            
+            <asp:LinkButton ID="btnEnviarMail" runat="server" CssClass="btn btn-outline-secondary" OnClick="btnEnviarMail_Click">Enviar por mail</asp:LinkButton>
+            <div class="text-center mt-2 no-imprimir">
+             <asp:Label ID="lblMensajeMail" runat="server" Visible="false"></asp:Label>
+             </div>
         </div>
 </asp:Content>

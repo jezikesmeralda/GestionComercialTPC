@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Negocio;
 using System;
+using GestionComercialWeb.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -58,6 +59,36 @@ namespace GestionComercialWeb
 
         protected void btnDescargarPdf_Click(object sender, EventArgs e)
         {
+            Venta venta = ObtenerVentaActual();
+            if (venta == null) return;
+
+            byte[] pdfBytes = FacturaPdfGenerador.Generar(venta);
+
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + venta.NumeroFactura + ".pdf");
+            Response.BinaryWrite(pdfBytes);
+            Response.End();
+        }
+        protected void btnEnviarMail_Click(object sender, EventArgs e)
+        {
+            Venta venta = ObtenerVentaActual();
+            if (venta == null) return;
+
+            try
+            {
+                byte[] pdfBytes = FacturaPdfGenerador.Generar(venta);
+                EmailServices.EnviarFactura(venta, pdfBytes);
+
+                MostrarMensajeMail("Factura enviada a " + venta.Cliente.Email + ".", esError: false);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeMail("No se pudo enviar el mail: " + ex.Message, esError: true);
+            }
+        }
+        private Venta ObtenerVentaActual()
+        {
             Venta venta = Session["VentaFactura"] as Venta;
 
             if (venta == null)
@@ -68,16 +99,13 @@ namespace GestionComercialWeb
                     venta = ventaNegocio.ObtenerPorId(idVenta);
                 }
             }
-
-            if (venta == null) return;
-
-            byte[] pdfBytes = FacturaPdfGenerador.Generar(venta);
-
-            Response.Clear();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + venta.NumeroFactura + ".pdf");
-            Response.BinaryWrite(pdfBytes);
-            Response.End();
+            return venta;
+        }
+        private void MostrarMensajeMail(string texto, bool esError)
+        {
+            lblMensajeMail.Text = texto;
+            lblMensajeMail.CssClass = esError ? "text-danger" : "text-success";
+            lblMensajeMail.Visible = true;
         }
     }
 }
