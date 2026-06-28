@@ -13,7 +13,7 @@ namespace GestionComercialWeb
     {
         public static byte[] Generar(Venta venta)
         {
-            // Necesario una sola vez por aplicación; QuestPDF lo exige para uso sin licencia comercial
+            
             QuestPDF.Settings.License = LicenseType.Community;
 
             var documento = Document.Create(container =>

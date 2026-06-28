@@ -75,6 +75,7 @@
     <Content Include="Clientes.aspx" />
     <Content Include="ClientesForm.aspx" />
     <Content Include="Compras.aspx" />
+    <Content Include="Content\Factura.css" />
     <Content Include="Factura.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HistorialCompras.aspx" />
