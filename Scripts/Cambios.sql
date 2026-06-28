@@ -6,6 +6,7 @@ GO
 
 SELECT * FROM Clientes;
 SELECT * FROM Productos;
+SELECT * FROM Ventas;
 GO
 --AÑADI ESTO---
 ALTER PROCEDURE sp_ListarProductos

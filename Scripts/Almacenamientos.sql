@@ -589,3 +589,20 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE sp_ListarVentas
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        v.Id,
+        v.NumeroFactura,
+        v.FechaVenta,
+        v.Total,
+        c.Nombre + ' ' + c.Apellido AS NombreCliente,
+        u.Nombre AS NombreVendedor
+    FROM Ventas v
+    INNER JOIN Clientes c ON v.IdCliente = c.Id
+    INNER JOIN Usuarios u ON v.IdUsuario = u.Id
+    ORDER BY v.FechaVenta DESC
+END

@@ -14,18 +14,37 @@ namespace GestionComercialWeb
         private ProductoNegocio prodNegocio = new ProductoNegocio();
         private VentaNegocio ventaNegocio = new VentaNegocio();
         private ClienteNegocio clienteNegocio = new ClienteNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 CargarClientes();
+
+                Usuario usuarioActual = (Usuario)Session["usuario"];
+                if (usuarioActual.Rol == Rol.Administrador)
+                {
+                    pnlHistorial.Visible = true;
+                    var ventas = new VentaNegocio().Listar();
+                    gvHistorialVentas.DataSource = ventas.Select(v => new
+                    {
+                        v.NumeroFactura,
+                        v.FechaVenta,
+                        NombreCliente = v.Cliente.Nombre,
+                        NombreVendedor = v.Vendedor.UserName,
+                        v.Total
+                    }).ToList();
+                    gvHistorialVentas.DataBind();
+                }
             }
+
             if (Session["Carrito"] == null)
             {
                 Session["Carrito"] = new List<DetalleVenta>();
             }
             ActualizarGrillaYTotal();
         }
+
         private void CargarClientes()
         {
             try
@@ -47,7 +66,6 @@ namespace GestionComercialWeb
             {
             }
         }
-        
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -62,7 +80,6 @@ namespace GestionComercialWeb
 
                 lblProductoEncontrado.Text = encontrado.NombreProducto;
                 lblStockActual.Text = encontrado.StockActual.ToString();
-
                 lblPrecioVenta.Text = encontrado.PrecioVenta.ToString("F2");
             }
             else
@@ -74,7 +91,6 @@ namespace GestionComercialWeb
             }
         }
 
-
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             if (Session["ProductoSeleccionado"] == null) return;
@@ -85,45 +101,40 @@ namespace GestionComercialWeb
 
             if (cantidad > prod.StockActual)
             {
-
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('¡Stock insuficiente!');", true);
                 return;
             }
+
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
 
             DetalleVenta nuevoDetalle = new DetalleVenta();
             nuevoDetalle.Producto = prod;
             nuevoDetalle.Cantidad = cantidad;
-            nuevoDetalle.PrecioUnitario = prod.PrecioVenta; 
-
+            nuevoDetalle.PrecioUnitario = prod.PrecioVenta;
 
             listaTemporal.Add(nuevoDetalle);
 
             Session["Carrito"] = listaTemporal;
 
             LimpiarBuscadorProducto();
-
             ActualizarGrillaYTotal();
         }
-    
 
-protected void btnRegistrarVenta_Click(object sender, EventArgs e)
+        protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
-            
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
 
-           
-            
             if (ddlCliente.SelectedValue == "0" || listaTemporal == null || listaTemporal.Count == 0) return;
 
             try
             {
+                Usuario usuarioActual = (Usuario)Session["usuario"];
+
                 Venta nuevaVenta = new Venta();
                 nuevaVenta.Cliente = new Cliente { Id = int.Parse(ddlCliente.SelectedValue) };
-                nuevaVenta.Vendedor = new Usuario { Id = 1 };
+                nuevaVenta.Vendedor = new Usuario { Id = usuarioActual.Id };
                 nuevaVenta.Detalles = listaTemporal;
 
-                
                 decimal totalFinal = 0;
                 foreach (var item in listaTemporal) totalFinal += item.Subtotal;
                 nuevaVenta.Total = totalFinal;
@@ -137,7 +148,6 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
             catch (Exception ex)
             {
                 Response.Write("ERROR: " + ex.Message);
-                
             }
         }
 
@@ -152,7 +162,13 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
             {
                 foreach (var item in listaTemporal)
                 {
-                    datosParaGrilla.Add(new{Producto = item.Producto.NombreProducto, Cantidad = item.Cantidad, Precio = item.PrecioUnitario, Subtotal = item.Subtotal});
+                    datosParaGrilla.Add(new
+                    {
+                        Producto = item.Producto.NombreProducto,
+                        Cantidad = item.Cantidad,
+                        Precio = item.PrecioUnitario,
+                        Subtotal = item.Subtotal
+                    });
                     acumuladorTotal += item.Subtotal;
                 }
             }
@@ -173,5 +189,4 @@ protected void btnRegistrarVenta_Click(object sender, EventArgs e)
             lblPrecioVenta.Text = "-";
         }
     }
-
 }

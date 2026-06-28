@@ -129,6 +129,40 @@ namespace Negocio
         {
             return $"FAC-{DateTime.Now.Year}-{idVenta:D6}";
         }
+        public List<Venta> Listar()
+        {
+            List<Venta> lista = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ListarVentas");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Venta aux = new Venta();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.NumeroFactura = datos.Lector["NumeroFactura"] as string;
+                    aux.FechaVenta = (DateTime)datos.Lector["FechaVenta"];
+                    aux.Total = (decimal)datos.Lector["Total"];
+                    aux.Cliente = new Cliente { Nombre = (string)datos.Lector["NombreCliente"] };
+                    aux.Vendedor = new Usuario { UserName = (string)datos.Lector["NombreVendedor"] };
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
 
