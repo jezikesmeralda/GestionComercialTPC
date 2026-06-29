@@ -203,38 +203,36 @@ namespace Negocio
             }
         }
 
-        public Producto BusquedaNombre(string nombre)
+        public List<Producto> BusquedaNombre(string nombre)
         {
-            Producto producto = null;
+            List<Producto> lista = new List<Producto>();
 
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearConsulta(@"SELECT TOP 1 Id, NombreProducto, StockActual, PrecioCosto FROM Productos WHERE NombreProducto LIKE @Nombre");
+                datos.SetearConsulta(@"SELECT Id, NombreProducto, StockActual, PrecioCosto FROM Productos WHERE NombreProducto LIKE @Nombre AND Activo = 1 ORDER BY NombreProducto");
 
                 datos.SetearParametro("@Nombre", "%" + nombre + "%");
 
                 datos.EjecutarLectura();
 
-                if (datos.Lector.Read())
+                while (datos.Lector.Read())
                 {
-                    producto = new Producto();
+                    Producto producto = new Producto();
 
-                    producto.Id =
-                        (int)datos.Lector["Id"];
+                    producto.Id = (int)datos.Lector["Id"];
 
-                    producto.NombreProducto =
-                        (string)datos.Lector["NombreProducto"];
+                    producto.NombreProducto = (string)datos.Lector["NombreProducto"];
 
-                    producto.StockActual =
-                        (int)datos.Lector["StockActual"];
+                    producto.StockActual = (int)datos.Lector["StockActual"];
 
-                    producto.PrecioCosto =
-                        (decimal)datos.Lector["PrecioCosto"];
+                    producto.PrecioCosto = (decimal)datos.Lector["PrecioCosto"];
+                    
+                    lista.Add(producto);
                 }
 
-                return producto;
+                return lista;
             }
             finally
             {

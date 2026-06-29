@@ -95,7 +95,7 @@
             <div class="card shadow-sm">
                 <div class="card-body text-center">
 
-                    <h5 class="card-title">Stock Bajo
+                    <h5 class="card-title"> Productos con Stock Bajo
                     </h5>
 
                     <h2>

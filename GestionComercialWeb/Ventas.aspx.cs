@@ -14,6 +14,11 @@ namespace GestionComercialWeb
         private ProductoNegocio prodNegocio = new ProductoNegocio();
         private VentaNegocio ventaNegocio = new VentaNegocio();
         private ClienteNegocio clienteNegocio = new ClienteNegocio();
+        private Producto ProductoSeleccionado
+        {
+            get { return (Producto)Session["ProductoSeleccionado"]; }
+            set { Session["ProductoSeleccionado"] = value; }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -76,24 +81,29 @@ namespace GestionComercialWeb
                 return;
             }
 
-            Producto encontrado = prodNegocio.BusquedaNombre(busqueda);
+            List<Producto> productos = prodNegocio.BusquedaNombre(busqueda);
 
-            if (encontrado != null)
-            {
-                Session["ProductoSeleccionado"] = encontrado;
+            Session["ProductosBuscados"] = productos;
 
-                lblProductoEncontrado.Text = encontrado.NombreProducto;
-                lblStockActual.Text = encontrado.StockActual.ToString();
-                lblPrecioVenta.Text = encontrado.PrecioVenta.ToString("F2");
-                OcultarError();
-            }
+            gvProductos.DataSource = productos;
+            gvProductos.DataBind();
+
+            if (productos.Count == 0)
+                MostrarError("No se encontraron productos.");
             else
+                OcultarError();
+        }
+        protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Seleccionar")
             {
-                Session["ProductoSeleccionado"] = null;
-                lblProductoEncontrado.Text = "Producto no encontrado";
-                lblStockActual.Text = "-";
-                lblPrecioVenta.Text = "-";
-                MostrarError("No se encontró ningún producto con ese nombre.");
+                int fila = Convert.ToInt32(e.CommandArgument);
+
+                List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
+
+                ProductoSeleccionado= productos[fila];
+
+                OcultarError();
             }
         }
 
@@ -112,7 +122,7 @@ namespace GestionComercialWeb
                 return;
             }
 
-            Producto prod = (Producto)Session["ProductoSeleccionado"];
+            Producto prod = ProductoSeleccionado;
 
             if (cantidad > prod.StockActual)
             {
@@ -209,12 +219,12 @@ namespace GestionComercialWeb
 
         private void LimpiarBuscadorProducto()
         {
-            Session["ProductoSeleccionado"] = null;
+            ProductoSeleccionado = null;
+            Session["ProductosBuscados"] = null;
             txtBuscarProducto.Text = "";
             txtCantidad.Text = "";
-            lblProductoEncontrado.Text = "Ninguno";
-            lblStockActual.Text = "-";
-            lblPrecioVenta.Text = "-";
+            gvProductos.DataSource = null;
+            gvProductos.DataBind();
         }
         private void MostrarError(string mensaje)
         {

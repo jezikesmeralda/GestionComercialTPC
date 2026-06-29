@@ -36,24 +36,20 @@
 
                     </div>
 
-                    <div class="alert alert-secondary mb-4">
+                    <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" DataKeyNames="Id" OnRowCommand="gvProductos_RowCommand">
 
-                        <strong>Producto encontrado:</strong>
-                        <asp:Label ID="lblProductoEncontrado" runat="server" Text="Ninguno"></asp:Label>
-                        <div class="row mt-2">
+                        <Columns>
 
-                            <div class="col-md-3">
-                                <strong>Stock Actual:</strong>
-                                <asp:Label ID="lblStockActual" runat="server" Text="-"></asp:Label>
-                            </div>
+                            <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
 
-                            <div class="col-md-3">
-                                <strong>Último Costo:</strong>
-                                <asp:Label ID="lblUltimoCosto" runat="server" Text="-"></asp:Label>
-                            </div>
+                            <asp:BoundField DataField="StockActual" HeaderText="Stock" />
 
-                        </div>
-                    </div>
+                            <asp:BoundField DataField="PrecioCosto" HeaderText="Costo" DataFormatString="{0:C2}" />
+
+                            <asp:ButtonField Text="Seleccionar" CommandName="Seleccionar" ButtonType="Button"/>
+                        </Columns>
+
+                    </asp:GridView>
 
                     <div class="row align-items-end mb-3">
                         <div class="col-md-2">

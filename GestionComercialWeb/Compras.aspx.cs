@@ -47,23 +47,34 @@ namespace GestionComercialWeb
 
             ProductoNegocio negocio = new ProductoNegocio();
 
-            Producto producto = negocio.BusquedaNombre(busqueda);
+            List<Producto> productos = negocio.BusquedaNombre(busqueda);
 
-            if (producto != null)
-            {
-                ProductoSeleccionado = producto;
+            Session["ProductosBuscados"] = productos;
 
-                lblProductoEncontrado.Text = producto.NombreProducto;
-                lblStockActual.Text = producto.StockActual.ToString();
-                lblUltimoCosto.Text = producto.PrecioCosto.ToString("N2");
-            }
+            gvProductos.DataSource = productos;
+            gvProductos.DataBind();
+
+            if (productos.Count == 0)
+                MostrarError("No se encontraron productos.");
             else
+                OcultarError();
+        }
+        
+        protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Seleccionar")
             {
-                ProductoSeleccionado = null;
-                lblProductoEncontrado.Text = "Producto no encontrado";
-                lblStockActual.Text = "-";
-                lblUltimoCosto.Text = "-";
-                MostrarError("No se encontró ningún producto con ese nombre.");
+                int fila = Convert.ToInt32(e.CommandArgument);
+
+                List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
+
+                ProductoSeleccionado = productos[fila];
+
+                txtPrecio.Text = ProductoSeleccionado.PrecioCosto.ToString("N2");
+
+                OcultarError();
+
+
             }
         }
         protected void btnAgregar_Click(object sender, EventArgs e)
