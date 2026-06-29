@@ -79,6 +79,7 @@
     <Content Include="Factura.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HistorialCompras.aspx" />
+    <Content Include="HistorialVentas.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MarcasForm.aspx" />
@@ -133,6 +134,13 @@
     </Compile>
     <Compile Include="Factura.aspx.designer.cs">
       <DependentUpon>Factura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialVentas.aspx.cs">
+      <DependentUpon>HistorialVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialVentas.aspx.designer.cs">
+      <DependentUpon>HistorialVentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\EmailServices.cs" />
     <Compile Include="Services\FacturaPdfGenerador.cs" />

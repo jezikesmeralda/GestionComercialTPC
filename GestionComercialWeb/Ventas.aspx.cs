@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
@@ -14,6 +12,7 @@ namespace GestionComercialWeb
         private ProductoNegocio prodNegocio = new ProductoNegocio();
         private VentaNegocio ventaNegocio = new VentaNegocio();
         private ClienteNegocio clienteNegocio = new ClienteNegocio();
+
         private Producto ProductoSeleccionado
         {
             get { return (Producto)Session["ProductoSeleccionado"]; }
@@ -26,27 +25,13 @@ namespace GestionComercialWeb
             {
                 CargarClientes();
 
-                Usuario usuarioActual = (Usuario)Session["usuario"];
-                if (usuarioActual.Rol == Rol.Administrador)
-                {
-                    pnlHistorial.Visible = true;
-                    var ventas = new VentaNegocio().Listar();
-                    gvHistorialVentas.DataSource = ventas.Select(v => new
-                    {
-                        v.NumeroFactura,
-                        v.FechaVenta,
-                        NombreCliente = v.Cliente.Nombre,
-                        NombreVendedor = v.Vendedor.UserName,
-                        v.Total
-                    }).ToList();
-                    gvHistorialVentas.DataBind();
-                }
+                if (UsuarioActual.Rol == Rol.Administrador)
+                    btnHistorial.Visible = true;
             }
 
             if (Session["Carrito"] == null)
-            {
                 Session["Carrito"] = new List<DetalleVenta>();
-            }
+
             ActualizarGrillaYTotal();
         }
 
@@ -93,16 +78,14 @@ namespace GestionComercialWeb
             else
                 OcultarError();
         }
+
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Seleccionar")
             {
                 int fila = Convert.ToInt32(e.CommandArgument);
-
                 List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
-
-                ProductoSeleccionado= productos[fila];
-
+                ProductoSeleccionado = productos[fila];
                 OcultarError();
             }
         }
@@ -132,9 +115,8 @@ namespace GestionComercialWeb
 
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
             if (listaTemporal == null)
-            {
                 listaTemporal = new List<DetalleVenta>();
-            }
+
             DetalleVenta nuevoDetalle = new DetalleVenta();
             nuevoDetalle.Producto = prod;
             nuevoDetalle.Cantidad = cantidad;
@@ -166,11 +148,9 @@ namespace GestionComercialWeb
 
             try
             {
-                Usuario usuarioActual = (Usuario)Session["usuario"];
-
                 Venta nuevaVenta = new Venta();
                 nuevaVenta.Cliente = new Cliente { Id = int.Parse(ddlCliente.SelectedValue) };
-                nuevaVenta.Vendedor = new Usuario { Id = usuarioActual.Id };
+                nuevaVenta.Vendedor = new Usuario { Id = UsuarioActual.Id };
                 nuevaVenta.Detalles = listaTemporal;
 
                 decimal totalFinal = 0;
@@ -226,6 +206,7 @@ namespace GestionComercialWeb
             gvProductos.DataSource = null;
             gvProductos.DataBind();
         }
+
         private void MostrarError(string mensaje)
         {
             lblError.Text = mensaje;

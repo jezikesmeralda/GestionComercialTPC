@@ -2,7 +2,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
-    <h2 class="mb-4">Ventas</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Ventas</h2>
+        <asp:Button ID="btnHistorial" runat="server" Text="Historial" CssClass="btn btn-outline-primary" PostBackUrl="~/HistorialVentas.aspx" Visible="false" />
+    </div>
 
     <div class="card shadow-sm mb-4">
         <div class="card-body">
@@ -27,19 +30,12 @@
                     </div>
 
                     <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" DataKeyNames="Id" OnRowCommand="gvProductos_RowCommand">
-
                         <Columns>
-
                             <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
-
                             <asp:BoundField DataField="StockActual" HeaderText="Stock" />
-
                             <asp:BoundField DataField="PrecioVenta" HeaderText="Precio" DataFormatString="{0:C2}" />
-
                             <asp:ButtonField Text="Seleccionar" CommandName="Seleccionar" ButtonType="Button" />
-
                         </Columns>
-
                     </asp:GridView>
 
                     <div class="row align-items-end mb-3">
@@ -47,10 +43,12 @@
                             <label class="form-label">Cantidad</label>
                             <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
                         </div>
-                <div class="col-md-2">
-                    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" OnClick="btnAgregar_Click" />
-                </div>
-            </div>
+                        <div class="col-md-2">
+                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" OnClick="btnAgregar_Click" />
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </div>
 
@@ -70,9 +68,6 @@
             <div class="text-end mt-3">
                 <h4>Total: $<asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label></h4>
             </div>
-            </ContentTemplate>
-
-</asp:UpdatePanel>
 
             <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
 
@@ -81,22 +76,5 @@
             </div>
         </div>
     </div>
-
-    <asp:Panel ID="pnlHistorial" runat="server" Visible="false">
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h5>Historial de Ventas</h5>
-                <asp:GridView ID="gvHistorialVentas" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">
-                    <Columns>
-                        <asp:BoundField HeaderText="N° Factura" DataField="NumeroFactura" />
-                        <asp:BoundField HeaderText="Fecha" DataField="FechaVenta" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                        <asp:BoundField HeaderText="Cliente" DataField="NombreCliente" />
-                        <asp:BoundField HeaderText="Vendedor" DataField="NombreVendedor" />
-                        <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C2}" />
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
-    </asp:Panel>
 
 </asp:Content>
