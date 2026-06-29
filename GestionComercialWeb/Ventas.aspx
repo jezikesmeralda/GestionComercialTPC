@@ -14,7 +14,8 @@
             </div>
 
             <hr />
-
+          <asp:UpdatePanel ID="upVenta" runat="server">
+            <ContentTemplate>
             <div class="row align-items-end mb-4">
                 <div class="col-md-5">
                     <label class="form-label">Buscar Producto</label>
@@ -69,6 +70,9 @@
             <div class="text-end mt-3">
                 <h4>Total: $<asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label></h4>
             </div>
+            </ContentTemplate>
+
+</asp:UpdatePanel>
 
             <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
 

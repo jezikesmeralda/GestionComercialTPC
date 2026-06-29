@@ -70,7 +70,11 @@ namespace GestionComercialWeb
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             string busqueda = txtBuscarProducto.Text.Trim();
-            if (string.IsNullOrEmpty(busqueda)) return;
+            if (string.IsNullOrEmpty(busqueda))
+            {
+                MostrarError("Ingrese un nombre de producto para buscar.");
+                return;
+            }
 
             Producto encontrado = prodNegocio.BusquedaNombre(busqueda);
 
@@ -81,6 +85,7 @@ namespace GestionComercialWeb
                 lblProductoEncontrado.Text = encontrado.NombreProducto;
                 lblStockActual.Text = encontrado.StockActual.ToString();
                 lblPrecioVenta.Text = encontrado.PrecioVenta.ToString("F2");
+                OcultarError();
             }
             else
             {
@@ -88,25 +93,38 @@ namespace GestionComercialWeb
                 lblProductoEncontrado.Text = "Producto no encontrado";
                 lblStockActual.Text = "-";
                 lblPrecioVenta.Text = "-";
+                MostrarError("No se encontró ningún producto con ese nombre.");
             }
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (Session["ProductoSeleccionado"] == null) return;
-            if (string.IsNullOrEmpty(txtCantidad.Text) || int.Parse(txtCantidad.Text) <= 0) return;
+            if (Session["ProductoSeleccionado"] == null)
+            {
+                MostrarError("Debe buscar y seleccionar un producto antes de agregarlo.");
+                return;
+            }
+
+            int cantidad;
+            if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
+            {
+                MostrarError("Ingrese una cantidad válida (mayor a 0).");
+                return;
+            }
 
             Producto prod = (Producto)Session["ProductoSeleccionado"];
-            int cantidad = int.Parse(txtCantidad.Text);
 
             if (cantidad > prod.StockActual)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('¡Stock insuficiente!');", true);
+                MostrarError("Stock insuficiente. Stock disponible: " + prod.StockActual + ".");
                 return;
             }
 
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
-
+            if (listaTemporal == null)
+            {
+                listaTemporal = new List<DetalleVenta>();
+            }
             DetalleVenta nuevoDetalle = new DetalleVenta();
             nuevoDetalle.Producto = prod;
             nuevoDetalle.Cantidad = cantidad;
@@ -115,7 +133,7 @@ namespace GestionComercialWeb
             listaTemporal.Add(nuevoDetalle);
 
             Session["Carrito"] = listaTemporal;
-
+            OcultarError();
             LimpiarBuscadorProducto();
             ActualizarGrillaYTotal();
         }
@@ -126,15 +144,13 @@ namespace GestionComercialWeb
 
             if (ddlCliente.SelectedValue == "0")
             {
-                lblError.Text = "Debe seleccionar un cliente.";
-                lblError.Visible = true;
+                MostrarError("Debe seleccionar un cliente.");
                 return;
             }
 
             if (listaTemporal == null || listaTemporal.Count == 0)
             {
-                lblError.Text = "Debe agregar al menos un producto.";
-                lblError.Visible = true;
+                MostrarError("Debe agregar al menos un producto.");
                 return;
             }
 
@@ -159,8 +175,7 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                MostrarError(ex.Message);
             }
         }
 
@@ -200,6 +215,16 @@ namespace GestionComercialWeb
             lblProductoEncontrado.Text = "Ninguno";
             lblStockActual.Text = "-";
             lblPrecioVenta.Text = "-";
+        }
+        private void MostrarError(string mensaje)
+        {
+            lblError.Text = mensaje;
+            lblError.Visible = true;
+        }
+
+        private void OcultarError()
+        {
+            lblError.Visible = false;
         }
     }
 }
