@@ -22,6 +22,12 @@ namespace GestionComercialWeb
                     Session.Remove("mensaje");
                 }
 
+                if (UsuarioActual.Rol != Rol.Administrador)
+                {
+                    btnNuevoCliente.Visible = false;
+                    gvClientes.Columns[6].Visible = false;
+                }
+
                 CargarClientes();
             }
         }
@@ -30,6 +36,18 @@ namespace GestionComercialWeb
         {
             gvClientes.DataSource = negocio.Listar();
             gvClientes.DataBind();
+        }
+
+        protected void gvClientes_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow && UsuarioActual.Rol != Rol.Administrador)
+            {
+                Button btnEditar = (Button)e.Row.FindControl("btnEditar");
+                Button btnEliminar = (Button)e.Row.FindControl("btnEliminar");
+
+                if (btnEditar != null) btnEditar.Visible = false;
+                if (btnEliminar != null) btnEliminar.Visible = false;
+            }
         }
 
         protected void gvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
