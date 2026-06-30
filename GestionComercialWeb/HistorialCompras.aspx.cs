@@ -9,18 +9,23 @@ using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
-    public partial class HistorialCompras : System.Web.UI.Page
+    public partial class HistorialCompras : PaginaBase
     {
         
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var lista = new DetalleCompraNegocio().Listar();
+            if (UsuarioActual.Rol != Rol.Administrador)
+                Response.Redirect("Inicio.aspx");
 
-            Response.Write("Cantidad: " + lista.Count);
+            if (!IsPostBack)
+            {
+                var lista = new DetalleCompraNegocio().Listar();
 
-            gvHistorialCompra.DataSource = lista;
-            gvHistorialCompra.DataBind();
+                gvHistorialCompra.DataSource = lista;
+
+                gvHistorialCompra.DataBind();
+            }
         }
     }
 }
