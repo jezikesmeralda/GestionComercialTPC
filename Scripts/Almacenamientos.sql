@@ -639,3 +639,36 @@ BEGIN
     ORDER BY MontoTotal DESC;
 END
 GO
+
+CREATE PROCEDURE sp_ReporteStockBajo
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        p.Id,
+        p.NombreProducto,
+        p.StockActual,
+        p.StockMinimo,
+        m.Nombre AS NombreMarca
+    FROM Productos p
+    INNER JOIN Marcas m ON p.IdMarca = m.Id
+    WHERE p.Activo = 1 AND p.StockActual <= p.StockMinimo
+    ORDER BY p.StockActual ASC;
+END
+GO
+
+CREATE PROCEDURE sp_ReporteVendedores
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        u.Id,
+        u.Nombre AS NombreVendedor,
+        COUNT(v.Id)      AS CantidadVentas,
+        SUM(v.Total)     AS MontoTotal
+    FROM Ventas v
+    INNER JOIN Usuarios u ON v.IdUsuario = u.Id
+    GROUP BY u.Id, u.Nombre
+    ORDER BY MontoTotal DESC;
+END
+GO

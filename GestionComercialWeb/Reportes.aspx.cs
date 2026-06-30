@@ -24,6 +24,8 @@ namespace GestionComercialWeb
         {
             CargarProductos();
             CargarClientes();
+            CargarVendedores();
+            CargarStockBajo();
 
         }
         private void CargarProductos()
@@ -53,6 +55,28 @@ namespace GestionComercialWeb
                 }).ToList();
 
             rptClientes.DataBind();
+        }
+        private void CargarVendedores()
+        {
+            var lista = new ReportesNegocio().Vendedores();
+
+            rptVendedores.DataSource = lista
+                .Select((item, index) => new
+                {
+                    Posicion = index + 1,
+                    item.NombreVendedor,
+                    item.CantidadVentas,
+                    item.MontoTotal
+                }).ToList();
+
+            rptVendedores.DataBind();
+        }
+
+        private void CargarStockBajo()
+        {
+            
+            rptStockBajo.DataSource = new ReportesNegocio().StockBajo();
+            rptStockBajo.DataBind();
         }
     }
 }

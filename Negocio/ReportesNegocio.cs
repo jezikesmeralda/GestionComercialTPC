@@ -56,6 +56,56 @@ namespace Negocio
             catch (Exception ex) { throw ex; }
             finally { datos.CerrarConexion(); }
         }
+    
+    public List<ReporteVendedor> Vendedores()
+        {
+            List<ReporteVendedor> lista = new List<ReporteVendedor>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearProcedimiento("sp_ReporteVendedores");
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    lista.Add(new ReporteVendedor
+                    {
+                        Id = (int)datos.Lector["Id"],
+                        NombreVendedor = (string)datos.Lector["NombreVendedor"],
+                        CantidadVentas = (int)datos.Lector["CantidadVentas"],
+                        MontoTotal = (decimal)datos.Lector["MontoTotal"]
+                    });
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
+
+        public List<ReporteStockBajo> StockBajo()
+        {
+            List<ReporteStockBajo> lista = new List<ReporteStockBajo>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearProcedimiento("sp_ReporteStockBajo");
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    lista.Add(new ReporteStockBajo
+                    {
+                        Id = (int)datos.Lector["Id"],
+                        NombreProducto = (string)datos.Lector["NombreProducto"],
+                        StockActual = (int)datos.Lector["StockActual"],
+                        StockMinimo = (int)datos.Lector["StockMinimo"],
+                        NombreMarca = (string)datos.Lector["NombreMarca"]
+                    });
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
+
     }
 
 }
