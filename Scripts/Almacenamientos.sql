@@ -606,3 +606,20 @@ BEGIN
     INNER JOIN Usuarios u ON v.IdUsuario = u.Id
     ORDER BY v.FechaVenta DESC
 END
+
+
+CREATE PROCEDURE sp_ReporteProductosMasVendidos
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        p.Id,
+        p.NombreProducto,
+        SUM(dv.Cantidad)  AS CantidadVendida,
+        SUM(dv.Subtotal)  AS MontoTotal
+    FROM DetalleVentas dv
+    INNER JOIN Productos p ON dv.IdProducto = p.Id
+    GROUP BY p.Id, p.NombreProducto
+    ORDER BY CantidadVendida DESC;
+END
+GO

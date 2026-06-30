@@ -72,7 +72,7 @@ BEGIN
         c.Id AS IdCliente,
         c.Nombre AS NombreCliente,
         c.Apellido AS ApellidoCliente,
-        c.Email AS EmailCliente,        -- 👈 agregado
+        c.Email AS EmailCliente,       
         u.Id AS IdUsuario,
         u.Nombre AS NombreUsuario
     FROM Ventas v

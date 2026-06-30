@@ -1,0 +1,37 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="GestionComercialWeb.Reportes" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Reportes</h2>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Productos más vendidos</h5>
+        </div>
+        <div class="card-body">
+           <table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Producto</th>
+            <th class="text-center">Unidades vendidas</th>
+            <th class="text-end">Monto total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <asp:Repeater ID="rptProductos" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td><%# Eval("Posicion") %></td>
+                    <td><%# Eval("NombreProducto") %></td>
+                    <td class="text-center"><%# Eval("CantidadVendida") %></td>
+                    <td class="text-end"><%# Eval("MontoTotal", "{0:C2}") %></td>
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
+    </tbody>
+</table>
+        </div>
+    </div>
+</asp:Content>

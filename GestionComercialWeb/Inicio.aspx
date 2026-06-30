@@ -48,6 +48,10 @@
             <a href="Categorias.aspx" class="btn btn-custom-negro w-100 p-3">Categorías
             </a>
         </div>
+                <div class="col-md-3 mb-3">
+            <a href="Reportes.aspx" class="btn btn-custom-negro w-100 p-3">Reportes
+            </a>
+        </div>
 
 
 

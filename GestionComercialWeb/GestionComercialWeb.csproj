@@ -87,6 +87,7 @@
     <Content Include="ProduForm.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Registro.aspx" />
+    <Content Include="Reportes.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Web.config" />
     <Content Include="Marcas.aspx" />
@@ -141,6 +142,13 @@
     </Compile>
     <Compile Include="HistorialVentas.aspx.designer.cs">
       <DependentUpon>HistorialVentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes.aspx.cs">
+      <DependentUpon>Reportes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes.aspx.designer.cs">
+      <DependentUpon>Reportes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\EmailServices.cs" />
     <Compile Include="Services\FacturaPdfGenerador.cs" />

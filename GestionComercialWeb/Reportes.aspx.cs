@@ -1,0 +1,44 @@
+﻿using Dominio;
+using Negocio;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace GestionComercialWeb
+{
+    public partial class Reportes : PaginaBase
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (UsuarioActual.Rol != Rol.Administrador)
+                Response.Redirect("Inicio.aspx");
+
+            if (!IsPostBack)
+                Cargar();
+        }
+    
+     private void Cargar()
+        {
+            CargarProductos();
+            
+        }
+        private void CargarProductos()
+        {
+            var lista = new ReportesNegocio().ProductosMasVendidos();
+
+            rptProductos.DataSource = lista.Select((item, index) => new
+                {
+                    Posicion = index + 1,
+                    item.NombreProducto,
+                    item.CantidadVendida,
+                    item.MontoTotal
+                }).ToList();
+
+            rptProductos.DataBind();
+        }
+
+    }
+}
