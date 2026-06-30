@@ -23,7 +23,8 @@ namespace GestionComercialWeb
      private void Cargar()
         {
             CargarProductos();
-            
+            CargarClientes();
+
         }
         private void CargarProductos()
         {
@@ -39,6 +40,19 @@ namespace GestionComercialWeb
 
             rptProductos.DataBind();
         }
+        private void CargarClientes()
+        {
+            var lista = new ReportesNegocio().ClientesMasCompraron();
 
+            rptClientes.DataSource = lista.Select((item, index) => new
+                {
+                    Posicion = index + 1,
+                    item.NombreCliente,
+                    item.CantidadCompras,
+                    item.MontoTotal
+                }).ToList();
+
+            rptClientes.DataBind();
+        }
     }
 }

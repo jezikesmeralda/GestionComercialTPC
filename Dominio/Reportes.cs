@@ -14,4 +14,12 @@ namespace Dominio
         public decimal MontoTotal { get; set; }
         
     }
+
+    public class ReporteCliente
+    {
+        public int Id { get; set; }
+        public string NombreCliente { get; set; }
+        public int CantidadCompras { get; set; }
+        public decimal MontoTotal { get; set; }
+    }
 }

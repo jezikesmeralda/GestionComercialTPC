@@ -6,7 +6,7 @@
 
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Productos más vendidos</h5>
+            <h5 class="mb-0">Productos más vendidos (por unidades)</h5>
         </div>
         <div class="card-body">
            <table class="table table-striped table-hover">
@@ -15,7 +15,7 @@
             <th>#</th>
             <th>Producto</th>
             <th class="text-center">Unidades vendidas</th>
-            <th class="text-end">Monto total</th>
+            <th class="text-end">Total facturado</th>
         </tr>
     </thead>
 
@@ -34,4 +34,33 @@
 </table>
         </div>
     </div>
+    <div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Clientes que más gastaron</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Cliente</th>
+                    <th class="text-center">Cantidad de compras</th>
+                    <th class="text-end">Total gastado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <asp:Repeater ID="rptClientes" runat="server">
+                    <ItemTemplate>
+                        <tr>
+                            <td><%# Eval("Posicion") %></td>
+                            <td><%# Eval("NombreCliente") %></td>
+                            <td class="text-center"><%# Eval("CantidadCompras") %></td>
+                            <td class="text-end"><%# Eval("MontoTotal", "{0:C2}") %></td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </tbody>
+        </table>
+    </div>
+</div>
 </asp:Content>

@@ -32,5 +32,30 @@ namespace Negocio
             catch (Exception ex) { throw ex; }
             finally { datos.CerrarConexion(); }
         }
+    
+    public List<ReporteCliente> ClientesMasCompraron()
+        {
+            List<ReporteCliente> lista = new List<ReporteCliente>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearProcedimiento("sp_ReporteClientes");
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    lista.Add(new ReporteCliente
+                    {
+                        Id = (int)datos.Lector["Id"],
+                        NombreCliente = (string)datos.Lector["NombreCliente"],
+                        CantidadCompras = (int)datos.Lector["CantidadCompras"],
+                        MontoTotal = (decimal)datos.Lector["MontoTotal"]
+                    });
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
     }
+
 }

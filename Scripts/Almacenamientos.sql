@@ -623,3 +623,19 @@ BEGIN
     ORDER BY CantidadVendida DESC;
 END
 GO
+
+CREATE PROCEDURE sp_ReporteClientes
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        c.Id,
+        c.Nombre + ' ' + c.Apellido AS NombreCliente,
+        COUNT(v.Id)   AS CantidadCompras,
+        SUM(v.Total)  AS MontoTotal
+    FROM Ventas v
+    INNER JOIN Clientes c ON v.IdCliente = c.Id
+    GROUP BY c.Id, c.Nombre, c.Apellido
+    ORDER BY MontoTotal DESC;
+END
+GO
