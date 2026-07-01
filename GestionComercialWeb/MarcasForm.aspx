@@ -17,6 +17,8 @@
 
             <asp:HiddenField ID="hfId" runat="server" />
 
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger"></asp:Label>
+
             <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success" OnClick="btnGuardar_Click" />
 
             <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-secondary ms-2" PostBackUrl="~/Marcas.aspx" />

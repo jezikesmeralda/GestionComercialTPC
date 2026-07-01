@@ -30,22 +30,31 @@ namespace GestionComercialWeb
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            Categoria categoria = new Categoria();
-
-            categoria.Nombre = txtNombre.Text;
-
-            if (!string.IsNullOrEmpty(hfId.Value))
+            try
             {
-                categoria.Id = int.Parse(hfId.Value);
-                negocio.Modificar(categoria);
-            }
-            else
-            {
-                negocio.Alta(categoria);
-            }
 
-            Response.Redirect("Categorias.aspx");
-        }
+                Categoria categoria = new Categoria();
+
+                categoria.Nombre = txtNombre.Text;
+
+                if (!string.IsNullOrEmpty(hfId.Value))
+                {
+                    categoria.Id = int.Parse(hfId.Value);
+                    negocio.Modificar(categoria);
+                }
+                else
+                {
+                    negocio.Alta(categoria);
+                }
+
+                Response.Redirect("Categorias.aspx");
+            }
+            catch (Exception ex)
+            {
+                
+                lblError.Text =  ex.Message;
+            }
     }
+}
 }
 

@@ -44,6 +44,8 @@ namespace Negocio
         {
             if (string.IsNullOrWhiteSpace(categoria.Nombre))
                 throw new Exception("El nombre de la categoría es obligatorio.");
+            if (ExisteCategoria(categoria.Nombre))
+                throw new Exception("Ya existe una marca con ese nombre.");
 
             AccesoDatos datos = new AccesoDatos();
 
@@ -100,6 +102,25 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public bool ExisteCategoria(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Categorias WHERE Nombre = @Nombre");
+                datos.SetearParametro("@Nombre", nombre);
+
+                int cantidad = Convert.ToInt32(datos.EjecutarScalar());
+
+                return cantidad > 0;
             }
             finally
             {

@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -31,21 +32,28 @@ namespace GestionComercialWeb
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            Marca marca = new Marca();
+          try { 
+                Marca marca = new Marca();
 
-            marca.Nombre = txtNombre.Text;
+                marca.Nombre = txtNombre.Text;
 
-            if (!string.IsNullOrEmpty(hfId.Value))
-            {
-                marca.Id = int.Parse(hfId.Value);
-                negocio.Modificar(marca);
+                if (!string.IsNullOrEmpty(hfId.Value))
+                {
+                    marca.Id = int.Parse(hfId.Value);
+                    negocio.Modificar(marca);
+                }
+                else
+                {
+                    negocio.Alta(marca);
+                }
+
+                Response.Redirect("Marcas.aspx");
             }
-            else
+           catch (Exception ex)
             {
-                negocio.Alta(marca);
-            }
 
-            Response.Redirect("Marcas.aspx");
+                lblError.Text = ex.Message;
+            }
         }
     }
 }

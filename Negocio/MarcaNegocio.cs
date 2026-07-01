@@ -43,6 +43,8 @@ namespace Negocio
         {
             if (string.IsNullOrWhiteSpace(marca.Nombre))
                 throw new Exception("El nombre de la marca es obligatorio.");
+            if (ExisteMarca(marca.Nombre))
+                throw new Exception("Ya existe una marca con ese nombre.");
 
             AccesoDatos datos = new AccesoDatos();
 
@@ -99,6 +101,24 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public bool ExisteMarca(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Marcas WHERE Nombre = @Nombre");
+                datos.SetearParametro("@Nombre", nombre);
+
+                int cantidad = Convert.ToInt32(datos.EjecutarScalar());
+
+                return cantidad > 0;
             }
             finally
             {
