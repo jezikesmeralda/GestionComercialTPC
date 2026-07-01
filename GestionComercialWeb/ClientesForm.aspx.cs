@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Web.UI;
+using System.Net.Mail;
 
 namespace GestionComercialWeb
 {
@@ -20,20 +21,25 @@ namespace GestionComercialWeb
 
                     if (cliente != null)
                     {
-                        hfId.Value = cliente.Id.ToString();
-                        txtNombre.Text = cliente.Nombre;
-                        txtApellido.Text = cliente.Apellido;
-                        txtDni.Text = cliente.Dni.ToString();
-                        txtTelefono.Text = cliente.Telefono;
-                        txtEmail.Text = cliente.Email;
-                        txtDireccion.Text = cliente.Direccion;
+                        Response.Redirect("Clientes.aspx");
+                        return;
+                        
                     }
+                    hfId.Value = cliente.Id.ToString();
+                    txtNombre.Text = cliente.Nombre;
+                    txtApellido.Text = cliente.Apellido;
+                    txtDni.Text = cliente.Dni.ToString();
+                    txtTelefono.Text = cliente.Telefono;
+                    txtEmail.Text = cliente.Email;
+                    txtDireccion.Text = cliente.Direccion;
                 }
             }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            lblError.Visible = false;
+            lblError.Text = "";
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
                 lblError.Text = "El nombre es obligatorio.";
@@ -56,6 +62,19 @@ namespace GestionComercialWeb
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                try
+                {
+                    System.Net.Mail.MailAddress mail = new System.Net.Mail.MailAddress(txtEmail.Text);
+                }
+                catch
+                {
+                    lblError.Text = "Ingrese un email válido.";
+                    lblError.Visible = true;
+                    return;
+                }
+            }
             try
             {
                 Cliente cliente = new Cliente();
