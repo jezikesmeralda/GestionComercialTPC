@@ -19,7 +19,7 @@ namespace GestionComercialWeb
                     int id = int.Parse(Request.QueryString["id"]);
                     Cliente cliente = negocio.Listar().Find(x => x.Id == id);
 
-                    if (cliente != null)
+                    if (cliente == null)
                     {
                         Response.Redirect("Clientes.aspx");
                         return;
