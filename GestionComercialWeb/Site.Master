@@ -114,7 +114,7 @@
                             <a class="nav-link" href="Categorias.aspx">Categorías</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Reportes.aspx">Reportes</a>
+                            <asp:HyperLink ID="lnkReportes" runat="server" CssClass="nav-link" NavigateUrl="~/Reportes.aspx">Reportes</asp:HyperLink>
                         </li>
 
                     </ul>

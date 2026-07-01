@@ -402,7 +402,7 @@ BEGIN
     WHERE Id = @IdProducto;
 
 END
-
+GO;
 -----------------nuevo 
 CREATE PROCEDURE sp_AltaVenta
 (
@@ -431,7 +431,7 @@ BEGIN
     SELECT SCOPE_IDENTITY();
 
 END
-
+GO
 CREATE PROCEDURE sp_AltaDetalleVenta
 (
     @IdVenta INT,
@@ -461,7 +461,7 @@ BEGIN
     );
 
 END
-
+GO
     CREATE PROCEDURE sp_ListarDetalleCompras
 AS
 BEGIN
@@ -607,6 +607,7 @@ BEGIN
     ORDER BY v.FechaVenta DESC
 END
 
+GO
 
 CREATE PROCEDURE sp_ReporteProductosMasVendidos
 AS

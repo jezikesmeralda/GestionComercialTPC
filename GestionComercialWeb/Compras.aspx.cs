@@ -17,11 +17,9 @@ namespace GestionComercialWeb
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Write("ENTRO AL PAGE LOAD");
 
             if (!IsPostBack)
             {
-                Response.Write("Rol actual: " + UsuarioActual.Rol.ToString());
                 if (UsuarioActual.Rol == Rol.Administrador)
                     btnHistorial.Visible = true;
 
