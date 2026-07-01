@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Negocio;
 using System;
+using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
@@ -45,12 +46,22 @@ namespace GestionComercialWeb
         {
             if (e.CommandArgument == null) return;
 
-            int id = Convert.ToInt32(e.CommandArgument);
+            int id;
+            if (!int.TryParse(e.CommandArgument.ToString(), out id))
+                return;
 
             if (e.CommandName == "Eliminar")
             {
-                negocio.Baja(id);
-                CargarProveedores();
+                try
+                {
+                    negocio.Baja(id);
+                    CargarProveedores();
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = ex.Message;
+                    lblError.Visible = true;
+                }
             }
 
             if (e.CommandName == "Editar")
@@ -62,6 +73,11 @@ namespace GestionComercialWeb
         protected void btnNuevoProveedor_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProveedoresForm.aspx");
+        }
+        private void MostrarError(string mensaje)
+        {
+            lblError.Text = mensaje;
+            lblError.Visible = true;
         }
     }
 }

@@ -60,15 +60,26 @@ namespace GestionComercialWeb
         protected void btnDescargarPdf_Click(object sender, EventArgs e)
         {
             Venta venta = ObtenerVentaActual();
-            if (venta == null) return;
-
-            byte[] pdfBytes = FacturaPdfGenerador.Generar(venta);
+            if (venta == null)
+            {
+                MostrarMensajeMail("No se pudo obtener la factura.", true);
+                return;
+            }
+            try
+            {
+                byte[] pdfBytes = FacturaPdfGenerador.Generar(venta);
 
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.AddHeader("Content-Disposition", "attachment; filename=" + venta.NumeroFactura + ".pdf");
             Response.BinaryWrite(pdfBytes);
             Response.End();
+            }
+            catch (Exception ex)
+             {
+                MostrarMensajeMail("Error al generar el PDF: " + ex.Message, true);
+             }
+
         }
         protected void btnEnviarMail_Click(object sender, EventArgs e)
         {

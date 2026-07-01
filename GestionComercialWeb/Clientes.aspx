@@ -12,6 +12,7 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="mb-3">Listado de Clientes</h5>
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
 
             <asp:GridView ID="gvClientes" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="false" OnRowCommand="gvClientes_RowCommand" OnRowDataBound="gvClientes_RowDataBound">
                 <Columns>

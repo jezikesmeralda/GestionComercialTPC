@@ -52,14 +52,28 @@ namespace GestionComercialWeb
 
         protected void gvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+         
             if (e.CommandArgument == null) return;
 
-            int id = Convert.ToInt32(e.CommandArgument);
+            int id;
+            if (!int.TryParse(e.CommandArgument.ToString(), out id))
+            {
+                return;
+            }
 
             if (e.CommandName == "Eliminar")
             {
-                negocio.Baja(id);
+                try
+                {
+                    negocio.Baja(id);
                 CargarClientes();
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = ex.Message;
+                    lblMensaje.CssClass = "alert alert-danger d-block mb-3";
+                    lblMensaje.Visible = true;
+                }
             }
 
             if (e.CommandName == "Editar")

@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Negocio;
 using System;
+using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
@@ -43,13 +44,31 @@ namespace GestionComercialWeb
 
         protected void gvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int id = Convert.ToInt32(e.CommandArgument);
-
-            if (e.CommandName == "Eliminar")
+            int id;
+            if (!int.TryParse(e.CommandArgument.ToString(), out id))
             {
-                negocio.Baja(id);
-                cargarGrilla();
+                MostrarError("La categoría seleccionada no es válida.");
+                return;
             }
+           
+                if (e.CommandName == "Eliminar")
+            {
+                try
+                {
+                    negocio.Baja(id);
+                cargarGrilla();
+                    lblError.Text = "Cliente eliminado correctamente.";
+                    lblError.CssClass = "alert alert-success d-block mb-3";
+                    lblError.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = ex.Message;
+                    lblError.CssClass = "alert alert-danger d-block mb-3";
+                    lblError.Visible = true;
+                }
+            }
+            
 
             if (e.CommandName == "Editar")
             {
@@ -60,6 +79,11 @@ namespace GestionComercialWeb
         protected void btnNuevaCategoria_Click(object sender, EventArgs e)
         {
             Response.Redirect("CategoriasForm.aspx");
+        }
+        private void MostrarError(string mensaje)
+        {
+            lblError.Text = mensaje;
+            lblError.Visible = true;
         }
     }
 }

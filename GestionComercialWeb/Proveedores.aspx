@@ -10,7 +10,7 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="mb-3">Listado de Proveedores</h5>
-
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
             <asp:GridView ID="gvProveedores" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="gvProveedores_RowCommand" OnRowDataBound="gvProveedores_RowDataBound">
                 <Columns>
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />

@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Negocio;
 using System;
+using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
@@ -43,12 +44,22 @@ namespace GestionComercialWeb
 
         protected void gvMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int id = Convert.ToInt32(e.CommandArgument);
+            int id;
+            if (!int.TryParse(e.CommandArgument.ToString(), out id))
+                return;
 
             if (e.CommandName == "Eliminar")
             {
-                negocio.Baja(id);
-                cargarGrilla();
+                try
+                {
+                    negocio.Baja(id);
+                    cargarGrilla();
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = ex.Message;
+                    lblError.Visible = true;
+                }
             }
 
             if (e.CommandName == "Editar")
@@ -60,6 +71,11 @@ namespace GestionComercialWeb
         protected void btnNuevaMarca_Click(object sender, EventArgs e)
         {
             Response.Redirect("MarcasForm.aspx");
+        }
+        private void MostrarError(string mensaje)
+        {
+            lblError.Text = mensaje;
+            lblError.Visible = true;
         }
     }
 }

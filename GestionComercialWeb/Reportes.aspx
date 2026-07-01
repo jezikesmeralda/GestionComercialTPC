@@ -95,7 +95,7 @@
 </div>
 
     <div class="card shadow-sm mb-4">
-        <div class="card-header bg-dark text-dark">
+        <div class="card-header bg-dark text-white">
             <h5 class="mb-0">Productos con stock bajo</h5>
         </div>
         <div class="card-body">

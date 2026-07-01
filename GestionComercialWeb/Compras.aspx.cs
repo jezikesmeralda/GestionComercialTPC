@@ -42,7 +42,9 @@ namespace GestionComercialWeb
         }
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            string busqueda = txtBuscarProducto.Text.Trim();
+            try
+            {
+                string busqueda = txtBuscarProducto.Text.Trim();
 
             if (string.IsNullOrEmpty(busqueda))
             {
@@ -63,16 +65,26 @@ namespace GestionComercialWeb
                 MostrarError("No se encontraron productos.");
             else
                 OcultarError();
-        }
         
+              }
+              catch (Exception ex)
+              {
+              MostrarError(ex.Message);
+              }
+        }
+
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Seleccionar")
             {
-                int fila = Convert.ToInt32(e.CommandArgument);
+                int fila;
+                if (!int.TryParse(e.CommandArgument.ToString(), out fila))
+                    return;
+
 
                 List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
-
+                if (productos == null || fila < 0 || fila >= productos.Count)
+                    return;
                 ProductoSeleccionado = productos[fila];
 
                 txtPrecio.Text = ProductoSeleccionado.PrecioCosto.ToString("N2");
