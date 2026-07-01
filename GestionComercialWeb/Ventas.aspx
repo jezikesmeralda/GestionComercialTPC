@@ -13,6 +13,7 @@
                 <div class="col-md-4">
                     <label class="form-label">Cliente</label>
                     <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-select"></asp:DropDownList>
+                    <asp:Label ID="lblErrorCliente" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                 </div>
             </div>
 
@@ -27,6 +28,7 @@
                         <div class="col-md-2">
                             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" OnClick="btnBuscar_Click" />
                         </div>
+                        <asp:Label ID="lblErrorProducto" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                     </div>
 
                     <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" DataKeyNames="Id" OnRowCommand="gvProductos_RowCommand">
@@ -42,10 +44,12 @@
                         <div class="col-md-3">
                             <label class="form-label">Cantidad</label>
                             <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                            <asp:Label ID="lblErrorCantidad" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                         </div>
                         <div class="col-md-2">
                             <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" OnClick="btnAgregar_Click" />
                         </div>
+                        <asp:Label ID="lblErrorAgregar" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                     </div>
                 </ContentTemplate>
             </asp:UpdatePanel>

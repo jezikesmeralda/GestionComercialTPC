@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Security;
 using System.Web.UI.WebControls;
-using Dominio;
-using Negocio;
 
 namespace GestionComercialWeb
 {
@@ -62,7 +63,7 @@ namespace GestionComercialWeb
             string busqueda = txtBuscarProducto.Text.Trim();
             if (string.IsNullOrEmpty(busqueda))
             {
-                MostrarError("Ingrese un nombre de producto para buscar.");
+                MostrarError(lblErrorProducto,"Ingrese un nombre de producto para buscar.");
                 return;
             }
 
@@ -74,9 +75,9 @@ namespace GestionComercialWeb
             gvProductos.DataBind();
 
             if (productos.Count == 0)
-                MostrarError("No se encontraron productos.");
+                MostrarError(lblErrorProducto,"No se encontraron productos.");
             else
-                OcultarError();
+                OcultarError(lblErrorProducto);
         }
 
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -86,30 +87,38 @@ namespace GestionComercialWeb
                 int fila = Convert.ToInt32(e.CommandArgument);
                 List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
                 ProductoSeleccionado = productos[fila];
-                OcultarError();
+                OcultarError(lblErrorProducto);
             }
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            bool errores = false;
             if (Session["ProductoSeleccionado"] == null)
             {
-                MostrarError("Debe buscar y seleccionar un producto antes de agregarlo.");
-                return;
+                MostrarError(lblErrorProducto, "Debe buscar y seleccionar un producto antes de agregarlo.");
+                errores = true;
             }
 
             int cantidad;
             if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
             {
-                MostrarError("Ingrese una cantidad válida (mayor a 0).");
-                return;
+                MostrarError(lblErrorCantidad, "Ingrese una cantidad válida (mayor a 0).");
+                errores = true;
             }
 
+            if (ddlCliente.SelectedValue == "0")
+            {
+                MostrarError(lblErrorCliente, "Debe seleccionar un cliente.");
+                errores = true;
+            }
+            if (errores)
+                return;
             Producto prod = ProductoSeleccionado;
 
             if (cantidad > prod.StockActual)
             {
-                MostrarError("Stock insuficiente. Stock disponible: " + prod.StockActual + ".");
+                MostrarError(lblErrorAgregar, "Stock insuficiente. Stock disponible: " + prod.StockActual + ".");
                 return;
             }
 
@@ -125,7 +134,7 @@ namespace GestionComercialWeb
             listaTemporal.Add(nuevoDetalle);
 
             Session["Carrito"] = listaTemporal;
-            OcultarError();
+            OcultarError(lblErrorProducto);
             LimpiarBuscadorProducto();
             ActualizarGrillaYTotal();
         }
@@ -133,18 +142,22 @@ namespace GestionComercialWeb
         protected void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
             List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
+            bool errores = false;
 
             if (ddlCliente.SelectedValue == "0")
             {
-                MostrarError("Debe seleccionar un cliente.");
-                return;
+                MostrarError(lblErrorCliente, "Debe seleccionar un cliente.");
+                errores = true;
             }
 
             if (listaTemporal == null || listaTemporal.Count == 0)
             {
-                MostrarError("Debe agregar al menos un producto.");
-                return;
+                MostrarError(lblErrorProducto, "Debe agregar al menos un producto.");
+                errores = true; ;
             }
+
+            if (errores)
+                return;
 
             try
             {
@@ -165,7 +178,7 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                MostrarError(ex.Message);
+                MostrarError(lblErrorProducto, ex.Message);
             }
         }
 
@@ -207,15 +220,16 @@ namespace GestionComercialWeb
             gvProductos.DataBind();
         }
 
-        private void MostrarError(string mensaje)
+        private void MostrarError(System.Web.UI.WebControls.Label label, string mensaje)
         {
-            lblError.Text = mensaje;
-            lblError.Visible = true;
+            label.Text = mensaje;
+            label.Visible = true;
         }
 
-        private void OcultarError()
+        private void OcultarError(System.Web.UI.WebControls.Label label)
         {
-            lblError.Visible = false;
+            label.Text = "";
+            label.Visible = false;
         }
     }
 }

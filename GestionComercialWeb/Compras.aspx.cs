@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web.UI.WebControls;
+
 
 namespace GestionComercialWeb
 {
@@ -48,7 +50,7 @@ namespace GestionComercialWeb
 
             if (string.IsNullOrEmpty(busqueda))
             {
-                MostrarError("Ingrese un nombre de producto para buscar.");
+                MostrarError(lblErrorBusqueda, "Ingrese un nombre de producto para buscar.");
                 return;
             }
 
@@ -62,14 +64,14 @@ namespace GestionComercialWeb
             gvProductos.DataBind();
 
             if (productos.Count == 0)
-                MostrarError("No se encontraron productos.");
+                MostrarError(lblErrorBusqueda, "No se encontraron productos.");
             else
-                OcultarError();
+                OcultarError(lblErrorBusqueda);
         
               }
               catch (Exception ex)
               {
-              MostrarError(ex.Message);
+              MostrarError(lblErrorBusqueda, ex.Message);
               }
         }
 
@@ -89,7 +91,7 @@ namespace GestionComercialWeb
 
                 txtPrecio.Text = ProductoSeleccionado.PrecioCosto.ToString("N2");
 
-                OcultarError();
+                OcultarError(lblErrorBusqueda);
 
 
             }
@@ -98,20 +100,20 @@ namespace GestionComercialWeb
         {
             if (ProductoSeleccionado == null)
             {
-                MostrarError("Debe buscar y seleccionar un producto antes de agregarlo.");
+                MostrarError(lblErrorBusqueda,"Debe buscar y seleccionar un producto antes de agregarlo.");
                 return;
             }
             int cantidad;
             if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
             {
-                MostrarError("Ingrese una cantidad válida (mayor a 0).");
+                MostrarError(lblErrorCantidad,"Ingrese una cantidad válida (mayor a 0).");
                 return;
             }
 
             decimal precio;
             if (!decimal.TryParse(txtPrecio.Text, out precio) || precio <= 0)
             {
-                MostrarError("Ingrese un precio de compra válido (mayor a 0).");
+                MostrarError(lblErrorPrecioCompra,"Ingrese un precio de compra válido (mayor a 0).");
                 return;
             }
 
@@ -130,7 +132,7 @@ namespace GestionComercialWeb
             lista.Add(detalle);
             Session["DetalleCompra"] = lista;
 
-            OcultarError();
+            OcultarError(lblErrorAgregar);
             CargarGrilla();
         }
     
@@ -152,14 +154,14 @@ namespace GestionComercialWeb
         {
             if (ddlProveedor.SelectedValue == "0")
             {
-                MostrarError("Debe seleccionar un proveedor.");
+                MostrarError(lblErrorProveedor,"Debe seleccionar un proveedor.");
                 return;
             }
             List<DetalleCompra> detalles = (List<DetalleCompra>)Session["DetalleCompra"];
 
             if (detalles == null || detalles.Count == 0)
             {
-                MostrarError("Debe agregar al menos un producto a la compra.");
+                MostrarError(lblErrorAgregar,"Debe agregar al menos un producto a la compra.");
                 return;
             }
 
@@ -187,18 +189,19 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                MostrarError(ex.Message);
+                MostrarError(lblErrorAgregar,ex.Message);
             }
         }
-        private void MostrarError(string mensaje)
+        private void MostrarError(System.Web.UI.WebControls.Label label, string mensaje)
         {
-            lblError.Text = mensaje;
-            lblError.Visible = true;
+            label.Text = mensaje;
+            label.Visible = true;
         }
 
-        private void OcultarError()
+        private void OcultarError(System.Web.UI.WebControls.Label label)
         {
-            lblError.Visible = false;
+            label.Text = "";
+            label.Visible = false;
         }
     }
 

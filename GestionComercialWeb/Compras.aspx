@@ -17,7 +17,9 @@
                     <label>Proveedor</label>
                     <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select">
                         <asp:ListItem Text="Todas" Value="0" />
+                        
                     </asp:DropDownList>
+                    <asp:Label ID="lblErrorProveedor" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                 </div>
             </div>
             <hr />
@@ -27,10 +29,12 @@
                         <div class="col-md-4">
                             <label>Buscar Producto</label>
                             <asp:TextBox ID="txtBuscarProducto" runat="server" CssClass="form-control" placeholder="Ingrese nombre del producto"></asp:TextBox>
+                            <asp:Label ID="lblErrorBusqueda" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                         </div>
 
                         <div class="col-md-2">
                             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" OnClick="btnBuscar_Click" />
+                            
 
                         </div>
 
@@ -50,16 +54,18 @@
                         </Columns>
 
                     </asp:GridView>
-
+                    <asp:Label ID="lblErrorAgregar" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                     <div class="row align-items-end mb-3">
                         <div class="col-md-2">
                             <label>Cantidad</label>
                             <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                            <asp:Label ID="lblErrorCantidad" runat="server" CssClass="text-danger" Visible="false"></asp:Label>                        
                         </div>
 
                         <div class="col-md-2">
                             <label>Precio Compra</label>
                             <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control"> </asp:TextBox>
+                            <asp:Label ID="lblErrorPrecioCompra" runat="server" CssClass="text-danger" Visible="false"></asp:Label> 
                         </div>
 
                         <div class="col-md-2">
@@ -94,7 +100,7 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
 
-            <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
+            
 
             <div class="text-end">
                 <asp:Button ID="btnRegistrarCompra" runat="server" Text="Registrar Compra" CssClass="btn btn-success" OnClick="btnRegistrarCompra_Click" />

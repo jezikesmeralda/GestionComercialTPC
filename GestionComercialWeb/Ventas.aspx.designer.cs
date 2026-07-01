@@ -33,6 +33,15 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
 
         /// <summary>
+        /// lblErrorCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorCliente;
+
+        /// <summary>
         /// upVenta control.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
+        /// lblErrorProducto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorProducto;
+
+        /// <summary>
         /// gvProductos control.
         /// </summary>
         /// <remarks>
@@ -78,6 +96,15 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.TextBox txtCantidad;
 
         /// <summary>
+        /// lblErrorCantidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorCantidad;
+
+        /// <summary>
         /// btnAgregar control.
         /// </summary>
         /// <remarks>
@@ -85,6 +112,15 @@ namespace GestionComercialWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregar;
+
+        /// <summary>
+        /// lblErrorAgregar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorAgregar;
 
         /// <summary>
         /// gvDetalleVenta control.
