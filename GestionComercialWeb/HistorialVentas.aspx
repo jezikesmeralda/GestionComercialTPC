@@ -16,6 +16,11 @@
                     <asp:BoundField HeaderText="Cliente" DataField="NombreCliente" />
                     <asp:BoundField HeaderText="Vendedor" DataField="NombreVendedor" />
                     <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C2}" />
+                    <asp:TemplateField HeaderText="Detalle">
+                        <ItemTemplate>
+                            <a href='<%# "Factura.aspx?id=" + Eval("Id") %>' class="btn btn-outline-primary btn-sm">Ver Factura</a>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>

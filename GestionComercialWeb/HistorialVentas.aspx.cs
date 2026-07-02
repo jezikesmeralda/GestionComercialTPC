@@ -17,6 +17,7 @@ namespace GestionComercialWeb
                 var ventas = new VentaNegocio().Listar();
                 gvHistorialVentas.DataSource = ventas.Select(v => new
                 {
+                    v.Id,
                     v.NumeroFactura,
                     v.FechaVenta,
                     NombreCliente = v.Cliente.Nombre,

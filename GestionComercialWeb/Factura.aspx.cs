@@ -2,25 +2,21 @@
 using Negocio;
 using System;
 using GestionComercialWeb.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
-    public partial class Factura : System.Web.UI.Page
+    public partial class Factura : PaginaBase
     {
         private VentaNegocio ventaNegocio = new VentaNegocio();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+
             if (!IsPostBack)
-            {
                 CargarFactura();
-            }
         }
+
         private void CargarFactura()
         {
             int idVenta;
@@ -39,7 +35,6 @@ namespace GestionComercialWeb
                 return;
             }
 
-            
             Session["VentaFactura"] = venta;
 
             lblNumeroFactura.Text = venta.NumeroFactura;
@@ -69,18 +64,18 @@ namespace GestionComercialWeb
             {
                 byte[] pdfBytes = FacturaPdfGenerador.Generar(venta);
 
-            Response.Clear();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + venta.NumeroFactura + ".pdf");
-            Response.BinaryWrite(pdfBytes);
-            Response.End();
+                Response.Clear();
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + venta.NumeroFactura + ".pdf");
+                Response.BinaryWrite(pdfBytes);
+                Response.End();
             }
             catch (Exception ex)
-             {
+            {
                 MostrarMensajeMail("Error al generar el PDF: " + ex.Message, true);
-             }
-
+            }
         }
+
         protected void btnEnviarMail_Click(object sender, EventArgs e)
         {
             Venta venta = ObtenerVentaActual();
@@ -98,6 +93,7 @@ namespace GestionComercialWeb
                 MostrarMensajeMail("No se pudo enviar el mail: " + ex.Message, esError: true);
             }
         }
+
         private Venta ObtenerVentaActual()
         {
             Venta venta = Session["VentaFactura"] as Venta;
@@ -106,12 +102,11 @@ namespace GestionComercialWeb
             {
                 int idVenta;
                 if (int.TryParse(Request.QueryString["id"], out idVenta))
-                {
                     venta = ventaNegocio.ObtenerPorId(idVenta);
-                }
             }
             return venta;
         }
+
         private void MostrarMensajeMail(string texto, bool esError)
         {
             lblMensajeMail.Text = texto;
@@ -120,4 +115,3 @@ namespace GestionComercialWeb
         }
     }
 }
-
