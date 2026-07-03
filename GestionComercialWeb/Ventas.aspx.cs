@@ -71,8 +71,12 @@ namespace GestionComercialWeb
 
             Session["ProductosBuscados"] = productos;
 
+            pnlResultados.Visible = productos.Count > 0;
             gvProductos.DataSource = productos;
             gvProductos.DataBind();
+            pnlProductoSeleccionado.Visible = false;
+            ProductoSeleccionado = null;
+
 
             if (productos.Count == 0)
                 MostrarError(lblErrorProducto,"No se encontraron productos.");
@@ -87,9 +91,32 @@ namespace GestionComercialWeb
                 int fila = Convert.ToInt32(e.CommandArgument);
                 List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
                 ProductoSeleccionado = productos[fila];
+                lblProductoSeleccionado.Text = ProductoSeleccionado.NombreProducto;
+                lblStockSeleccionado.Text = ProductoSeleccionado.StockActual.ToString();
+                lblPrecioSeleccionado.Text = ProductoSeleccionado.PrecioVenta.ToString("C2");
+                pnlProductoSeleccionado.Visible = true;
+
+                
+                pnlResultados.Visible = false;
+
                 OcultarError(lblErrorProducto);
             }
         }
+        protected void btnCancelarSeleccion_Click(object sender, EventArgs e)
+        {
+          
+            ProductoSeleccionado = null;
+            pnlProductoSeleccionado.Visible = false;
+
+            List<Producto> productos = (List<Producto>)Session["ProductosBuscados"];
+            if (productos != null && productos.Count > 0)
+            {
+                pnlResultados.Visible = true;
+                gvProductos.DataSource = productos;
+                gvProductos.DataBind();
+            }
+        }
+
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -122,19 +149,18 @@ namespace GestionComercialWeb
                 return;
             }
 
-            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"];
-            if (listaTemporal == null)
-                listaTemporal = new List<DetalleVenta>();
-
-            DetalleVenta nuevoDetalle = new DetalleVenta();
-            nuevoDetalle.Producto = prod;
-            nuevoDetalle.Cantidad = cantidad;
-            nuevoDetalle.PrecioUnitario = prod.PrecioVenta;
-
-            listaTemporal.Add(nuevoDetalle);
+            List<DetalleVenta> listaTemporal = (List<DetalleVenta>)Session["Carrito"] ?? new List<DetalleVenta>();
+            listaTemporal.Add(new DetalleVenta
+            {
+                Producto = prod,
+                Cantidad = cantidad,
+                PrecioUnitario = prod.PrecioVenta
+            });
 
             Session["Carrito"] = listaTemporal;
             OcultarError(lblErrorProducto);
+            OcultarError(lblErrorCantidad);
+            OcultarError(lblErrorAgregar);
             LimpiarBuscadorProducto();
             ActualizarGrillaYTotal();
         }
@@ -161,26 +187,24 @@ namespace GestionComercialWeb
 
             try
             {
-                Venta nuevaVenta = new Venta();
-                nuevaVenta.Cliente = new Cliente { Id = int.Parse(ddlCliente.SelectedValue) };
-                nuevaVenta.Vendedor = new Usuario { Id = UsuarioActual.Id };
-                nuevaVenta.Detalles = listaTemporal;
-
-                decimal totalFinal = 0;
-                foreach (var item in listaTemporal) totalFinal += item.Subtotal;
-                nuevaVenta.Total = totalFinal;
+                Venta nuevaVenta = new Venta
+                {
+                    Cliente = new Cliente { Id = int.Parse(ddlCliente.SelectedValue) },
+                    Vendedor = new Usuario { Id = UsuarioActual.Id },
+                    Detalles = listaTemporal,
+                    Total = listaTemporal.Sum(x => x.Subtotal)
+                };
 
                 Venta ventaGuardada = ventaNegocio.Alta(nuevaVenta);
-
                 Session["Carrito"] = null;
-
                 Response.Redirect("Factura.aspx?id=" + ventaGuardada.Id);
             }
             catch (Exception ex)
             {
-                MostrarError(lblErrorProducto, ex.Message);
+                MostrarError(lblError, ex.Message);
             }
         }
+           
 
         private void ActualizarGrillaYTotal()
         {

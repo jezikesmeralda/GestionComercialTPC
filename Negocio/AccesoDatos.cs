@@ -19,30 +19,39 @@ namespace Negocio
         {
             try
             {
-                conexion = new SqlConnection(@"Server=localhost;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
+
+                conexion = new SqlConnection(@"Server=localhost\SQLEXPRESS01;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
                 conexion.Open();
             }
             catch
             {
                 try
                 {
-                    conexion = new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
+                    conexion = new SqlConnection(@"Server=localhost;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
                     conexion.Open();
                 }
                 catch
                 {
                     try
                     {
-                        conexion = new SqlConnection(@"Server=.\SQLEXPRESS;Database=Comercio;Integrated Security=False;User=sa;Password=Passw0rd2025!;TrustServerCertificate=True;");
+                        conexion = new SqlConnection(@"Server=localhost\SQLEXPRESS;Database=Comercio;Trusted_Connection=True;TrustServerCertificate=True;");
                         conexion.Open();
                     }
                     catch
                     {
-                        conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=Comercio;Integrated Security=True;TrustServerCertificate=True;");
-                        conexion.Open();
+                        try
+                        {
+                            conexion = new SqlConnection(@"Server=.\SQLEXPRESS;Database=Comercio;Integrated Security=False;User=sa;Password=Passw0rd2025!;TrustServerCertificate=True;");
+                            conexion.Open();
+                        }
+                        catch
+                        {
+                            conexion = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=Comercio;Integrated Security=True;TrustServerCertificate=True;");
+                            conexion.Open();
+                        }
                     }
                 }
-            }
+                }
 
             conexion.Close();
             comando = new SqlCommand();

@@ -16,10 +16,21 @@
                     <asp:Label ID="lblErrorCliente" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                 </div>
             </div>
-
+            </div>
             <hr />
+            <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="upVenta">
+                <ProgressTemplate>
+                    <div class="text-center text-muted small mt-1 mb-2">
+                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                        Procesando...
+       
+                    </div>
+                </ProgressTemplate>
+            </asp:UpdateProgress>
+          
             <asp:UpdatePanel ID="upVenta" runat="server">
                 <ContentTemplate>
+                    <asp:Panel ID="pnlBuscador" runat="server" DefaultButton="btnBuscar">
                     <div class="row align-items-end mb-4">
                         <div class="col-md-5">
                             <label class="form-label">Buscar Producto</label>
@@ -28,17 +39,42 @@
                         <div class="col-md-2">
                             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary w-100" OnClick="btnBuscar_Click" />
                         </div>
+                        </div>
                         <asp:Label ID="lblErrorProducto" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
-                    </div>
+                   
+                        </asp:Panel>
 
-                    <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" DataKeyNames="Id" OnRowCommand="gvProductos_RowCommand">
+                     <asp:Panel ID="pnlResultados" runat="server" Visible="false">
+                      <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" DataKeyNames="Id" OnRowCommand="gvProductos_RowCommand">
                         <Columns>
                             <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
                             <asp:BoundField DataField="StockActual" HeaderText="Stock" />
                             <asp:BoundField DataField="PrecioVenta" HeaderText="Precio" DataFormatString="{0:C2}" />
                             <asp:ButtonField Text="Seleccionar" CommandName="Seleccionar" ButtonType="Button" />
                         </Columns>
-                    </asp:GridView>
+                         </asp:GridView>
+                          </asp:Panel>
+
+                    <asp:Panel ID="pnlProductoSeleccionado" runat="server" Visible="false">
+                        <div class="alert alert-success mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Producto seleccionado:</strong>
+                                    <asp:Label ID="lblProductoSeleccionado" runat="server"></asp:Label>
+                                    &nbsp;&nbsp;
+                 
+                                    <strong>Stock:</strong>
+                                    <asp:Label ID="lblStockSeleccionado" runat="server"></asp:Label>
+                                    &nbsp;&nbsp;
+                 
+                                    <strong>Precio:</strong>
+                                    <asp:Label ID="lblPrecioSeleccionado" runat="server"></asp:Label>
+                                </div>
+                               
+                                <asp:Button ID="btnCancelarSeleccion" runat="server" Text="✕ Cambiar" CssClass="btn btn-sm btn-outline-secondary" OnClick="btnCancelarSeleccion_Click" />
+                            </div>
+                        </div>
+                    </asp:Panel>
 
                     <div class="row align-items-end mb-3">
                         <div class="col-md-3">
@@ -51,13 +87,8 @@
                         </div>
                         <asp:Label ID="lblErrorAgregar" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
-    </div>
-
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
+               
+       <hr />
             <h5>Detalle Venta</h5>
 
             <asp:GridView ID="gvDetalleVenta" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">
@@ -78,7 +109,15 @@
             <div class="text-end">
                 <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-success" OnClick="btnRegistrarVenta_Click" />
             </div>
-        </div>
-    </div>
+            </ContentTemplate>
+           <Triggers>
 
+               <asp:AsyncPostBackTrigger ControlID="btnBuscar" EventName="Click" />
+               <asp:AsyncPostBackTrigger ControlID="btnAgregar" EventName="Click" />
+               <asp:AsyncPostBackTrigger ControlID="btnCancelarSeleccion" EventName="Click" />
+          </Triggers>
+            </asp:UpdatePanel>
+        </div>
+    
+    </div>
 </asp:Content>
