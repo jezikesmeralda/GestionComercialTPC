@@ -40,12 +40,38 @@ namespace GestionComercialWeb
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            litMensaje.Text = "";
+            
             if (!Page.IsValid)
             {
-               MostrarError("Por favor, complete todos los campos requeridos correctamente.");
+               MostrarError(lblError,"Por favor, complete todos los campos requeridos correctamente.");
                 return;
             }
+            litMensaje.Text = "";
+            lblErrorNombre.Visible = false;
+            lblErrorTelefono.Visible = false;
+            lblErrorEmail.Visible = false;
+
+            bool valido = true;
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MostrarError(lblErrorNombre, "El nombre es obligatorio.");
+                valido = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtTelefono.Text) )
+            {
+                MostrarError(lblErrorTelefono, "El teléfono es obligatorio");
+                valido = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEmail.Text) )
+            {
+                MostrarError(lblErrorEmail, "Ingrese un email válido.");
+                valido = false;
+            }
+
+            if (!valido) return;
 
             try
             {
@@ -69,16 +95,13 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                MostrarError("Ocurrió un error al guardar el proveedor.");
+                MostrarError(lblError,"Ocurrió un error al guardar el proveedor.");
             }
         }
-        private void MostrarError(string mensaje)
+        private void MostrarError(Label lbl, string mensaje)
         {
-            litMensaje.Text = $@"
-            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                <strong>Error:</strong> {mensaje}
-                <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
-            </div>";
+            lbl.Text = mensaje;
+            lbl.Visible = true;
         }
     }
 }
