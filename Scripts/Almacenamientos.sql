@@ -673,3 +673,34 @@ BEGIN
     ORDER BY MontoTotal DESC;
 END
 GO
+
+
+CREATE PROCEDURE sp_ObtenerCompraPorId
+    @IdCompra INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        c.Id,
+        c.FechaCompra,
+        c.Total,
+        p.Id AS IdProveedor,
+        p.Nombre AS NombreProveedor
+    FROM Compras c
+    INNER JOIN Proveedores p ON c.IdProveedor = p.Id
+    WHERE c.Id = @IdCompra;
+
+    SELECT
+        dc.Id,
+        dc.IdProducto,
+        pr.NombreProducto,
+        dc.Cantidad,
+        dc.PrecioUnitario,
+        dc.Subtotal
+    FROM DetalleCompras dc
+    INNER JOIN Productos pr ON dc.IdProducto = pr.Id
+    WHERE dc.IdCompra = @IdCompra;
+END
+
+GO;

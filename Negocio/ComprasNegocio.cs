@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace Negocio
 {
     public class ComprasNegocio
@@ -43,6 +42,61 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        public Compra ObtenerPorId(int idCompra)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Compra compra = null;
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ObtenerCompraPorId");
+                datos.SetearParametro("@IdCompra", idCompra);
+
+                System.Data.DataSet ds = datos.EjecutarDataSet();
+
+                if (ds.Tables.Count < 2 || ds.Tables[0].Rows.Count == 0)
+                    return null;
+
+                System.Data.DataRow cabecera = ds.Tables[0].Rows[0];
+
+                compra = new Compra
+                {
+                    Id = Convert.ToInt32(cabecera["Id"]),
+                    FechaCompra = Convert.ToDateTime(cabecera["FechaCompra"]),
+                    Total = Convert.ToDecimal(cabecera["Total"]),
+                    Proveedor = new Proveedor
+                    {
+                        Id = Convert.ToInt32(cabecera["IdProveedor"]),
+                        Nombre = cabecera["NombreProveedor"].ToString()
+                    },
+                    Detalles = new List<DetalleCompra>()
+                };
+
+                foreach (System.Data.DataRow fila in ds.Tables[1].Rows)
+                {
+                    compra.Detalles.Add(new DetalleCompra
+                    {
+                        Id = Convert.ToInt32(fila["Id"]),
+                        Producto = new Producto
+                        {
+                            Id = Convert.ToInt32(fila["IdProducto"]),
+                            NombreProducto = fila["NombreProducto"].ToString()
+                        },
+                        Cantidad = Convert.ToInt32(fila["Cantidad"]),
+                        PrecioUnitario = Convert.ToDecimal(fila["PrecioUnitario"]),
+                        Subtotal = Convert.ToDecimal(fila["Subtotal"])
+                    });
+                }
+
+                return compra;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         public void Alta(Compra compra)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -50,7 +104,6 @@ namespace Negocio
             try
             {
                 datos.SetearProcedimiento("sp_AltaCompra");
-
                 datos.SetearParametro("@IdProveedor", compra.Proveedor.Id);
                 datos.SetearParametro("@Total", compra.Total);
 
@@ -78,7 +131,6 @@ namespace Negocio
             try
             {
                 datos.SetearProcedimiento("sp_AltaDetalleCompra");
-
                 datos.SetearParametro("@IdCompra", idCompra);
                 datos.SetearParametro("@IdProducto", detalle.Producto.Id);
                 datos.SetearParametro("@Cantidad", detalle.Cantidad);
@@ -92,8 +144,5 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
-
-
     }
 }
-    
