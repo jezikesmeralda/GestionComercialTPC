@@ -8,6 +8,7 @@ SELECT * FROM Clientes;
 SELECT * FROM Productos;
 SELECT * FROM Ventas;
 SELECT * FROM Usuarios;
+SELECT * FROM DetalleCompras;
 
 GO
 --AÑADI ESTO---
@@ -126,3 +127,8 @@ BEGIN
     INNER JOIN Productos p ON dv.IdProducto = p.Id
     WHERE dv.IdVenta = @IdVenta;
 END
+
+GO
+
+ALTER TABLE Usuarios
+ADD Email VARCHAR(200) NULL;
