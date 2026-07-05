@@ -803,3 +803,21 @@ BEGIN
     WHERE Id = @Id
 END
 GO
+CREATE PROCEDURE sp_ListarUsuariosInactivos
+AS
+BEGIN
+    SELECT Id, Nombre, Password, Rol, Activo, Email
+    FROM Usuarios
+    WHERE Activo = 0
+END
+GO
+
+CREATE PROCEDURE sp_ReactivarUsuario
+    @Id INT
+AS
+BEGIN
+    UPDATE Usuarios
+    SET Activo = 1
+    WHERE Id = @Id
+END
+GO

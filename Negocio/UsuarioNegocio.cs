@@ -161,5 +161,60 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public List<Usuario> ListarInactivos()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ListarUsuariosInactivos");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.UserName = (string)datos.Lector["Nombre"];
+                    aux.Password = (string)datos.Lector["Password"];
+                    aux.Rol = (Rol)(int)datos.Lector["Rol"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.Email = datos.Lector["Email"] != DBNull.Value ? (string)datos.Lector["Email"] : string.Empty;
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Reactivar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ReactivarUsuario");
+                datos.SetearParametro("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
