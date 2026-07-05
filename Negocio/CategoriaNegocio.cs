@@ -45,7 +45,7 @@ namespace Negocio
             if (string.IsNullOrWhiteSpace(categoria.Nombre))
                 throw new Exception("El nombre de la categoría es obligatorio.");
             if (ExisteCategoria(categoria.Nombre))
-                throw new Exception("Ya existe una marca con ese nombre.");
+                throw new Exception("Ya existe una categoria con ese nombre.");
 
             AccesoDatos datos = new AccesoDatos();
 
@@ -121,6 +121,56 @@ namespace Negocio
                 int cantidad = Convert.ToInt32(datos.EjecutarScalar());
 
                 return cantidad > 0;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public List<Categoria> ListarInactivos()
+        {
+            List<Categoria> lista = new List<Categoria>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ListarCategoriasInactivas");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Categoria aux = new Categoria();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Reactivar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ReactivarCategoria");
+                datos.SetearParametro("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             finally
             {

@@ -2,15 +2,18 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Marcas</h2>
-
+    <asp:HiddenField ID="hfIdEliminar" runat="server" />
+    <asp:HiddenField ID="hfIdReactivar" runat="server" />
     <div class="mb-3 mt-4">
         <asp:Button ID="btnNuevaMarca" runat="server" Text="Nueva Marca" CssClass="btn btn-success" OnClick="btnNuevaMarca_Click" />
     </div>
-
+     <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
+        <asp:Literal ID="litMensaje" runat="server" />
+    </asp:Panel>
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="mb-3">Listado de Marcas</h5>
-            <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+
 
             <asp:GridView ID="gvMarcas" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="gvMarcas_RowCommand" OnRowDataBound="gvMarcas_RowDataBound">
                 <Columns>
@@ -21,12 +24,73 @@
                         <ItemTemplate>
                             <div class="d-flex gap-2">
                                 <asp:Button ID="btnEditar" runat="server" Text="Editar" CssClass="btn btn-outline-primary btn-sm me-1" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' />
-                                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-outline-danger btn-sm" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' OnClientClick="return confirm('¿Seguro que querés eliminar esta marca?');" />
+                                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-outline-danger btn-sm" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' />
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+        </div>
+    </div>
+    <div class="mb-3 mt-3">
+        <asp:Button ID="btnVerInactivos" runat="server" Text="Ver Marcas Inactivas" CssClass="btn btn-secondary" OnClick="btnVerInactivos_Click" />
+    </div>
+
+    <asp:Panel ID="pnlInactivos" runat="server" Visible="false" CssClass="card shadow-sm">
+        <div class="card-body">
+            <h5 class="mb-3">Marcas Inactivas</h5>
+            <asp:GridView ID="gvInactivos" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="gvInactivos_RowCommand">
+                <Columns>
+                    <asp:BoundField HeaderText="ID" DataField="Id" />
+                    <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
+
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <asp:Button ID="btnReactivar" runat="server" Text="Reactivar" CssClass="btn btn-outline-success btn-sm" CommandName="Reactivar" CommandArgument='<%# Eval("Id") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
+    </asp:Panel>
+
+
+    <div class="modal fade" id="modalEliminar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Seguro que desea eliminar esta marca?
+               
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <asp:Button ID="btnConfirmarEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnConfirmarEliminar_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalReactivar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Confirmar reactivación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Seguro que desea reactivar esta marca?
+               
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <asp:Button ID="btnConfirmarReactivar" runat="server" Text="Reactivar" CssClass="btn btn-success" OnClick="btnConfirmarReactivar_Click" />
+                </div>
+            </div>
         </div>
     </div>
 </asp:Content>

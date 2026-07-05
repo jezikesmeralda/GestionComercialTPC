@@ -741,3 +741,40 @@ BEGIN
     WHERE Id = @Id
 END
 GO
+CREATE PROCEDURE sp_ListarMarcasInactivas
+AS
+BEGIN
+    SELECT Id, Nombre, Activo
+    FROM Marcas
+    WHERE Activo = 0
+END
+GO
+
+CREATE PROCEDURE sp_ReactivarMarca
+    @Id INT
+AS
+BEGIN
+    UPDATE Marcas
+    SET Activo = 1
+    WHERE Id = @Id
+END
+GO
+
+CREATE PROCEDURE sp_ListarCategoriasInactivas
+AS
+BEGIN
+    SELECT Id, Nombre, Activo
+    FROM Categorias
+    WHERE Activo = 0
+END
+GO
+
+CREATE PROCEDURE sp_ReactivarCategoria
+    @Id INT
+AS
+BEGIN
+    UPDATE Categorias
+    SET Activo = 1
+    WHERE Id = @Id
+END
+GO
