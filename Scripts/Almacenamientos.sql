@@ -704,3 +704,22 @@ BEGIN
 END
 
 GO;
+
+CREATE PROCEDURE sp_ListarClientesInactivos
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, Dni, Email, Telefono, Direccion, Activo
+    FROM Clientes
+    WHERE Activo = 0
+END
+GO
+
+CREATE PROCEDURE sp_ReactivarCliente
+    @Id INT
+AS
+BEGIN
+    UPDATE Clientes
+    SET Activo = 1
+    WHERE Id = @Id
+END
+GO
