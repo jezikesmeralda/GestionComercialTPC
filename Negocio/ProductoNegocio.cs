@@ -278,5 +278,71 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public List<Producto> ListarInactivos()
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ListarProductosInactivos");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.NombreProducto = (string)datos.Lector["NombreProducto"];
+                    aux.Descripcion = datos.Lector["Descripcion"] as string;
+                    aux.ImagenUrl = datos.Lector["ImagenUrl"] as string;
+                    aux.PrecioCosto = (decimal)datos.Lector["PrecioCosto"];
+                    aux.PorcentajeGanancia = (decimal)datos.Lector["PorcentajeGanancia"];
+                    aux.StockActual = (int)datos.Lector["StockActual"];
+                    aux.StockMinimo = (int)datos.Lector["StockMinimo"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Nombre = (string)datos.Lector["NombreMarca"];
+
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Reactivar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("sp_ReactivarProducto");
+                datos.SetearParametro("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
