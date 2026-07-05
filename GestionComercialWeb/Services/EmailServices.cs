@@ -80,8 +80,7 @@ namespace GestionComercialWeb.Services
             <p>Tu cuenta ha sido creada exitosamente en el sistema de Vinoteca.</p>
             <p>Tus credenciales de acceso son:</p>
             <p><strong>Usuario:</strong> {userName}</p>
-            <p><strong>Contraseña:</strong> {password}</p>
-            <p>Te recomendamos cambiar tu contraseña al ingresar por primera vez.</p>
+            <p><strong>Contraseña:</strong> {password}</p
             <p>Vinoteca</p>
         ";
 

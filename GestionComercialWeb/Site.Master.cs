@@ -13,7 +13,10 @@ namespace GestionComercialWeb
                 lblUsuario.Text = usuario.UserName;
 
                 if (usuario.Rol != Rol.Administrador)
+                {
                     lnkReportes.Visible = false;
+                    lnkUsuarios.Visible = false;
+                }
             }
         }
 
