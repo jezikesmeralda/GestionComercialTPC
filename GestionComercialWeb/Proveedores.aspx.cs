@@ -14,6 +14,11 @@ namespace GestionComercialWeb
         {
             if (!IsPostBack)
             {
+                if (Session["mensaje"] != null)
+                {
+                    MostrarMensaje(Session["mensaje"].ToString(), esError: false);
+                    Session.Remove("mensaje");
+                }
                 if (UsuarioActual.Rol != Rol.Administrador)
                 {
                     btnNuevoProveedor.Visible = false;
@@ -52,16 +57,10 @@ namespace GestionComercialWeb
 
             if (e.CommandName == "Eliminar")
             {
-                try
-                {
-                    negocio.Baja(id);
-                    CargarProveedores();
-                }
-                catch (Exception ex)
-                {
-                    lblError.Text = ex.Message;
-                    lblError.Visible = true;
-                }
+                hfIdEliminar.Value = id.ToString();
+
+                MostrarModal("modalEliminar");
+                return;
             }
 
             if (e.CommandName == "Editar")
@@ -74,10 +73,95 @@ namespace GestionComercialWeb
         {
             Response.Redirect("ProveedoresForm.aspx");
         }
-        private void MostrarError(string mensaje)
+
+        protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
         {
-            lblError.Text = mensaje;
-            lblError.Visible = true;
+            try
+            {
+                int id = int.Parse(hfIdEliminar.Value);
+                negocio.Baja(id);
+                CargarProveedores();
+                MostrarMensaje("Proveedor eliminado correctamente.", esError: false);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje(ex.Message, esError: true);
+            }
+        }
+        protected void btnVerInactivos_Click(object sender, EventArgs e)
+        {
+            pnlInactivos.Visible = !pnlInactivos.Visible;
+
+            if (pnlInactivos.Visible)
+            {
+                CargarInactivos();
+                btnVerInactivos.Text = "Ocultar Proveedores Inactivos";
+            }
+            else
+            {
+                btnVerInactivos.Text = "Ver Proveedors Inactivos";
+            }
+        }
+        private void CargarInactivos()
+        {
+            gvInactivos.DataSource = negocio.ListarInactivos();
+            gvInactivos.DataBind();
+        }
+        protected void gvInactivos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandArgument == null) return;
+
+            int id;
+            if (!int.TryParse(e.CommandArgument.ToString(), out id))
+                return;
+
+            if (e.CommandName == "Reactivar")
+            {
+                hfIdReactivar.Value = id.ToString();
+                MostrarModal("modalReactivar");
+            }
+        }
+        protected void btnConfirmarReactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = int.Parse(hfIdReactivar.Value);
+                negocio.Reactivar(id);
+
+
+                pnlInactivos.Visible = true;
+                btnVerInactivos.Text = "Ocultar Proveedores Inactivos";
+                CargarInactivos();
+                CargarProveedores();
+
+                MostrarMensaje("Proveedor reactivado correctamente.", esError: false);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje(ex.Message, esError: true);
+            }
+        }
+        private void MostrarMensaje(string mensaje, bool esError)
+        {
+            pnlMensaje.CssClass = "alert alert-dismissible fade show mb-3 " + (esError ? "alert-danger" : "alert-success");
+            litMensaje.Text = mensaje + " <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Cerrar\"></button>";
+            pnlMensaje.Visible = true;
+        }
+        private void MostrarModal(string idModal)
+        {
+            string script = $@"
+        (function() {{
+            function abrirModal() {{
+                if (typeof bootstrap !== 'undefined') {{
+                    new bootstrap.Modal(document.getElementById('{idModal}')).show();
+                }} else {{
+                    setTimeout(abrirModal, 50);
+                }}
+            }}
+            abrirModal();
+        }})();
+    ";
+            ClientScript.RegisterStartupScript(GetType(), "mostrarModal_" + idModal, script, true);
         }
     }
 }

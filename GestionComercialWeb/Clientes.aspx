@@ -1,21 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Clientes.aspx.cs" Inherits="GestionComercialWeb.Clientes" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-  
+
     <h2>Clientes</h2>
     <asp:HiddenField ID="hfIdEliminar" runat="server" />
     <asp:HiddenField ID="hfIdReactivar" runat="server" />
     <div class="mb-3 mt-4">
         <asp:Button ID="btnNuevoCliente" runat="server" Text="Nuevo Cliente" CssClass="btn btn-success" OnClick="btnNuevoCliente_Click" />
     </div>
-<asp:Panel ID="pnlMensaje" runat="server" Visible="false">
-    <asp:Literal ID="litMensaje" runat="server" />
-</asp:Panel>
+    <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
+        <asp:Literal ID="litMensaje" runat="server" />
+    </asp:Panel>
 
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="mb-3">Listado de Clientes</h5>
-              <asp:GridView ID="gvClientes" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="false" OnRowCommand="gvClientes_RowCommand" OnRowDataBound="gvClientes_RowDataBound">
+            <asp:GridView ID="gvClientes" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="false" OnRowCommand="gvClientes_RowCommand" OnRowDataBound="gvClientes_RowDataBound">
                 <Columns>
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                     <asp:BoundField HeaderText="Apellido" DataField="Apellido" />

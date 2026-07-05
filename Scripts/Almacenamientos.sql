@@ -723,3 +723,21 @@ BEGIN
     WHERE Id = @Id
 END
 GO
+CREATE PROCEDURE sp_ListarProveedoresInactivos
+AS
+BEGIN
+    SELECT Id, Nombre, Email, Telefono, Activo
+    FROM Proveedores
+    WHERE Activo = 0
+END
+GO
+
+CREATE PROCEDURE sp_ReactivarProveedor
+    @Id INT
+AS
+BEGIN
+    UPDATE Proveedores
+    SET Activo = 1
+    WHERE Id = @Id
+END
+GO
