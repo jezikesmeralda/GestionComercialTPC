@@ -55,9 +55,8 @@ namespace GestionComercialWeb.Services
                 <p>Vinoteca</p>
             ";
         }
-    
 
-    public static void EnviarCredenciales(string email, string userName, string password)
+        public static void EnviarCredenciales(string email, string userName, string password)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new Exception("El usuario no tiene un email registrado.");
@@ -67,7 +66,7 @@ namespace GestionComercialWeb.Services
             string usuario = ConfigurationManager.AppSettings["Smtp:Usuario"];
             string passwordSmtp = ConfigurationManager.AppSettings["Smtp:Password"];
             string remitenteEmail = ConfigurationManager.AppSettings["Smtp:From"];
-            string nombreRemitente = ConfigurationManager.AppSettings["Smtp:NombreRemitente"];
+            string nombreRemitente = ConfigurationManager.AppSettings["Smtp:NombreRemitenteUsuarios"];
 
             using (MailMessage mensaje = new MailMessage())
             {
@@ -80,8 +79,8 @@ namespace GestionComercialWeb.Services
             <p>Tu cuenta ha sido creada exitosamente en el sistema de Vinoteca.</p>
             <p>Tus credenciales de acceso son:</p>
             <p><strong>Usuario:</strong> {userName}</p>
-            <p><strong>Contraseña:</strong> {password}</p
-            <p>Vinoteca</p>
+            <p><strong>Contraseña:</strong> {password}</p>
+            <p>Vinoteca.</p>
         ";
 
                 using (SmtpClient cliente = new SmtpClient(host, puerto))
@@ -92,7 +91,5 @@ namespace GestionComercialWeb.Services
                 }
             }
         }
-
     }
-
 }

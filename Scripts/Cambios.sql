@@ -132,3 +132,54 @@ GO
 
 ALTER TABLE Usuarios
 ADD Email VARCHAR(200) NULL;
+
+GO
+
+
+ALTER PROCEDURE [dbo].[sp_ListarUsuarios]
+AS
+BEGIN
+    SELECT Id, Nombre, Password, Rol, Activo, Email
+    FROM Usuarios
+    WHERE Activo = 1
+END
+
+GO
+
+
+ALTER PROCEDURE [dbo].[sp_AltaUsuario]
+    @Nombre VARCHAR(100),
+    @Password VARCHAR(255),
+    @Rol INT,
+    @Email VARCHAR(200)
+AS
+BEGIN
+    INSERT INTO Usuarios (Nombre, Password, Rol, Activo, Email)
+    VALUES (@Nombre, @Password, @Rol, 1, @Email)
+END
+GO
+
+ALTER PROCEDURE [dbo].[sp_ModificarUsuario]
+    @Id INT,
+    @Nombre VARCHAR(100),
+    @Password VARCHAR(255),
+    @Rol INT,
+    @Email VARCHAR(200)
+AS
+BEGIN
+    UPDATE Usuarios
+    SET Nombre = @Nombre,
+        Password = @Password,
+        Rol = @Rol,
+        Email = @Email
+    WHERE Id = @Id
+END
+GO
+
+SELECT * FROM Usuarios
+SELECT * FROM Clientes
+
+UPDATE Usuarios
+SET Email = 'admin@vinoteca.com'
+WHERE Id = 1
+

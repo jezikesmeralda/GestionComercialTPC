@@ -25,6 +25,7 @@ namespace Negocio
                     aux.Password = (string)datos.Lector["Password"];
                     aux.Rol = (Rol)(int)datos.Lector["Rol"];
                     aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.Email = datos.Lector["Email"] != DBNull.Value ? (string)datos.Lector["Email"] : string.Empty;
 
                     lista.Add(aux);
                 }
@@ -60,6 +61,7 @@ namespace Negocio
                 datos.SetearParametro("@Nombre", usuario.UserName);
                 datos.SetearParametro("@Password", usuario.Password);
                 datos.SetearParametro("@Rol", (int)usuario.Rol);
+                datos.SetearParametro("@Email", usuario.Email);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -92,6 +94,7 @@ namespace Negocio
                 datos.SetearParametro("@Nombre", usuario.UserName);
                 datos.SetearParametro("@Password", usuario.Password);
                 datos.SetearParametro("@Rol", (int)usuario.Rol);
+                datos.SetearParametro("@Email", usuario.Email);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)

@@ -56,7 +56,6 @@
             <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" Visible="false" />
 
             <asp:Button ID="btnLogin" runat="server" Text="Iniciar Sesión" CssClass="btn btn-dark w-100 mb-2" OnClick="btnLogin_Click" />
-            <a href="Registro.aspx" class="btn btn-outline-dark w-100">Registrarse</a>
         </div>
     </form>
 </body>
