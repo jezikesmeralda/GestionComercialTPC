@@ -17,7 +17,7 @@
 
             <asp:HiddenField ID="hfId" runat="server" />
 
-            <asp:Label ID="lblError" runat="server" CssClass="text-danger"></asp:Label>
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
 
             <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success" OnClick="btnGuardar_Click" />
 

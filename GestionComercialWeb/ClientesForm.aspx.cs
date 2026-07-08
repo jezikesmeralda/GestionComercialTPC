@@ -95,12 +95,12 @@ namespace GestionComercialWeb
             try
             {
                 Cliente cliente = new Cliente();
-                cliente.Nombre = txtNombre.Text;
-                cliente.Apellido = txtApellido.Text;
+                cliente.Nombre = txtNombre.Text.Trim();
+                cliente.Apellido = txtApellido.Text.Trim();
                 cliente.Dni = dni;
-                cliente.Telefono = txtTelefono.Text;
-                cliente.Email = txtEmail.Text;
-                cliente.Direccion = txtDireccion.Text;
+                cliente.Telefono = txtTelefono.Text.Trim();
+                cliente.Email = txtEmail.Text.Trim();
+                cliente.Direccion = txtDireccion.Text.Trim();
 
                 if (!string.IsNullOrEmpty(hfId.Value))
                 {

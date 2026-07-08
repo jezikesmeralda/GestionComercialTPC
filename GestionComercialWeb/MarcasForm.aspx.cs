@@ -32,7 +32,20 @@ namespace GestionComercialWeb
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-          try { 
+            lblError.Visible = false;
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MostrarError(lblError, "El nombre es obligatorio.");
+                return;
+            }
+
+            if (txtNombre.Text.Trim().Length < 2)
+            {
+                MostrarError(lblError, "El nombre debe tener al menos 2 caracteres.");
+                return;
+            }
+            try { 
                 Marca marca = new Marca();
 
                 marca.Nombre = txtNombre.Text;
@@ -51,9 +64,13 @@ namespace GestionComercialWeb
             }
            catch (Exception ex)
             {
-
-                lblError.Text = ex.Message;
+                MostrarError(lblError, "Ocurrió un error al guardar la marca.");
             }
+        }
+        private void MostrarError(Label lbl, string mensaje)
+        {
+            lbl.Text = mensaje;
+            lbl.Visible = true;
         }
     }
 }

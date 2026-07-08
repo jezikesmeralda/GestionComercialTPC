@@ -89,9 +89,11 @@ namespace GestionComercialWeb
             try
             {
                 Dominio.Proveedor nuevo = new Dominio.Proveedor();
-                nuevo.Nombre = txtNombre.Text;
-                nuevo.Telefono = txtTelefono.Text;
-                nuevo.Email = txtEmail.Text;
+                nuevo.Nombre = txtNombre.Text.Trim();
+                nuevo.Telefono = txtTelefono.Text.Trim();
+                nuevo.Email = txtEmail.Text.Trim();
+
+                
 
                 if (!string.IsNullOrEmpty(hfId.Value))
                 {
