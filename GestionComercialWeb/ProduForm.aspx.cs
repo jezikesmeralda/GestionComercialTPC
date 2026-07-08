@@ -30,6 +30,11 @@ namespace GestionComercialWeb
                         int id = int.Parse(Request.QueryString["id"]);
                         CargarProducto(id);
                     }
+                    else
+                    {
+                        
+                       lblStockActualInfo.Visible = false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -54,10 +59,13 @@ namespace GestionComercialWeb
                 txtPrecioCosto.Text = producto.PrecioCosto.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 txtPorcetajeGanancia.Text = producto.PorcentajeGanancia.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 txtStockMinimo.Text = producto.StockMinimo.ToString();
-                txtStockActual.Text = producto.StockActual.ToString();
 
                 ddlMarca.SelectedValue = producto.Marca.Id.ToString();
                 ddlCategoria.SelectedValue = producto.Categoria.Id.ToString();
+
+                
+                lblStockActualInfo.Visible = true;
+                lblStockActualInfo.Text = producto.StockActual + " unidades";
             }
         }
 
@@ -73,7 +81,6 @@ namespace GestionComercialWeb
                 producto.PrecioCosto = decimal.Parse(txtPrecioCosto.Text.Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
                 producto.PorcentajeGanancia = decimal.Parse(txtPorcetajeGanancia.Text.Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
                 producto.StockMinimo = int.Parse(txtStockMinimo.Text);
-                producto.StockActual = int.Parse(txtStockActual.Text);
                 producto.Activo = true;
 
                 int idMarca = int.Parse(ddlMarca.SelectedValue);
@@ -82,10 +89,14 @@ namespace GestionComercialWeb
                 ProductoNegocio negocio = new ProductoNegocio();
 
                 if (producto.Id == 0)
+                {
+                  
                     negocio.Alta(producto, idMarca, idCategoria);
+                }
                 else
+                {
                     negocio.Modificar(producto, idMarca, idCategoria);
-
+                }
                 Response.Redirect("Productos.aspx");
             }
             catch (Exception ex)

@@ -42,6 +42,15 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
+        /// Control lblStockActualInfo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStockActualInfo;
+
+        /// <summary>
         /// Control txtDescripcion.
         /// </summary>
         /// <remarks>
@@ -87,15 +96,6 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.TextBox txtPorcetajeGanancia;
 
         /// <summary>
-        /// Control txtURLImagen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtURLImagen;
-
-        /// <summary>
         /// Control txtStockMinimo.
         /// </summary>
         /// <remarks>
@@ -105,13 +105,13 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.TextBox txtStockMinimo;
 
         /// <summary>
-        /// Control txtStockActual.
+        /// Control txtURLImagen.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStockActual;
+        protected global::System.Web.UI.WebControls.TextBox txtURLImagen;
 
         /// <summary>
         /// Control lblError.

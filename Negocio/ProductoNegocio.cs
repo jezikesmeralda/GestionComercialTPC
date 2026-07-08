@@ -139,7 +139,6 @@ namespace Negocio
                 datos.SetearParametro("@IdCategoria", idCategoria);
                 datos.SetearParametro("@PrecioCosto", producto.PrecioCosto);
                 datos.SetearParametro("@PorcentajeGanancia", producto.PorcentajeGanancia);
-                datos.SetearParametro("@StockActual", producto.StockActual);
                 datos.SetearParametro("@StockMinimo", producto.StockMinimo);
                 datos.EjecutarAccion();
             }

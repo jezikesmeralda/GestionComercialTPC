@@ -183,3 +183,31 @@ UPDATE Usuarios
 SET Email = 'admin@vinoteca.com'
 WHERE Id = 1
 
+ALTER PROCEDURE sp_ModificarProducto
+    @Id INT,
+    @Nombre VARCHAR(150),
+    @Descripcion VARCHAR(500) = NULL,
+    @ImagenUrl VARCHAR(500) = NULL,
+    @IdMarca INT,
+    @IdCategoria INT,
+    @PrecioCosto DECIMAL(18,2),
+    @PorcentajeGanancia DECIMAL(10,2),
+    @StockMinimo INT
+AS
+BEGIN
+    DECLARE @PrecioVenta DECIMAL(18,2)
+    SET @PrecioVenta = @PrecioCosto * (1 + @PorcentajeGanancia / 100)
+
+    UPDATE Productos
+    SET NombreProducto = @Nombre,
+        Descripcion = @Descripcion,
+        ImagenUrl = @ImagenUrl,
+        IdMarca = @IdMarca,
+        IdCategoria = @IdCategoria,
+        PrecioCosto = @PrecioCosto,
+        PorcentajeGanancia = @PorcentajeGanancia,
+        PrecioVenta = @PrecioVenta,
+        StockMinimo = @StockMinimo
+    WHERE Id = @Id
+END
+GO
