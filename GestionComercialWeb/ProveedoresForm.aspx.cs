@@ -3,13 +3,14 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
 {
-    public partial class ProveedoresForm : System.Web.UI.Page
+    public partial class ProveedoresForm : PaginaBase
     {
         ProveedorNegocio negocio = new ProveedorNegocio();
         protected void Page_Load(object sender, EventArgs e)
@@ -40,16 +41,11 @@ namespace GestionComercialWeb
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            
-            if (!Page.IsValid)
-            {
-               MostrarError(lblError,"Por favor, complete todos los campos requeridos correctamente.");
-                return;
-            }
             litMensaje.Text = "";
             lblErrorNombre.Visible = false;
             lblErrorTelefono.Visible = false;
             lblErrorEmail.Visible = false;
+            lblError.Visible = false;
 
             bool valido = true;
 
@@ -59,16 +55,33 @@ namespace GestionComercialWeb
                 valido = false;
             }
 
-            if (string.IsNullOrWhiteSpace(txtTelefono.Text) )
+            if (string.IsNullOrWhiteSpace(txtTelefono.Text))
             {
-                MostrarError(lblErrorTelefono, "El teléfono es obligatorio");
+                MostrarError(lblErrorTelefono, "El teléfono es obligatorio.");
+                valido = false;
+            }
+            else if (!Regex.IsMatch(txtTelefono.Text, @"^\d{10}$"))
+            {
+                MostrarError(lblErrorTelefono, "El teléfono debe tener exactamente 10 dígitos.");
                 valido = false;
             }
 
-            if (string.IsNullOrWhiteSpace(txtEmail.Text) )
+            if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MostrarError(lblErrorEmail, "Ingrese un email válido.");
+                MostrarError(lblErrorEmail, "El email es obligatorio.");
                 valido = false;
+            }
+            else
+            {
+                try
+                {
+                    System.Net.Mail.MailAddress mail = new System.Net.Mail.MailAddress(txtEmail.Text);
+                }
+                catch
+                {
+                    MostrarError(lblErrorEmail, "Ingrese un email válido.");
+                    valido = false;
+                }
             }
 
             if (!valido) return;
@@ -87,7 +100,7 @@ namespace GestionComercialWeb
                 }
                 else
                 {
-                    negocio.Alta(nuevo); 
+                    negocio.Alta(nuevo);
                 }
 
 
@@ -95,7 +108,7 @@ namespace GestionComercialWeb
             }
             catch (Exception ex)
             {
-                MostrarError(lblError,"Ocurrió un error al guardar el proveedor.");
+                MostrarError(lblError, "Ocurrió un error al guardar el proveedor.");
             }
         }
         private void MostrarError(Label lbl, string mensaje)
@@ -105,4 +118,3 @@ namespace GestionComercialWeb
         }
     }
 }
-

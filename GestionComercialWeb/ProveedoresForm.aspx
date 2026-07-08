@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Teléfono</label>
-                        <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
                         <asp:Label ID="lblErrorTelefono" runat="server" CssClass="text-danger small d-block mt-1" Visible="false" />
                     </div>
 

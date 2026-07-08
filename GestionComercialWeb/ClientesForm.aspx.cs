@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Web.UI;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace GestionComercialWeb
 {
@@ -23,7 +24,7 @@ namespace GestionComercialWeb
                     {
                         Response.Redirect("Clientes.aspx");
                         return;
-                        
+
                     }
                     hfId.Value = cliente.Id.ToString();
                     txtNombre.Text = cliente.Nombre;
@@ -40,6 +41,14 @@ namespace GestionComercialWeb
         {
             lblError.Visible = false;
             lblError.Text = "";
+
+            if (!Page.IsValid)
+            {
+                lblError.Text = "Revise los datos ingresados.";
+                lblError.Visible = true;
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
                 lblError.Text = "El nombre es obligatorio.";
@@ -54,10 +63,18 @@ namespace GestionComercialWeb
                 return;
             }
 
-            int dni;
-            if (!int.TryParse(txtDni.Text, out dni) || dni <= 0)
+            if (!Regex.IsMatch(txtDni.Text, @"^\d{8}$"))
             {
-                lblError.Text = "El DNI debe ser un número válido.";
+                lblError.Text = "El DNI debe tener exactamente 8 dígitos.";
+                lblError.Visible = true;
+                return;
+            }
+
+            int dni = int.Parse(txtDni.Text);
+
+            if (!Regex.IsMatch(txtTelefono.Text, @"^\d{10}$"))
+            {
+                lblError.Text = "El teléfono debe tener exactamente 10 dígitos.";
                 lblError.Visible = true;
                 return;
             }
