@@ -62,11 +62,13 @@
                         <p class="card-text"><%: produ.Descripcion %></p>
                         <p class="fs-5 text-success fw-bold">$<%: produ.PrecioVenta.ToString("N2") %></p>
                         <p><strong>Stock: </strong><%: produ.StockActual %> unidades</p>
+                        <% if (UsuarioActual.Rol == Dominio.Rol.Administrador) { %>
                         <a href='<%= "ProduForm.aspx?id=" + produ.Id %>' class="btn btn-outline-primary btn-sm">Editar</a>
                          <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm"
                            onclick="confirmarEliminar('<%: produ.Id %>')">
                            Eliminar
                         </a>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -93,9 +95,11 @@
                             <p class="card-text"><%: produ.Descripcion %></p>
                             <p class="fs-5 text-muted fw-bold">$<%: produ.PrecioVenta.ToString("N2") %></p>
                             <p><strong>Stock: </strong><%: produ.StockActual %> unidades</p>
+                            <% if (UsuarioActual.Rol == Dominio.Rol.Administrador) { %>
                             <a href="javascript:void(0);" class="btn btn-outline-success btn-sm"
                                 onclick="confirmarReactivar('<%: produ.Id %>')">Reactivar
                                 </a>
+                             <% } %>
                         </div>
                     </div>
                 </div>

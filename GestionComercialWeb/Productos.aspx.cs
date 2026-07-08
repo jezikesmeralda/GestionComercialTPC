@@ -14,6 +14,10 @@ namespace GestionComercialWeb
         ProductoNegocio negocio = new ProductoNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (UsuarioActual.Rol != Rol.Administrador)
+            {
+                btnNuevo.Visible = false;
+            }
             if (!IsPostBack)
             {
                 CargarCategorias();
