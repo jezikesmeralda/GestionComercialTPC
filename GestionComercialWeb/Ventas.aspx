@@ -28,7 +28,7 @@
                 </ProgressTemplate>
             </asp:UpdateProgress>
           
-            <asp:UpdatePanel ID="upVenta" runat="server">
+            <asp:UpdatePanel ID="upVenta" runat="server" updateMode="Always">
                 <ContentTemplate>
                     <asp:Panel ID="pnlBuscador" runat="server" DefaultButton="btnBuscar">
                     <div class="row align-items-end mb-4">
@@ -82,11 +82,13 @@
                             <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
                             <asp:Label ID="lblErrorCantidad" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                         </div>
-                        <div class="col-md-2">
-                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" OnClick="btnAgregar_Click" />
-                        </div>
-                        <asp:Label ID="lblErrorAgregar" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
-                    </div>
+                        
+                     
+                            <div class="col-md-2">
+        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success w-100" OnClick="btnAgregar_Click" />
+    </div>
+    <asp:Label ID="lblErrorAgregar" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+</div>
                
        <hr />
             <h5>Detalle Venta</h5>
@@ -101,20 +103,62 @@
             </asp:GridView>
 
             <div class="text-end mt-3">
-                <h4>Total: $<asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label></h4>
-            </div>
+
+    <h5>
+        Subtotal: $
+        <asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label>
+    </h5>
+                                <div class="card shadow-sm mt-3 p-3">
+    <div class="row align-items-end">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Medio de Pago</label>
+            <asp:DropDownList ID="ddlMedioPago" runat="server" CssClass="form-select" 
+                OnSelectedIndexChanged="ddlMedioPago_Changed" AutoPostBack="true">
+                <asp:ListItem Text="Efectivo" Value="Efectivo" />
+                <asp:ListItem Text="Débito" Value="Debito" />
+                <asp:ListItem Text="Crédito" Value="Credito" />
+            </asp:DropDownList>
+        </div>
+
+        <asp:Panel ID="pnlCuotas" runat="server" Visible="false" CssClass="col-md-4">
+            <label class="form-label fw-bold">Cuotas</label>
+            <asp:DropDownList ID="ddlCuotas" runat="server" CssClass="form-select"
+                OnSelectedIndexChanged="ddlCuotas_Changed" AutoPostBack="true">
+                <asp:ListItem Text="1 cuota (sin interés)" Value="1" />
+                <asp:ListItem Text="3 cuotas (10%)" Value="3" />
+                <asp:ListItem Text="6 cuotas (20%)" Value="6" />
+                <asp:ListItem Text="12 cuotas (40%)" Value="12" />
+            </asp:DropDownList>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlResumenCuotas" runat="server" Visible="false" CssClass="col-md-4 text-end">
+    <p class="mb-1 text-muted">
+        Interés (<asp:Label ID="lblInteres" runat="server" Text="0"></asp:Label>%): 
+        $<asp:Label ID="lblMontoInteres" runat="server" Text="0"></asp:Label>
+    </p>
+    <p class="mb-1">Total con interés: <strong>$<asp:Label ID="lblTotalConInteres" runat="server" Text="0"></asp:Label></strong></p>
+    <p class="mb-0 text-muted">Cuota mensual: $<asp:Label ID="lblCuotaMensual" runat="server" Text="0"></asp:Label></p>
+    <asp:Label ID="lblDebug" runat="server" CssClass="text-danger small"></asp:Label>
+</asp:Panel>
+    </div>
+</div>
 
             <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-2" Visible="false" />
+            
+              
 
             <div class="text-end">
                 <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-success" OnClick="btnRegistrarVenta_Click" />
             </div>
+
             </ContentTemplate>
            <Triggers>
 
                <asp:AsyncPostBackTrigger ControlID="btnBuscar" EventName="Click" />
                <asp:AsyncPostBackTrigger ControlID="btnAgregar" EventName="Click" />
                <asp:AsyncPostBackTrigger ControlID="btnCancelarSeleccion" EventName="Click" />
+               <asp:AsyncPostBackTrigger ControlID="ddlMedioPago" EventName="SelectedIndexChanged" />
+               <asp:AsyncPostBackTrigger ControlID="ddlCuotas" EventName="SelectedIndexChanged" />
           </Triggers>
             </asp:UpdatePanel>
         </div>

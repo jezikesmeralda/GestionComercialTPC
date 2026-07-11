@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GestionComercialWeb
@@ -24,7 +25,9 @@ namespace GestionComercialWeb
         {
             if (!IsPostBack)
             {
+                pnlCuotas.Visible = false;
                 CargarClientes();
+                //CalcularInteres();
 
                 if (UsuarioActual.Rol == Rol.Administrador)
                     btnHistorial.Visible = true;
@@ -163,6 +166,7 @@ namespace GestionComercialWeb
             OcultarError(lblErrorAgregar);
             LimpiarBuscadorProducto();
             ActualizarGrillaYTotal();
+            CalcularInteres();
         }
 
         protected void btnRegistrarVenta_Click(object sender, EventArgs e)
@@ -192,19 +196,68 @@ namespace GestionComercialWeb
                     Cliente = new Cliente { Id = int.Parse(ddlCliente.SelectedValue) },
                     Vendedor = new Usuario { Id = UsuarioActual.Id },
                     Detalles = listaTemporal,
-                    Total = listaTemporal.Sum(x => x.Subtotal)
+                    Total = listaTemporal.Sum(x => x.Subtotal),
+                    MedioPago = ddlMedioPago.SelectedValue,
+                    Cuotas = ddlMedioPago.SelectedValue == "Credito"
+                ? int.Parse(ddlCuotas.SelectedValue)
+                : 1
                 };
+                nuevaVenta.Interes = ObtenerPorcentaje(nuevaVenta.Cuotas);
+                nuevaVenta.TotalConInteres = nuevaVenta.Total + (nuevaVenta.Total * nuevaVenta.Interes / 100);
 
                 Venta ventaGuardada = ventaNegocio.Alta(nuevaVenta);
                 Session["Carrito"] = null;
-                Response.Redirect("Factura.aspx?id=" + ventaGuardada.Id);
+                //Response.Redirect("Factura.aspx?id=" + ventaGuardada.Id);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
+    "window.location='" + ResolveUrl("~/Factura.aspx?id=" + ventaGuardada.Id) + "';", true);
             }
             catch (Exception ex)
             {
                 MostrarError(lblError, ex.Message);
             }
         }
-           
+        protected void ddlMedioPago_Changed(object sender, EventArgs e)
+        {
+            pnlCuotas.Visible = ddlMedioPago.SelectedValue == "Credito";
+            pnlResumenCuotas.Visible = ddlMedioPago.SelectedValue == "Credito";
+            if (ddlMedioPago.SelectedValue == "Credito")
+                CalcularInteres();
+        }
+
+        protected void ddlCuotas_Changed(object sender, EventArgs e)
+        {
+            lblDebug.Text = "Session TotalCarrito: " + Session["TotalCarrito"] + " | Carrito count: " + ((List<DetalleVenta>)Session["Carrito"]).Count;
+            CalcularInteres();
+
+        }
+
+        private void CalcularInteres()
+        {
+            if (ddlMedioPago.SelectedValue != "Credito") return;
+
+            decimal total = Session["TotalCarrito"] != null ? (decimal)Session["TotalCarrito"] : 0;
+
+            int cuotas = int.Parse(ddlCuotas.SelectedValue);
+            decimal porcentaje = ObtenerPorcentaje(cuotas);
+            decimal montoInteres = total * porcentaje / 100m;
+            decimal totalConInteres = total + montoInteres;
+            decimal cuotaMensual = cuotas > 0 ? totalConInteres / cuotas : 0;
+
+            lblInteres.Text = porcentaje.ToString("N0");
+            lblMontoInteres.Text = montoInteres.ToString("N2");
+            lblTotalConInteres.Text = totalConInteres.ToString("N2");
+            lblCuotaMensual.Text = cuotaMensual.ToString("N2");
+            pnlResumenCuotas.Visible = true;
+
+            lblDebug.Text = "Total: " + total + " | Interés: " + porcentaje + "%";
+        }
+        private decimal ObtenerPorcentaje(int cuotas)
+        {
+            if (cuotas == 3) return 10;
+            if (cuotas == 6) return 20;
+            if (cuotas == 12) return 40;
+            return 0;
+        }
 
         private void ActualizarGrillaYTotal()
         {
@@ -232,6 +285,7 @@ namespace GestionComercialWeb
             gvDetalleVenta.DataBind();
 
             lblTotal.Text = acumuladorTotal.ToString("F2");
+            Session["TotalCarrito"] = acumuladorTotal; // añado esto
         }
 
         private void LimpiarBuscadorProducto()

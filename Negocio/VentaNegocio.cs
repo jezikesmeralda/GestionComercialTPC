@@ -19,6 +19,10 @@ namespace Negocio
                 datos.SetearParametro("@IdCliente", venta.Cliente.Id);
                 datos.SetearParametro("@IdUsuario", venta.Vendedor.Id);
                 datos.SetearParametro("@Total", venta.Total);
+                datos.SetearParametro("@MedioPago", venta.MedioPago);
+                datos.SetearParametro("@Cuotas", venta.Cuotas);
+                datos.SetearParametro("@Interes", venta.Interes);
+                datos.SetearParametro("@TotalConInteres", venta.TotalConInteres);
 
                 System.Data.DataRow fila = datos.EjecutarFila();
                 int idVenta = Convert.ToInt32(fila["Id"]);
@@ -88,6 +92,10 @@ namespace Negocio
                     NumeroFactura = cabecera["NumeroFactura"].ToString(),
                     FechaVenta = Convert.ToDateTime(cabecera["FechaVenta"]),
                     Total = Convert.ToDecimal(cabecera["Total"]),
+                    MedioPago = cabecera["MedioPago"].ToString(),
+                    Cuotas = Convert.ToInt32(cabecera["Cuotas"]),
+                    Interes = Convert.ToDecimal(cabecera["Interes"]),
+                    TotalConInteres = Convert.ToDecimal(cabecera["TotalConInteres"]),
                     Cliente = new Cliente
                     {
                         Id = Convert.ToInt32(cabecera["IdCliente"]),

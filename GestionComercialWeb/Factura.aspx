@@ -43,7 +43,25 @@
                         </asp:Repeater>
                     </tbody>
                 </table>
+                        <asp:Panel ID="pnlIntereses" runat="server" Visible="false">
+                    <div class="factura-total" style="font-size: 0.9em; border-top: none;">
+                        Subtotal: $<asp:Label ID="lblSubtotal" runat="server"></asp:Label>
+                    </div>
+                    <div class="factura-total" style="font-size: 0.9em; border-top: none;">
+                        Interés (<asp:Label ID="lblInteresPct" runat="server"></asp:Label>%): 
+                        $<asp:Label ID="lblMontoInteres" runat="server"></asp:Label>
+                    </div>
+                    <div class="factura-total" style="font-size: 0.9em; border-top: none;">
+                        Medio de Pago: <asp:Label ID="lblMedioPago" runat="server"></asp:Label>
+                        &nbsp;|&nbsp;
+                        <asp:Label ID="lblCuotas" runat="server"></asp:Label> cuotas de 
+                        $<asp:Label ID="lblCuotaMensual" runat="server"></asp:Label>
+                    </div>
+                </asp:Panel>
 
+                <div class="factura-total">
+                    TOTAL $<asp:Label ID="Label1" runat="server"></asp:Label>
+                </div>  
 
                 <div class="factura-total">
                     TOTAL $<asp:Label ID="lblTotal" runat="server"></asp:Label>

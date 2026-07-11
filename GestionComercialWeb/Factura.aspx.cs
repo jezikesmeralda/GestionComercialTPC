@@ -41,7 +41,17 @@ namespace GestionComercialWeb
             lblFecha.Text = venta.FechaVenta.ToString("dd/MM/yyyy");
             lblCliente.Text = venta.Cliente.Nombre + " " + venta.Cliente.Apellido;
             lblTotal.Text = venta.Total.ToString("N2");
-
+            if (venta.Cuotas > 1 && venta.Interes > 0)
+            {
+                pnlIntereses.Visible = true;
+                lblSubtotal.Text = venta.Total.ToString("N2");
+                lblInteresPct.Text = venta.Interes.ToString("N0");
+                lblMontoInteres.Text = (venta.TotalConInteres - venta.Total).ToString("N2");
+                lblMedioPago.Text = venta.MedioPago;
+                lblCuotas.Text = venta.Cuotas.ToString();
+                lblCuotaMensual.Text = (venta.TotalConInteres / venta.Cuotas).ToString("N2");
+                lblTotal.Text = venta.TotalConInteres.ToString("N2");
+            }
             rptDetalle.DataSource = venta.Detalles;
             rptDetalle.DataBind();
         }
