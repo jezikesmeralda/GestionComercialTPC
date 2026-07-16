@@ -105,16 +105,16 @@
                             <a class="nav-link" href="Ventas.aspx">Ventas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Compras.aspx">Compras</a>
+                            <asp:HyperLink ID="lnkCompras" runat="server" CssClass="nav-link" NavigateUrl="~/Compras.aspx">Compras</asp:HyperLink>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Proveedores.aspx">Proveedores</a>
+                            <asp:HyperLink ID="lnkProveedores" runat="server" CssClass="nav-link" NavigateUrl="~/Proveedores.aspx">Proveedores</asp:HyperLink>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Marcas.aspx">Marcas</a>
+                            <asp:HyperLink ID="lnkMarcas" runat="server" CssClass="nav-link" NavigateUrl="~/Marcas.aspx">Marcas</asp:HyperLink>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Categorias.aspx">Categorías</a>
+                            <asp:HyperLink ID="lnkCategorias" runat="server" CssClass="nav-link" NavigateUrl="~/Categorias.aspx">Categorías</asp:HyperLink>
                         </li>
                         <li class="nav-item">
                             <asp:HyperLink ID="lnkUsuarios" runat="server" CssClass="nav-link" NavigateUrl="~/Usuarios.aspx">Usuarios</asp:HyperLink>

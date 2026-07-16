@@ -32,23 +32,23 @@
             </a>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" id="divCompras" runat="server">
             <a href="Compras.aspx" class="btn btn-custom-negro w-100 p-3">Compras
             </a>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" id="divProveedores" runat="server">
             <a href="Proveedores.aspx" class="btn btn-custom-negro w-100 p-3">Proveedores
             </a>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" id="divMarcas" runat="server">
             <a href="Marcas.aspx" class="btn btn-custom-negro w-100 p-3">Marcas
             </a>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3" id="divCategorias" runat="server">
             <a href="Categorias.aspx" class="btn btn-custom-negro w-100 p-3">Categorías
             </a>
         </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mb-3" id="divReportes" runat="server">
             <a href="Reportes.aspx" class="btn btn-custom-negro w-100 p-3">Reportes
             </a>
         </div>

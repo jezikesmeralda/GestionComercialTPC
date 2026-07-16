@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Negocio;
 
 namespace GestionComercialWeb
 {
@@ -21,6 +22,15 @@ namespace GestionComercialWeb
                 lblProductos.Text = productoNeg.ContarActivos().ToString();
                 lblClientes.Text = clienteNeg.ContarActivos().ToString();
                 lblStockBajo.Text = productoNeg.ContarStockBajo().ToString();
+
+                if (UsuarioActual.Rol != Rol.Administrador)
+                {
+                    divCompras.Visible = false;
+                    divProveedores.Visible = false;
+                    divMarcas.Visible = false;
+                    divCategorias.Visible = false;
+                    divReportes.Visible = false;
+                }
             }
         }
     }

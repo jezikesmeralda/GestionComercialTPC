@@ -16,6 +16,10 @@ namespace GestionComercialWeb
                 {
                     lnkReportes.Visible = false;
                     lnkUsuarios.Visible = false;
+                    lnkCompras.Visible = false;
+                    lnkProveedores.Visible = false;
+                    lnkMarcas.Visible = false;
+                    lnkCategorias.Visible = false;
                 }
             }
         }
