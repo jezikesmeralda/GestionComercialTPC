@@ -20,13 +20,13 @@ namespace GestionComercialWeb
                     Session.Remove("mensaje");
                 }
 
-               // if (UsuarioActual.Rol != Rol.Administrador)
-                //{
-                 //   btnNuevoCliente.Visible = false;
-                  //  gvClientes.Columns[6].Visible = false;
-               // }
+               if (UsuarioActual.Rol != Rol.Administrador)
+                {
+                   // btnNuevoCliente.Visible = false;
+                    gvClientes.Columns[6].Visible = false;
+                }
 
-                CargarClientes();
+              CargarClientes();
             }
         }
 
