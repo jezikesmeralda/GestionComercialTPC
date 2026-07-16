@@ -16,7 +16,7 @@
                     <asp:Label ID="lblErrorCliente" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                 </div>
             </div>
-            </div>
+            
             <hr />
             <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="upVenta">
                 <ProgressTemplate>

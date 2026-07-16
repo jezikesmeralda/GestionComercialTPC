@@ -27,7 +27,7 @@ namespace GestionComercialWeb
             {
                 pnlCuotas.Visible = false;
                 CargarClientes();
-                //CalcularInteres();
+                
 
                 if (UsuarioActual.Rol == Rol.Administrador)
                     btnHistorial.Visible = true;
@@ -207,7 +207,7 @@ namespace GestionComercialWeb
 
                 Venta ventaGuardada = ventaNegocio.Alta(nuevaVenta);
                 Session["Carrito"] = null;
-                //Response.Redirect("Factura.aspx?id=" + ventaGuardada.Id);
+                
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
     "window.location='" + ResolveUrl("~/Factura.aspx?id=" + ventaGuardada.Id) + "';", true);
             }
@@ -249,7 +249,7 @@ namespace GestionComercialWeb
             lblCuotaMensual.Text = cuotaMensual.ToString("N2");
             pnlResumenCuotas.Visible = true;
 
-            lblDebug.Text = "Total: " + total + " | Interés: " + porcentaje + "%";
+            
         }
         private decimal ObtenerPorcentaje(int cuotas)
         {

@@ -22,7 +22,7 @@ namespace GestionComercialWeb
 
                if (UsuarioActual.Rol != Rol.Administrador)
                 {
-                   // btnNuevoCliente.Visible = false;
+                   
                     gvClientes.Columns[6].Visible = false;
                 }
 
