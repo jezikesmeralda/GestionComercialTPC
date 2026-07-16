@@ -41,7 +41,9 @@
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>
+  
                     </tbody>
+
                 </table>
                         <asp:Panel ID="pnlIntereses" runat="server" Visible="false">
                     <div class="factura-total" style="font-size: 0.9em; border-top: none;">

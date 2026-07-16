@@ -27,7 +27,7 @@ namespace GestionComercialWeb
             {
                 pnlCuotas.Visible = false;
                 CargarClientes();
-                
+
 
                 if (UsuarioActual.Rol == Rol.Administrador)
                     btnHistorial.Visible = true;
@@ -66,7 +66,7 @@ namespace GestionComercialWeb
             string busqueda = txtBuscarProducto.Text.Trim();
             if (string.IsNullOrEmpty(busqueda))
             {
-                MostrarError(lblErrorProducto,"Ingrese un nombre de producto para buscar.");
+                MostrarError(lblErrorProducto, "Ingrese un nombre de producto para buscar.");
                 return;
             }
 
@@ -82,7 +82,7 @@ namespace GestionComercialWeb
 
 
             if (productos.Count == 0)
-                MostrarError(lblErrorProducto,"No se encontraron productos.");
+                MostrarError(lblErrorProducto, "No se encontraron productos.");
             else
                 OcultarError(lblErrorProducto);
         }
@@ -99,7 +99,7 @@ namespace GestionComercialWeb
                 lblPrecioSeleccionado.Text = ProductoSeleccionado.PrecioVenta.ToString("C2");
                 pnlProductoSeleccionado.Visible = true;
 
-                
+
                 pnlResultados.Visible = false;
 
                 OcultarError(lblErrorProducto);
@@ -107,7 +107,7 @@ namespace GestionComercialWeb
         }
         protected void btnCancelarSeleccion_Click(object sender, EventArgs e)
         {
-          
+
             ProductoSeleccionado = null;
             pnlProductoSeleccionado.Visible = false;
 
@@ -185,6 +185,22 @@ namespace GestionComercialWeb
                 MostrarError(lblErrorProducto, "Debe agregar al menos un producto.");
                 errores = true; ;
             }
+            string medioPago = ddlMedioPago.SelectedValue;
+
+            if (medioPago != "Efectivo")
+            {
+                if (ddlBanco.SelectedValue == "0")
+                {
+                    MostrarError(lblError, "Debe seleccionar un banco.");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtUltimos4Digitos.Text) || txtUltimos4Digitos.Text.Length != 4)
+                {
+                    MostrarError(lblError, "Debe ingresar los últimos 4 dígitos de la tarjeta.");
+                    return;
+                }
+            }
 
             if (errores)
                 return;
@@ -207,7 +223,7 @@ namespace GestionComercialWeb
 
                 Venta ventaGuardada = ventaNegocio.Alta(nuevaVenta);
                 Session["Carrito"] = null;
-                
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
     "window.location='" + ResolveUrl("~/Factura.aspx?id=" + ventaGuardada.Id) + "';", true);
             }
@@ -215,18 +231,39 @@ namespace GestionComercialWeb
             {
                 MostrarError(lblError, ex.Message);
             }
+
         }
         protected void ddlMedioPago_Changed(object sender, EventArgs e)
         {
-            pnlCuotas.Visible = ddlMedioPago.SelectedValue == "Credito";
-            pnlResumenCuotas.Visible = ddlMedioPago.SelectedValue == "Credito";
-            if (ddlMedioPago.SelectedValue == "Credito")
-                CalcularInteres();
+            string medioPago = ddlMedioPago.SelectedValue;
+
+            if (medioPago == "Credito")
+            {
+                pnlCuotas.Visible = true;
+                pnlResumenCuotas.Visible = true;
+                pnlDatosTarjeta.Visible = true;
+                ddlCuotas.SelectedIndex = 0;
+                ddlCuotas_Changed(null, null);
+            }
+            else if (medioPago == "Debito")
+            {
+                pnlCuotas.Visible = false;
+                pnlResumenCuotas.Visible = false;
+                pnlDatosTarjeta.Visible = true;
+                LimpiarCamposTarjeta();
+            }
+            else if (medioPago == "Efectivo")
+            {
+                pnlCuotas.Visible = false;
+                pnlResumenCuotas.Visible = false;
+                pnlDatosTarjeta.Visible = false;
+                LimpiarCamposTarjeta();
+            }
         }
 
         protected void ddlCuotas_Changed(object sender, EventArgs e)
         {
-            lblDebug.Text = "Session TotalCarrito: " + Session["TotalCarrito"] + " | Carrito count: " + ((List<DetalleVenta>)Session["Carrito"]).Count;
+            lblDebug.Text = "TotalCarrito: " + Session["TotalCarrito"] + " | Productos: " + ((List<DetalleVenta>)Session["Carrito"]).Count;
             CalcularInteres();
 
         }
@@ -249,7 +286,7 @@ namespace GestionComercialWeb
             lblCuotaMensual.Text = cuotaMensual.ToString("N2");
             pnlResumenCuotas.Visible = true;
 
-            
+
         }
         private decimal ObtenerPorcentaje(int cuotas)
         {
@@ -308,6 +345,12 @@ namespace GestionComercialWeb
         {
             label.Text = "";
             label.Visible = false;
+        }
+
+        private void LimpiarCamposTarjeta()
+        {
+            ddlBanco.SelectedIndex = 0;
+            txtUltimos4Digitos.Text = "";
         }
     }
 }
