@@ -41,6 +41,21 @@ namespace GestionComercialWeb
             lblFecha.Text = venta.FechaVenta.ToString("dd/MM/yyyy");
             lblCliente.Text = venta.Cliente.Nombre + " " + venta.Cliente.Apellido;
             lblTotal.Text = venta.Total.ToString("N2");
+            lblMedioPago.Text = venta.MedioPago ?? "No especificado";
+
+            if (venta.MedioPago != "Efectivo")
+            {
+                pnlBancoEnFactura.Visible = true;
+                lblBancoEnFactura.Text = venta.Banco ?? "";
+                lblDigitosEnFactura.Text = venta.UltimosDigitos ?? "";
+            }
+
+            if (venta.MedioPago == "Credito")
+            {
+                pnlCuotasEnFactura.Visible = true;
+                lblCuotasEnFactura.Text = venta.Cuotas.ToString();
+                lblInteresEnFactura.Text = venta.Interes.ToString("F2");
+            }
             if (venta.Cuotas > 1 && venta.Interes > 0)
             {
                 pnlIntereses.Visible = true;

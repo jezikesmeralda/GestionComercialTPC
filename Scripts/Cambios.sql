@@ -311,3 +311,77 @@ BEGIN
     WHERE Id = @Id
 END
 GO
+
+------------------------------
+
+ALTER TABLE Ventas ADD 
+        
+    Banco VARCHAR(100) NULL,
+    UltimosDigitos VARCHAR(4) NULL;
+   
+    
+    -----------------------------------------
+ ALTER PROCEDURE [dbo].[sp_ObtenerVentaPorId]
+    @IdVenta INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        v.Id,
+        v.NumeroFactura,
+        v.FechaVenta,
+        v.Total,
+        v.MedioPago,
+        v.Banco,              
+        v.UltimosDigitos,    
+        v.Cuotas,
+        v.Interes,
+        c.Id AS IdCliente,
+        c.Nombre AS NombreCliente,
+        c.Apellido AS ApellidoCliente,
+        c.Email AS EmailCliente,
+        u.Id AS IdUsuario,
+        u.Nombre AS NombreUsuario
+    FROM Ventas v
+    INNER JOIN Clientes c ON v.IdCliente = c.Id
+    INNER JOIN Usuarios u ON v.IdUsuario = u.Id
+    WHERE v.Id = @IdVenta;
+
+    SELECT
+        dv.Id,
+        dv.IdProducto,
+        p.NombreProducto,
+        dv.Cantidad,
+        dv.PrecioUnitario,
+        dv.Subtotal
+    FROM DetalleVentas dv
+    INNER JOIN Productos p ON dv.IdProducto = p.Id
+    WHERE dv.IdVenta = @IdVenta;
+END
+GO
+
+--------------------------------
+ALTER PROCEDURE sp_AltaVenta 
+    @IdCliente INT,
+    @IdUsuario INT,
+    @Total DECIMAL(18,2),
+    @MedioPago VARCHAR(20) = NULL,
+    @Banco VARCHAR(100) = NULL,
+    @UltimosDigitos VARCHAR(4) = NULL,
+    @Cuotas INT = 1,
+    @Interes DECIMAL(18,2) = 0,
+    @TotalConInteres DECIMAL(18,2) = NULL
+AS
+BEGIN
+    INSERT INTO Ventas 
+    (IdCliente, IdUsuario, FechaVenta, Total, MedioPago, Banco, UltimosDigitos, Cuotas, Interes, TotalConInteres)
+    VALUES 
+    (@IdCliente, @IdUsuario, GETDATE(), @Total, @MedioPago, @Banco, @UltimosDigitos, @Cuotas, @Interes, @TotalConInteres);
+
+    DECLARE @IdVenta INT = SCOPE_IDENTITY();
+    DECLARE @NumeroFactura VARCHAR(20) = 'FAC-' + CAST(YEAR(GETDATE()) AS VARCHAR(4)) + '-' + RIGHT('000000' + CAST(@IdVenta AS VARCHAR(6)), 6);
+
+    UPDATE Ventas SET NumeroFactura = @NumeroFactura WHERE Id = @IdVenta;
+
+    SELECT @IdVenta AS Id, @NumeroFactura AS NumeroFactura;
+END

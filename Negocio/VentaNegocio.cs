@@ -20,6 +20,8 @@ namespace Negocio
                 datos.SetearParametro("@IdUsuario", venta.Vendedor.Id);
                 datos.SetearParametro("@Total", venta.Total);
                 datos.SetearParametro("@MedioPago", venta.MedioPago);
+                datos.SetearParametro("@Banco", venta.Banco);
+                datos.SetearParametro("@UltimosDigitos", venta.UltimosDigitos);
                 datos.SetearParametro("@Cuotas", venta.Cuotas);
                 datos.SetearParametro("@Interes", venta.Interes);
                 datos.SetearParametro("@TotalConInteres", venta.TotalConInteres);
@@ -93,9 +95,10 @@ namespace Negocio
                     FechaVenta = Convert.ToDateTime(cabecera["FechaVenta"]),
                     Total = Convert.ToDecimal(cabecera["Total"]),
                     MedioPago = cabecera["MedioPago"].ToString(),
+                    Banco = cabecera["Banco"].ToString(),
+                    UltimosDigitos = cabecera["UltimosDigitos"].ToString(),
                     Cuotas = Convert.ToInt32(cabecera["Cuotas"]),
                     Interes = Convert.ToDecimal(cabecera["Interes"]),
-                    TotalConInteres = Convert.ToDecimal(cabecera["TotalConInteres"]),
                     Cliente = new Cliente
                     {
                         Id = Convert.ToInt32(cabecera["IdCliente"]),

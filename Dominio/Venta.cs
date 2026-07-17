@@ -17,5 +17,8 @@ namespace Dominio
         public decimal Interes { get; set; }
         public decimal TotalConInteres { get; set; }
         public List<DetalleVenta> Detalles { get; set; }
+        public string Banco { get; set; }          
+        public string UltimosDigitos { get; set; } 
+        
     }
 }

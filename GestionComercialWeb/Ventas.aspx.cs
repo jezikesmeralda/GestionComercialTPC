@@ -228,10 +228,10 @@ namespace GestionComercialWeb
                     Detalles = listaTemporal,
                     Total = listaTemporal.Sum(x => x.Subtotal),
                     MedioPago = ddlMedioPago.SelectedValue,
-                    Cuotas = ddlMedioPago.SelectedValue == "Credito"
-                ? int.Parse(ddlCuotas.SelectedValue)
-                : 1
+                    Cuotas = ddlMedioPago.SelectedValue == "Credito" ? int.Parse(ddlCuotas.SelectedValue): 1
                 };
+                nuevaVenta.Banco = ddlBanco.SelectedItem?.Text ?? "";
+                nuevaVenta.UltimosDigitos = txtUltimos4Digitos.Text;
                 nuevaVenta.Interes = ObtenerPorcentaje(nuevaVenta.Cuotas);
                 nuevaVenta.TotalConInteres = nuevaVenta.Total + (nuevaVenta.Total * nuevaVenta.Interes / 100);
 
