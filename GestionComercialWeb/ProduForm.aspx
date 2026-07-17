@@ -90,7 +90,20 @@
             var img = document.getElementById('imgPreview');
             img.src = (url && url.trim() !== '') ? url : 'https://placehold.co/300x200';
         }
+        function calcularPrecioVenta() {
+            var costo = parseFloat(document.getElementById('<%= txtPrecioCosto.ClientID %>').value.replace(',', '.')) || 0;
+             var ganancia = parseFloat(document.getElementById('<%= txtPorcetajeGanancia.ClientID %>').value.replace(',', '.')) || 0;
+            var venta = costo * (1 + ganancia / 100);
+            document.getElementById('lblPrecioVentaPreview').innerText = '$' + venta.toFixed(2);
+        }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            actualizarPreview();
+            calcularPrecioVenta();
+
+            document.getElementById('<%= txtPrecioCosto.ClientID %>').addEventListener('keyup', calcularPrecioVenta);
+            document.getElementById('<%= txtPorcetajeGanancia.ClientID %>').addEventListener('keyup', calcularPrecioVenta);
+        });
        
     </script>
 
