@@ -79,15 +79,18 @@ ALTER PROCEDURE [dbo].[sp_ObtenerVentaPorId]
 AS
 BEGIN
     SET NOCOUNT ON;
+
     SELECT
         v.Id,
         v.NumeroFactura,
         v.FechaVenta,
         v.Total,
+        v.TotalConInteres, 
         v.MedioPago,
+        v.Banco,              
+        v.UltimosDigitos,    
         v.Cuotas,
         v.Interes,
-        v.TotalConInteres,
         c.Id AS IdCliente,
         c.Nombre AS NombreCliente,
         c.Apellido AS ApellidoCliente,
