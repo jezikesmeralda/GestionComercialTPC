@@ -9,15 +9,7 @@
 
     <div class="card shadow-sm mb-4">
         <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label class="form-label">Cliente</label>
-                    <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-select"></asp:DropDownList>
-                    <asp:Label ID="lblErrorCliente" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
-                </div>
-            </div>
 
-            <hr />
             <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="upVenta">
                 <ProgressTemplate>
                     <div class="text-center text-muted small mt-1 mb-2">
@@ -30,6 +22,15 @@
 
             <asp:UpdatePanel ID="upVenta" runat="server" UpdateMode="Always">
                 <ContentTemplate>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Cliente</label>
+                            <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-select"></asp:DropDownList>
+                            <asp:Label ID="lblErrorCliente" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+                        </div>
+                    </div>
+
+                    <hr />
                     <asp:Panel ID="pnlBuscador" runat="server" DefaultButton="btnBuscar">
                         <div class="row align-items-end mb-4">
                             <div class="col-md-5">

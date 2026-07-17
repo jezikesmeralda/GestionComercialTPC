@@ -129,6 +129,10 @@ namespace GestionComercialWeb
                 MostrarError(lblErrorProducto, "Debe buscar y seleccionar un producto antes de agregarlo.");
                 errores = true;
             }
+            else
+            {
+                lblErrorProducto.Text = "";
+            }
 
             int cantidad;
             if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
@@ -136,15 +140,24 @@ namespace GestionComercialWeb
                 MostrarError(lblErrorCantidad, "Ingrese una cantidad válida (mayor a 0).");
                 errores = true;
             }
+            else
+            {
+                lblErrorCantidad.Text = "";
+            }
 
-            if (ddlCliente.SelectedValue == "0")
+            if (ddlCliente.SelectedValue == "0" || string.IsNullOrEmpty(ddlCliente.SelectedValue))
             {
                 MostrarError(lblErrorCliente, "Debe seleccionar un cliente.");
                 errores = true;
             }
+            else
+            {
+                lblErrorCliente.Text = "";
+            }
             if (errores)
                 return;
             Producto prod = ProductoSeleccionado;
+       
 
             if (cantidad > prod.StockActual)
             {
@@ -164,6 +177,7 @@ namespace GestionComercialWeb
             OcultarError(lblErrorProducto);
             OcultarError(lblErrorCantidad);
             OcultarError(lblErrorAgregar);
+            OcultarError(lblErrorCliente);
             LimpiarBuscadorProducto();
             ActualizarGrillaYTotal();
             CalcularInteres();
@@ -322,7 +336,7 @@ namespace GestionComercialWeb
             gvDetalleVenta.DataBind();
 
             lblTotal.Text = acumuladorTotal.ToString("F2");
-            Session["TotalCarrito"] = acumuladorTotal; // añado esto
+            Session["TotalCarrito"] = acumuladorTotal; 
         }
 
         private void LimpiarBuscadorProducto()

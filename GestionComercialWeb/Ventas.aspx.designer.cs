@@ -24,24 +24,6 @@ namespace GestionComercialWeb
         protected global::System.Web.UI.WebControls.Button btnHistorial;
 
         /// <summary>
-        /// Control ddlCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
-
-        /// <summary>
-        /// Control lblErrorCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorCliente;
-
-        /// <summary>
         /// Control UpdateProgress1.
         /// </summary>
         /// <remarks>
@@ -58,6 +40,24 @@ namespace GestionComercialWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upVenta;
+
+        /// <summary>
+        /// Control ddlCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
+
+        /// <summary>
+        /// Control lblErrorCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorCliente;
 
         /// <summary>
         /// Control pnlBuscador.
