@@ -388,3 +388,43 @@ BEGIN
 
     SELECT @IdVenta AS Id, @NumeroFactura AS NumeroFactura;
 END
+
+ALTER PROCEDURE [dbo].[sp_ObtenerVentaPorId]
+    @IdVenta INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        v.Id,
+        v.NumeroFactura,
+        v.FechaVenta,
+        v.Total,
+        v.TotalConInteres, 
+        v.MedioPago,
+        v.Banco,              
+        v.UltimosDigitos,    
+        v.Cuotas,
+        v.Interes,
+        c.Id AS IdCliente,
+        c.Nombre AS NombreCliente,
+        c.Apellido AS ApellidoCliente,
+        c.Email AS EmailCliente,
+        u.Id AS IdUsuario,
+        u.Nombre AS NombreUsuario
+    FROM Ventas v
+    INNER JOIN Clientes c ON v.IdCliente = c.Id
+    INNER JOIN Usuarios u ON v.IdUsuario = u.Id
+    WHERE v.Id = @IdVenta;
+
+    SELECT
+        dv.Id,
+        dv.IdProducto,
+        p.NombreProducto,
+        dv.Cantidad,
+        dv.PrecioUnitario,
+        dv.Subtotal
+    FROM DetalleVentas dv
+    INNER JOIN Productos p ON dv.IdProducto = p.Id
+    WHERE dv.IdVenta = @IdVenta;
+END

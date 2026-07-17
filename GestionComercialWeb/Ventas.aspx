@@ -76,7 +76,7 @@
                             </div>
                         </div>
                     </asp:Panel>
-
+                    <asp:Panel ID="pnlCantidadAgregar" runat="server" DefaultButton="btnAgregar">
                     <div class="row align-items-end mb-3">
                         <div class="col-md-3">
                             <label class="form-label">Cantidad</label>
@@ -90,7 +90,7 @@
                         </div>
                         <asp:Label ID="lblErrorAgregar" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                     </div>
-
+                        </asp:Panel>
                     <hr />
                     <h5>Detalle Venta</h5>
 
@@ -108,6 +108,7 @@
                         <h5>Subtotal: $
         <asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label>
                         </h5>
+                       <asp:Panel ID="pnlPagoYRegistro" runat="server" DefaultButton="btnRegistrarVenta">
                         <div class="card shadow-sm mt-3 p-3">
                             <div class="row align-items-end">
                                 <div class="col-md-4">
@@ -174,6 +175,7 @@
 
                         <div class="text-end">
                             <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-success" OnClick="btnRegistrarVenta_Click" />
+                         </asp:Panel>
                         </div>
                 </ContentTemplate>
                 <Triggers>
