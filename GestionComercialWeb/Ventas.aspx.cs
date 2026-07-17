@@ -205,13 +205,13 @@ namespace GestionComercialWeb
             {
                 if (ddlBanco.SelectedValue == "0")
                 {
-                    MostrarError(lblError, "Debe seleccionar un banco.");
+                    MostrarError(lblErrorBanco, "Debe seleccionar un banco.");
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txtUltimos4Digitos.Text) || txtUltimos4Digitos.Text.Length != 4)
                 {
-                    MostrarError(lblError, "Debe ingresar los últimos 4 dígitos de la tarjeta.");
+                    MostrarError(lblErrorDigito, "Debe ingresar los últimos 4 dígitos de la tarjeta.");
                     return;
                 }
             }
@@ -238,8 +238,9 @@ namespace GestionComercialWeb
                 Venta ventaGuardada = ventaNegocio.Alta(nuevaVenta);
                 Session["Carrito"] = null;
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
-    "window.location='" + ResolveUrl("~/Factura.aspx?id=" + ventaGuardada.Id) + "';", true);
+                Response.Redirect("~/Factura.aspx?id=" + ventaGuardada.Id);
+                // ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
+                //"window.location='" + ResolveUrl("~/Factura.aspx?id=" + ventaGuardada.Id) + "';", true);
             }
             catch (Exception ex)
             {
@@ -277,7 +278,7 @@ namespace GestionComercialWeb
 
         protected void ddlCuotas_Changed(object sender, EventArgs e)
         {
-            lblDebug.Text = "TotalCarrito: " + Session["TotalCarrito"] + " | Productos: " + ((List<DetalleVenta>)Session["Carrito"]).Count;
+            
             CalcularInteres();
 
         }

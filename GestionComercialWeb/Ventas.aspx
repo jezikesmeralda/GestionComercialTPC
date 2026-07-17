@@ -117,6 +117,7 @@
                                         <asp:ListItem Text="Débito" Value="Debito" />
                                         <asp:ListItem Text="Crédito" Value="Credito" />
                                     </asp:DropDownList>
+                                    
                                 </div>
 
                                 <asp:Panel ID="pnlCuotas" runat="server" Visible="false" CssClass="col-md-4">
@@ -156,11 +157,13 @@
                                                     <asp:ListItem Text="Hipotecario" Value="6" />
                                                     <asp:ListItem Text="Credicoop" Value="7" />
                                                 </asp:DropDownList>
+                                                <asp:Label ID="lblErrorBanco" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label fw-bold">Últimos 4 dígitos</label>
                                                 <asp:TextBox ID="txtUltimos4Digitos" runat="server" CssClass="form-control" placeholder="Ej: 1234" MaxLength="4"></asp:TextBox>
                                                 <small class="text-muted d-block mt-1">Ingrese los últimos 4 dígitos de la tarjeta</small>
+                                                <asp:Label ID="lblErrorDigito" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                                             </div>
                                         </div>
                                     </div>

@@ -56,6 +56,7 @@ namespace GestionComercialWeb
                 lblCuotasEnFactura.Text = venta.Cuotas.ToString();
                 lblInteresEnFactura.Text = venta.Interes.ToString("F2");
             }
+            
             if (venta.Cuotas > 1 && venta.Interes > 0)
             {
                 pnlIntereses.Visible = true;

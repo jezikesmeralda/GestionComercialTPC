@@ -94,6 +94,7 @@ namespace Negocio
                     NumeroFactura = cabecera["NumeroFactura"].ToString(),
                     FechaVenta = Convert.ToDateTime(cabecera["FechaVenta"]),
                     Total = Convert.ToDecimal(cabecera["Total"]),
+                    TotalConInteres = Convert.ToDecimal(cabecera["TotalConInteres"]),
                     MedioPago = cabecera["MedioPago"].ToString(),
                     Banco = cabecera["Banco"].ToString(),
                     UltimosDigitos = cabecera["UltimosDigitos"].ToString(),

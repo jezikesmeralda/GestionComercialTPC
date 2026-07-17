@@ -63,9 +63,7 @@
                 </div>
             </asp:Panel>
 
-            <div class="factura-total">
-                TOTAL $<asp:Label ID="Label1" runat="server"></asp:Label>
-            </div>
+            
 
             <div class="factura-total">
                 TOTAL $<asp:Label ID="lblTotal" runat="server"></asp:Label>
